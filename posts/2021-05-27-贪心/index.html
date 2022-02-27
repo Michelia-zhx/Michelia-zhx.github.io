@@ -98,8 +98,8 @@
   "keywords": [
     "Hugo", "static", "generator"
   ],
-  "articleBody": "短视的行为\n区间选点 给N个闭区间, 要在数轴上选尽量少的点, 使每个区间至少包含一个选出的点 (answer ≤ count)\n区间贪心问题, 要么按左端点排序, 要么按右端点, 要么双关键字\n 每个区间按右端点从小到大排序 从前往后依次枚举每个区间   如果已经包含点, pass 否则选右端点 (answer ≥ count) = answer = count  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33  #include  #include  using namespace std; const int N=100010; int n; struct Range{ int l, r; bool operatored){ res ++; ed = range[i].r; } } printf(\"%d\", res); return 0; }   排课 (不冲突排尽量多的课) 和上题一样, 上题选点的个数(有点的区间相互没有相交) = 这题的课程数\n区间分组 区间分组, 每组内的区间两两没有交集, 要求组数尽量小. (合法的 → answer ≤ count)\n 每个区间按左端点从小到大排序 从前往后依次枚举每个区间   判断能否放入现有的组中 L[i]  max_r  不能, 新建一个组 存在, 随便挑一个, 将其放入, 更新当前组的max_r 最后分出的count个组, 每个都是相交的, 因此必须分开 → answer ≥ count = answer = count    区间max_r可以用小根堆存储  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39  #include  #include  #include  using namespace std; const int N=100010; int n; struct Range{ int l, r; bool operator, greater  heap; for (int i=0; i= r.l) heap.push(r.r); else{ int t = heap.top(); heap.pop(); heap.push(r.r); } } printf(\"%d\", heap.size()); return 0; }   区间覆盖 给定一些小区间和一个大区间[start, end], 要求用尽量少的小区间去完全覆盖大区间.\n 将所有区间按左端点从小到大排序 从前往后依次枚举每个区间, 在所有能覆盖start的区间中, 选择右端点最大的那一个, 将start更新成这个右端点  合法的 → answer ≤ count. 反证法 → answer ≥ count. 假设answer answer = count.    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51  #include  #include  #include  using namespace std; const int N=100010; int n; struct Range{ int l, r; bool operator= ed) { success = true; break; } st = r; i = j-1; } if (!success) res = -1; printf(\"%d\", res); return 0; }   哈夫曼树  合并果子 - 消耗体力最少  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26  #include  #include  #include  using namespace std; int main(){ int n; scanf(\"%d\", \u0026n); priority_queue, greater heap; while(n--){ int x; scanf(\"%d\", \u0026x); heap.push(x); } int res = 0; while (heap.size()  1){ int a = heap.top(); heap.pop(); int b = heap.top(); heap.pop(); res += a + b; heap.push(a+b); } printf(\"%d\", res); return 0; }   ",
-  "wordCount" : "1016",
+  "articleBody": "短视的行为\n区间选点 给N个闭区间, 要在数轴上选尽量少的点, 使每个区间至少包含一个选出的点 (answer ≤ count)\n区间贪心问题, 要么按左端点排序, 要么按右端点, 要么双关键字\n 每个区间按右端点从小到大排序 从前往后依次枚举每个区间   如果已经包含点, pass 否则选右端点 (answer ≥ count) = answer = count  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33  #include #include  using namespace std; const int N=100010; int n; struct Range{ int l, r; bool operatorconst Range \u0026W)const{ return r int main(){ scanf(\"%d\", \u0026n); for (int i=0; i int l, r; scanf(\"%d%d\", \u0026l, \u0026r); range[i] = {l, r}; } sort(range, range+n); int res = 0, ed = -2e9; for (int i=0; i if (range[i].l  ed){ res ++; ed = range[i].r; } } printf(\"%d\", res); return 0; }   排课 (不冲突排尽量多的课) 和上题一样, 上题选点的个数(有点的区间相互没有相交) = 这题的课程数\n区间分组 区间分组, 每组内的区间两两没有交集, 要求组数尽量小. (合法的 → answer ≤ count)\n 每个区间按左端点从小到大排序 从前往后依次枚举每个区间   判断能否放入现有的组中 L[i]  max_r  不能, 新建一个组 存在, 随便挑一个, 将其放入, 更新当前组的max_r 最后分出的count个组, 每个都是相交的, 因此必须分开 → answer ≥ count = answer = count    区间max_r可以用小根堆存储  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39  #include #include #include  using namespace std; const int N=100010; int n; struct Range{ int l, r; bool operatorconst Range \u0026W)const{ return r int main(){ scanf(\"%d\", \u0026n); for (int i=0; i int l, r; scanf(\"%d%d\", \u0026l, \u0026r); range[i] = {l, r}; } sort(range, range+n); priority_queueint, vectorint, greaterint  heap; for (int i=0; iauto r = range[i]; if (heap.empty() || heap.top() = r.l) heap.push(r.r); else{ int t = heap.top(); heap.pop(); heap.push(r.r); } } printf(\"%d\", heap.size()); return 0; }   区间覆盖 给定一些小区间和一个大区间[start, end], 要求用尽量少的小区间去完全覆盖大区间.\n 将所有区间按左端点从小到大排序 从前往后依次枚举每个区间, 在所有能覆盖start的区间中, 选择右端点最大的那一个, 将start更新成这个右端点  合法的 → answer ≤ count. 反证法 → answer ≥ count. 假设answer answer = count.    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51  #include #include #include  using namespace std; const int N=100010; int n; struct Range{ int l, r; bool operatorconst Range \u0026W)const{ return l int main(){ int st, ed; scanf(\"%d%d\", \u0026st, \u0026ed); scanf(\"%d\", \u0026n); for (int i=0; i int l, r; scanf(\"%d%d\", \u0026l, \u0026r); range[i] = {l, r}; } sort(range, range+n); int res = 0; bool success = false; for (int i=0; i int j=i, r=-2e9; while (jif (r 1; break; } res ++; if (r = ed) { success = true; break; } st = r; i = j-1; } if (!success) res = -1; printf(\"%d\", res); return 0; }   哈夫曼树  合并果子 - 消耗体力最少  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26  #include #include #include  using namespace std; int main(){ int n; scanf(\"%d\", \u0026n); priority_queueint, vectorint, greaterint heap; while(n--){ int x; scanf(\"%d\", \u0026x); heap.push(x); } int res = 0; while (heap.size()  1){ int a = heap.top(); heap.pop(); int b = heap.top(); heap.pop(); res += a + b; heap.push(a+b); } printf(\"%d\", res); return 0; }   ",
+  "wordCount" : "1009",
   "inLanguage": "en",
   "datePublished": "0001-01-01T00:00:00Z",
   "dateModified": "0001-01-01T00:00:00Z",
@@ -280,38 +280,38 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#0f0;font-weight:bold">#include</span> <span style="color:#0f0;font-weight:bold">&lt;iostream&gt;</span><span style="color:#0f0;font-weight:bold">
+</span><span style="color:#0f0;font-weight:bold">#include</span> <span style="color:#0f0;font-weight:bold">&lt;algorithm&gt;</span><span style="color:#0f0;font-weight:bold">
+</span><span style="color:#0f0;font-weight:bold"></span>
+<span style="color:#fff;font-weight:bold">using</span> <span style="color:#fff;font-weight:bold">namespace</span> std;
 
-using namespace std;
+<span style="color:#fff;font-weight:bold">const</span> <span style="color:#fff;font-weight:bold">int</span> N=<span style="color:#ff0;font-weight:bold">100010</span>;
 
-const int N=100010;
-
-int n;
-struct Range{
-    int l, r;
-    bool operator&lt; (const Range &amp;W)const{
-        return r &lt; W.r;
+<span style="color:#fff;font-weight:bold">int</span> n;
+<span style="color:#fff;font-weight:bold">struct</span> Range{
+    <span style="color:#fff;font-weight:bold">int</span> l, r;
+    <span style="color:#fff;font-weight:bold">bool</span> <span style="color:#fff;font-weight:bold">operator</span>&lt; (<span style="color:#fff;font-weight:bold">const</span> Range &amp;W)<span style="color:#fff;font-weight:bold">const</span>{
+        <span style="color:#fff;font-weight:bold">return</span> r &lt; W.r;
     }
 }range[N];
 
-int main(){
-    scanf(&#34;%d&#34;, &amp;n);
-    for (int i=0; i &lt; n; i++){
-        int l, r;
-        scanf(&#34;%d%d&#34;, &amp;l, &amp;r);
+<span style="color:#fff;font-weight:bold">int</span> main(){
+    scanf(<span style="color:#0ff;font-weight:bold">&#34;%d&#34;</span>, &amp;n);
+    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i=<span style="color:#ff0;font-weight:bold">0</span>; i &lt; n; i++){
+        <span style="color:#fff;font-weight:bold">int</span> l, r;
+        scanf(<span style="color:#0ff;font-weight:bold">&#34;%d%d&#34;</span>, &amp;l, &amp;r);
         range[i] = {l, r};
     }
     sort(range, range+n);
-    int res = 0, ed = -2e9;
-    for (int i=0; i &lt; n; i++){
-        if (range[i].l &gt; ed){
+    <span style="color:#fff;font-weight:bold">int</span> res = <span style="color:#ff0;font-weight:bold">0</span>, ed = -<span style="color:#ff0;font-weight:bold">2e9</span>;
+    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i=<span style="color:#ff0;font-weight:bold">0</span>; i &lt; n; i++){
+        <span style="color:#fff;font-weight:bold">if</span> (range[i].l &gt; ed){
             res ++;
             ed = range[i].r;
         }
     }
-    printf(&#34;%d&#34;, res);
-    return 0;
+    printf(<span style="color:#0ff;font-weight:bold">&#34;%d&#34;</span>, res);
+    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#ff0;font-weight:bold">0</span>;
 }
 </code></pre></td></tr></table>
 </div>
@@ -379,44 +379,44 @@ int main(){
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;queue&gt;
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#0f0;font-weight:bold">#include</span> <span style="color:#0f0;font-weight:bold">&lt;iostream&gt;</span><span style="color:#0f0;font-weight:bold">
+</span><span style="color:#0f0;font-weight:bold">#include</span> <span style="color:#0f0;font-weight:bold">&lt;algorithm&gt;</span><span style="color:#0f0;font-weight:bold">
+</span><span style="color:#0f0;font-weight:bold">#include</span> <span style="color:#0f0;font-weight:bold">&lt;queue&gt;</span><span style="color:#0f0;font-weight:bold">
+</span><span style="color:#0f0;font-weight:bold"></span>
+<span style="color:#fff;font-weight:bold">using</span> <span style="color:#fff;font-weight:bold">namespace</span> std;
 
-using namespace std;
+<span style="color:#fff;font-weight:bold">const</span> <span style="color:#fff;font-weight:bold">int</span> N=<span style="color:#ff0;font-weight:bold">100010</span>;
 
-const int N=100010;
-
-int n;
-struct Range{
-    int l, r;
-    bool operator&lt; (const Range &amp;W)const{
-        return r &lt; W.r;
+<span style="color:#fff;font-weight:bold">int</span> n;
+<span style="color:#fff;font-weight:bold">struct</span> Range{
+    <span style="color:#fff;font-weight:bold">int</span> l, r;
+    <span style="color:#fff;font-weight:bold">bool</span> <span style="color:#fff;font-weight:bold">operator</span>&lt; (<span style="color:#fff;font-weight:bold">const</span> Range &amp;W)<span style="color:#fff;font-weight:bold">const</span>{
+        <span style="color:#fff;font-weight:bold">return</span> r &lt; W.r;
     }
 }range[N];
 
-int main(){
-    scanf(&#34;%d&#34;, &amp;n);
-    for (int i=0; i &lt; n; i++){
-        int l, r;
-        scanf(&#34;%d%d&#34;, &amp;l, &amp;r);
+<span style="color:#fff;font-weight:bold">int</span> main(){
+    scanf(<span style="color:#0ff;font-weight:bold">&#34;%d&#34;</span>, &amp;n);
+    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i=<span style="color:#ff0;font-weight:bold">0</span>; i &lt; n; i++){
+        <span style="color:#fff;font-weight:bold">int</span> l, r;
+        scanf(<span style="color:#0ff;font-weight:bold">&#34;%d%d&#34;</span>, &amp;l, &amp;r);
         range[i] = {l, r};
     }
     sort(range, range+n);
     
-    priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt; &gt; heap;
-    for (int i=0; i&lt;n; i++){
-        auto r = range[i];
-        if (heap.empty() || heap.top() &gt;= r.l) heap.push(r.r);
-        else{
-            int t = heap.top();
+    priority_queue&lt;<span style="color:#fff;font-weight:bold">int</span>, vector&lt;<span style="color:#fff;font-weight:bold">int</span>&gt;, greater&lt;<span style="color:#fff;font-weight:bold">int</span>&gt; &gt; heap;
+    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i=<span style="color:#ff0;font-weight:bold">0</span>; i&lt;n; i++){
+        <span style="color:#fff;font-weight:bold">auto</span> r = range[i];
+        <span style="color:#fff;font-weight:bold">if</span> (heap.empty() || heap.top() &gt;= r.l) heap.push(r.r);
+        <span style="color:#fff;font-weight:bold">else</span>{
+            <span style="color:#fff;font-weight:bold">int</span> t = heap.top();
             heap.pop();
             heap.push(r.r);
         }
     }
     
-    printf(&#34;%d&#34;, heap.size());
-    return 0;
+    printf(<span style="color:#0ff;font-weight:bold">&#34;%d&#34;</span>, heap.size());
+    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#ff0;font-weight:bold">0</span>;
 }
 </code></pre></td></tr></table>
 </div>
@@ -487,56 +487,56 @@ int main(){
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;queue&gt;
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#0f0;font-weight:bold">#include</span> <span style="color:#0f0;font-weight:bold">&lt;iostream&gt;</span><span style="color:#0f0;font-weight:bold">
+</span><span style="color:#0f0;font-weight:bold">#include</span> <span style="color:#0f0;font-weight:bold">&lt;algorithm&gt;</span><span style="color:#0f0;font-weight:bold">
+</span><span style="color:#0f0;font-weight:bold">#include</span> <span style="color:#0f0;font-weight:bold">&lt;queue&gt;</span><span style="color:#0f0;font-weight:bold">
+</span><span style="color:#0f0;font-weight:bold"></span>
+<span style="color:#fff;font-weight:bold">using</span> <span style="color:#fff;font-weight:bold">namespace</span> std;
 
-using namespace std;
+<span style="color:#fff;font-weight:bold">const</span> <span style="color:#fff;font-weight:bold">int</span> N=<span style="color:#ff0;font-weight:bold">100010</span>;
 
-const int N=100010;
-
-int n;
-struct Range{
-    int l, r;
-    bool operator&lt; (const Range &amp;W)const{
-        return l &lt; W.l;
+<span style="color:#fff;font-weight:bold">int</span> n;
+<span style="color:#fff;font-weight:bold">struct</span> Range{
+    <span style="color:#fff;font-weight:bold">int</span> l, r;
+    <span style="color:#fff;font-weight:bold">bool</span> <span style="color:#fff;font-weight:bold">operator</span>&lt; (<span style="color:#fff;font-weight:bold">const</span> Range &amp;W)<span style="color:#fff;font-weight:bold">const</span>{
+        <span style="color:#fff;font-weight:bold">return</span> l &lt; W.l;
     }
 }range[N];
 
-int main(){
-    int st, ed;
-    scanf(&#34;%d%d&#34;, &amp;st, &amp;ed);
-    scanf(&#34;%d&#34;, &amp;n);
-    for (int i=0; i &lt; n; i++){
-        int l, r;
-        scanf(&#34;%d%d&#34;, &amp;l, &amp;r);
+<span style="color:#fff;font-weight:bold">int</span> main(){
+    <span style="color:#fff;font-weight:bold">int</span> st, ed;
+    scanf(<span style="color:#0ff;font-weight:bold">&#34;%d%d&#34;</span>, &amp;st, &amp;ed);
+    scanf(<span style="color:#0ff;font-weight:bold">&#34;%d&#34;</span>, &amp;n);
+    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i=<span style="color:#ff0;font-weight:bold">0</span>; i &lt; n; i++){
+        <span style="color:#fff;font-weight:bold">int</span> l, r;
+        scanf(<span style="color:#0ff;font-weight:bold">&#34;%d%d&#34;</span>, &amp;l, &amp;r);
         range[i] = {l, r};
     }
     sort(range, range+n);
     
-    int res = 0;
-    bool success = false;
-    for (int i=0; i &lt; n; i++){
-        int j=i, r=-2e9;
-        while (j&lt;n &amp;&amp; range[j].l &lt;= st){
+    <span style="color:#fff;font-weight:bold">int</span> res = <span style="color:#ff0;font-weight:bold">0</span>;
+    <span style="color:#fff;font-weight:bold">bool</span> success = <span style="color:#fff;font-weight:bold">false</span>;
+    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i=<span style="color:#ff0;font-weight:bold">0</span>; i &lt; n; i++){
+        <span style="color:#fff;font-weight:bold">int</span> j=i, r=-<span style="color:#ff0;font-weight:bold">2e9</span>;
+        <span style="color:#fff;font-weight:bold">while</span> (j&lt;n &amp;&amp; range[j].l &lt;= st){
             r = max(r, range[j].r);
             j++;
         }
-        if (r &lt; st){
-            res = -1;
-            break;
+        <span style="color:#fff;font-weight:bold">if</span> (r &lt; st){
+            res = -<span style="color:#ff0;font-weight:bold">1</span>;
+            <span style="color:#fff;font-weight:bold">break</span>;
         }
         res ++;
-        if (r &gt;= ed) {
-            success = true;
-            break;
+        <span style="color:#fff;font-weight:bold">if</span> (r &gt;= ed) {
+            success = <span style="color:#fff;font-weight:bold">true</span>;
+            <span style="color:#fff;font-weight:bold">break</span>;
         }
         st = r;
-        i = j-1;
+        i = j-<span style="color:#ff0;font-weight:bold">1</span>;
     }
-    if (!success) res = -1;
-    printf(&#34;%d&#34;, res);
-    return 0;
+    <span style="color:#fff;font-weight:bold">if</span> (!success) res = -<span style="color:#ff0;font-weight:bold">1</span>;
+    printf(<span style="color:#0ff;font-weight:bold">&#34;%d&#34;</span>, res);
+    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#ff0;font-weight:bold">0</span>;
 }
 </code></pre></td></tr></table>
 </div>
@@ -574,31 +574,31 @@ int main(){
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;queue&gt;
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#0f0;font-weight:bold">#include</span> <span style="color:#0f0;font-weight:bold">&lt;iostream&gt;</span><span style="color:#0f0;font-weight:bold">
+</span><span style="color:#0f0;font-weight:bold">#include</span> <span style="color:#0f0;font-weight:bold">&lt;algorithm&gt;</span><span style="color:#0f0;font-weight:bold">
+</span><span style="color:#0f0;font-weight:bold">#include</span> <span style="color:#0f0;font-weight:bold">&lt;queue&gt;</span><span style="color:#0f0;font-weight:bold">
+</span><span style="color:#0f0;font-weight:bold"></span>
+<span style="color:#fff;font-weight:bold">using</span> <span style="color:#fff;font-weight:bold">namespace</span> std;
 
-using namespace std;
+<span style="color:#fff;font-weight:bold">int</span> main(){
+    <span style="color:#fff;font-weight:bold">int</span> n;
+    scanf(<span style="color:#0ff;font-weight:bold">&#34;%d&#34;</span>, &amp;n);
 
-int main(){
-    int n;
-    scanf(&#34;%d&#34;, &amp;n);
-
-    priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; heap;
-    while(n--){
-        int x;
-        scanf(&#34;%d&#34;, &amp;x);
+    priority_queue&lt;<span style="color:#fff;font-weight:bold">int</span>, vector&lt;<span style="color:#fff;font-weight:bold">int</span>&gt;, greater&lt;<span style="color:#fff;font-weight:bold">int</span>&gt;&gt; heap;
+    <span style="color:#fff;font-weight:bold">while</span>(n--){
+        <span style="color:#fff;font-weight:bold">int</span> x;
+        scanf(<span style="color:#0ff;font-weight:bold">&#34;%d&#34;</span>, &amp;x);
         heap.push(x);
     }
-    int res = 0;
-    while (heap.size() &gt; 1){
-        int a = heap.top(); heap.pop();
-        int b = heap.top(); heap.pop();
+    <span style="color:#fff;font-weight:bold">int</span> res = <span style="color:#ff0;font-weight:bold">0</span>;
+    <span style="color:#fff;font-weight:bold">while</span> (heap.size() &gt; <span style="color:#ff0;font-weight:bold">1</span>){
+        <span style="color:#fff;font-weight:bold">int</span> a = heap.top(); heap.pop();
+        <span style="color:#fff;font-weight:bold">int</span> b = heap.top(); heap.pop();
         res += a + b;
         heap.push(a+b);
     }
-    printf(&#34;%d&#34;, res);
-    return 0;
+    printf(<span style="color:#0ff;font-weight:bold">&#34;%d&#34;</span>, res);
+    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#ff0;font-weight:bold">0</span>;
 }
 </code></pre></td></tr></table>
 </div>
@@ -820,6 +820,10 @@ code.has-jax {
     border: inherit;
     color: #515151;
 }
-</style></body>
+</style>
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script></body>
 
 </html>
