@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Paper Notes - Multi-Teacher Knowledge Distillation - 1 | Michelia&#39;s Blog</title>
+<meta name="keywords" content="Hugo, static, generator" />
+<meta name="description" content="My first blog">
+<meta name="author" content="Michelia-zhx">
+<link rel="canonical" href="https://michelia-zhx.github.io/posts/2022-02-23-multi_teacher_knowledge_distillation-1/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="apple-touch-icon" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="mask-icon" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Paper Notes - Multi-Teacher Knowledge Distillation - 1" />
+<meta property="og:description" content="My first blog" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://michelia-zhx.github.io/posts/2022-02-23-multi_teacher_knowledge_distillation-1/" /><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Paper Notes - Multi-Teacher Knowledge Distillation - 1"/>
+<meta name="twitter:description" content="My first blog"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://michelia-zhx.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Paper Notes - Multi-Teacher Knowledge Distillation - 1",
+      "item": "https://michelia-zhx.github.io/posts/2022-02-23-multi_teacher_knowledge_distillation-1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Paper Notes - Multi-Teacher Knowledge Distillation - 1",
+  "name": "Paper Notes - Multi-Teacher Knowledge Distillation - 1",
+  "description": "My first blog",
+  "keywords": [
+    "Hugo", "static", "generator"
+  ],
+  "articleBody": " Learning from Multiple Teacher Networks http://library.usc.edu.ph/ACM/KKD%202017/pdfs/p1285.pdf\n  loss:  teachers的softmax输出取平均和student的交叉熵 中间层表示的相对相异度(仅适用于MTKD), 三元组$(q_i,q_i^+,q_i^-)$, 其中$q$是中间层的输出, 偏序关系$q_i^+  q_i^-$由两者和$q_i$的距离$d$决定, 参数$w_s$决定选取哪些层. 在不同teacher中, 中间层输出的偏序关系可能不同, 因此用投票法决定中间层输出应当的偏序关系, 设计和student对应层输出的loss, 以此鼓励student拥有和teacher中间层类似的相对相似(相异)关系. student和groudtruth的交叉熵   实验设置: 基于CIFAR-10, CIFAR-100, MNIST, SVHN的实验  CIFAR-10, 比较student不同层数和参数量(11/250K, 11/862K, 13/1.6M, 19/2.5M)时的表现(compression rate, acceleration rate and classification accuracy)(和Fitnets比较) CIFAR-10, student均为11层, 比较当student的参数为250K和862K时, teacher数量为1, 3, 5时, Teacher, RDL, FitNets, KD和他们的准确率 CIFAR-10, CIFAR-100, 比较不同方法(Teacher(5层), FitNets, KD, Maxout Networks, Network in Network, Deeply-Supervised Networks和此方法(19层))在两个数据集上的准确率 MNIST, 比较不同方法(Teacher(4层), FitNets, KD, Maxout Networks, Network in Network, Deeply-Supervised Networks和此方法(7层))的准确率 SVHN, 比较不同方法(Teacher(5层), FitNets, KD, Maxout Networks, Network in Network, Deeply-Supervised Networks和此方法(19层))的准确率   @inproceedings{you2017learning, author={You, Shan and Xu, Chang and Xu, Chao and Tao, Dacheng}, booktitle={Proceedings of the 23rd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining}, title={Learning from multiple teacher networks}, pages={1285–1294}, year={2017} }   Semi-Supervised Knowledge Transfer for Deep Learning from Private Training Data. ICLR 2017 https://openreview.net/pdf?id=HkwoSDPgg\n  学习算法应当保护用户私人数据, 但模型会记住数据, 也会受到攻击(black/white box attack). 将样本分成n份, 分别训练teacher model, 将这些teachers聚合:  如果大多数teacher有相同的输出, 则输出不依赖于分别训练teacher的不相交集 如果有某两类票数相近, 则分歧可能会泄露私人信息(我不理解) 在投票中引入随机噪声   student是半监督, 一部分是利用private data通过teacher得到的label, 之后使用无标记的public data. 利用GAN训练student, discriminator增加1类(m+由生成器生成), 训练后只使用discriminator. 实验设置:    Dataset Teacher Student Student Public Data testing Data     MNIST 2 conv + 1 relu GANS(6 fc layers) test[:1000] test[1000:]   SVHN 2 conv + 2 relu GANS(7 conv + 2 NIN) test[:1000] test[1000:]   UCI Adult RF(100 trees) RF(100 trees) test[:500] test[500:]   UCI Diabetes RF(100 trees) RF(100 trees) test[:500] test[500:]     @article{Papernot2017SemisupervisedKT, title={Semi-supervised Knowledge Transfer for Deep Learning from Private Training Data}, author={Nicolas Papernot and Mart{'i}n Abadi and {'U}lfar Erlingsson and Ian J. Goodfellow and Kunal Talwar}, journal={arXiv preprint}, pages = {}, year={2016} }   Knowledge Adaptation: Teaching to Adapt. ICLR, 2017 https://openreview.net/pdf?id=rJRhzzKxl\n  teachers的domain和student $\\mathcal{D}{T_i}, \\mathcal{D}S$不完全一致, 因此student对teacher的信任度取决于两者表示空间的相似度 $\\mathcal{L} = \\mathcal{H}(\\sum{i=1}sim(\\mathcal{D}{T_i}, \\mathcal{D}S)\\cdot D{T_i}, D_S)$ 定义MCD, MCD越大表示越远离分类边界, 输入teacher得到的结果置信度越高. 因此选取MCD最大(即置信度最高)的n个样本, 在teacher中得到的结果作为伪标记以训练student可以使无监督学习的性能得到提升. 实验设置: 基于Amazon product reviews sentiment analysis dataset. 包含Book, DVD, Electronics, Kitchen四类.  比较teacher, 由以相同类别样本训练的teacher训练出来的student, 由以所有样本训练的teacher训练出来的student, 结合以上两种teacher训练出来的student, 以及许多其他模型(SCL, SFA, SCL-com, SFA-com, SST, IDDIWP, DWHC, DAM, CP-MDA, SDAMS-SVM, SDAMS-Log)在四种类别上的性能. 比较分别以其中三类为domain的teacher训练以第四类为domain的student(B$\\rightarrow$D,E$\\rightarrow$D,K$\\rightarrow$D依次轮换)在不同方法下的性能   @article{ruder2017knowledge, title={Knowledge adaptation: Teaching to adapt}, author={Ruder, Sebastian and Ghaffari, Parsa and Breslin, John G}, journal={arXiv preprint arXiv:1702.02052}, pages = {}, year={2017} }   Deep Model Compression: Distilling Knowledge from Noisy Teachers. Sau, Bharat Bhusan et al. arXiv:1610.09650 https://arxiv.org/pdf/1610.09650.pdf\n  在teacher的输出(student的目标)上加扰动, 等价于基于噪声的正则化. 可用于模型压缩. 实验设置: 基于MNIST, SVHN, CIFAR-10.  MNIST: teacher – a modified network of LeNet([C5(S1P0)@20-MP2(S2)]- [C5(S1P0)@50-MP2(S2)]- FC500- FC10); student – FC800-FC800-FC10 SVHN: Network-in-Network([C5(S1P2)@192]- [C1(S1P0)@160]- [C1(S1P0)@96-MP3(S2)]- D0.5- [C5(S1P2)@192]- [C1(S1P0)@192]- [C1(S1P0)@192- AP3(S2)]- D0.5- [C3(S1P1)@192]- [C1(S1P0)@192]- [C1(S1P0)@10]- AP8(S1)); student: LeNet([C5(S1P2)@32-MP3(S2)]- [C5(S1P2)@64-MP3(S2)]- FC1024-FC10) CIFAR-10: teacher: same as SVHN; student: a modified version of the LeNet([C5(S1P2)@64-MP2(S2)]- [C5(S1P2)@128- MP2(S2)]-FC1024-FC10).   @article{sau2016deep, title={Deep model compression: Distilling knowledge from noisy teachers}, author={Sau, Bharat Bhusan and Balasubramanian, Vineeth N}, journal={CoRR}, pages = {}, year={2016} }   Mean teachers are better role models: Weight-averaged consistency targets improve semi-supervised deep learning results. Tarvainen, Antti and Valpola, Harri. NeurIPS 2017 https://papers.nips.cc/paper/2017/file/68053af2923e00204c3ca7c6a3150cf7-Paper.pdf\n  算法:  构建一个普通的监督模型; copy一份监督学习模型, 原模型叫做student, 新的叫teacher; 每步使用同样的minibatch输入到student与teacher模型中, 但在输入数据前分别加入随机增强或者噪音; 加入student与teacher输出的一致性损失函数; 优化器只更新student的权重; 每步之后, 采用student权重的EMA更新teacher权重;   核心思想是: 模型既充当学生, 又充当老师. 作为老师, 用来产生学生学习时的目标; 作为学生, 则利用教师模型产生的目标来进行学习. 而教师模型的参数是由历史上(前几个step)几个学生模型的参数经过加权平均得到. 可以看成是П-model中的两次计算中模型换成了两个不同的模型, 一个叫teacher, 一个叫student; 另外, 也可以看成作Temporal ensembling的改进版, 在Temporal ensembling中, 采用的是每epoch的指数移动平均值来聚合历史数内容, 而Mean teacher则是在每训练步进行对Student的权重进指数移动平均. 实验设置: 基于SVHN和CIFAR-10  All the methods in the comparison use a similar 13-layer ConvNet architecture.   @inproceedings{10.5555/3294771.3294885, title = {Mean Teachers Are Better Role Models: Weight-Averaged Consistency Targets Improve Semi-Supervised Deep Learning Results}, author = {Tarvainen, Antti and Valpola, Harri}, booktitle = {Proceedings of the 31st International Conference on Neural Information Processing Systems}, pages = {1195–1204}, year = {2017} }   Born-Again Neural Networks. Furlanello, Tommaso et al. ICML 2018 https://proceedings.mlr.press/v80/furlanello18a/furlanello18a.pdf\n  基于新模型的输入和原模型的输入间的交叉熵, 使用KD项修改替代和正则化原来的loss Selves Born-Again Networks集成的学习顺序: $\\mathcal{L}(f(x, \\arg\\min_{\\theta_{k-1}}\\mathcal{L}(f(x, \\theta_{k-1}))),f(x,\\theta_k))$, 将上一个student学到的知识作为监督信息, 教导下一个学生. 实验设置:  CIFAR-10: Wide-ResNet with different depth and width (28-1, 28-2, 28-5, 28-10) and DenseNet of different depth and growth factor (112-33, 90-60, 80-80, 80-120) CIFAR-100: 与上同.   @inproceedings{Furlanello2018BornAN, title={Born Again Neural Networks}, author={Tommaso Furlanello and ZaKnowledge Adaptation: Teaching to Adaptchary Chase Lipton and Michael Tschannen and Laurent Itti and Anima Anandkumar}, booktitle={ICML}, year={2018} }   Deep Mutual Learning. Zhang, Ying et al. CVPR 2018 https://openaccess.thecvf.com/content_cvpr_2018/papers/Zhang_Deep_Mutual_Learning_CVPR_2018_paper.pdf\n  两个(多个?)students相互学习, 对于每个student, 损失为和groundtruth的交叉熵以及相对于另一个student的softmax输出的KL散度: $\\mathcal{L}{\\theta_1} = \\mathcal{L}{C_1} + D_{KL}(p_2|p_1), \\theta_1\\leftarrow\\theta_1+\\gamma_t\\dfrac{\\partial\\mathcal{\\theta_1}}{\\partial\\theta_1}$; $\\mathcal{L}{\\theta_2} = \\mathcal{L}{C_2} + D_{KL}(p_1|p_2), \\theta_2\\leftarrow\\theta_2+\\gamma_t\\dfrac{\\partial\\mathcal{\\theta_2}}{\\partial\\theta_2}$ 优点:  随着学生网络的增加其效率也得到提高 它可以应用在各种各样的网络中, 包括大小不同的网络 即使是非常大的网络采用相互学习策略, 其性能也能够得到提升   实验设置:  数据集: ImageNet, CIFAR-10, CIFAR-100, Market-1501 Networks:    ResNet-32 MobileNet InceptionV1 WRN-28-10     0.5M 3.3M 7.8M 36.5M       @inproceedings{8578552, title = {Deep Mutual Learning}, author = {Y. Zhang and T. Xiang and T. M. Hospedales and H. Lu}, booktitle = {2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, pages = {4320-4328}, year = {2018} }   Data Distillation: Towards Omni-Supervised Learning. Radosavovic, Ilija et al. CVPR 2018 https://openaccess.thecvf.com/content_cvpr_2018/papers/Radosavovic_Data_Distillation_Towards_CVPR_2018_paper.pdf\n  Model Distillation vs. Data Distillation: 前者ensemble同一样本在不同模型的输出, 后者ensemble同一样本经不同转换后在同一模型的输出. 方法:  用手动标注的数据训练模型A 用模型A去训练数据增广 (本文中为 scaling and horizontal flipping) 的未标注数据 将未标注数据的预测结果通过 ensembling 多个预测结果, 转化为 labels 在手动标注和自动标注的数据集重新训练模型   实验: 在COCO Keypoint Detection, Object Detection 验证. teacher和student都是Mask R-CNN keypoint detection variant @inproceedings{inproceedings, title = {Data Distillation: Towards Omni-Supervised Learning}, author = {Radosavovic, Ilija and Dollar, Piotr and Girshick, Ross and Gkioxari, Georgia and He, Kaiming}, year = {2018}, doi = {10.1109/CVPR.2018.00433} pages = {4119-4128} }   Multilingual Neural Machine Translation with Knowledge Distillation. ICLR 2019 https://openreview.net/pdf?id=S1gUsoR9YX\n  方法很简单, 就是先针对每对语言训练单独的翻译模型作为teacher, 再用multi-teacher KD训练student, loss就是student和label的交叉熵以及和teacher的softmax输出的交叉熵. 实验设置: 数据集: IWSLT, WMT, Ted Talk; student和teacher均使用Transformer    Task model hidden size $d_{model}$ feed-forward hidden size $d_{ff}$ number of layer     IWSLT and Ted talk tasks 256 1024 2   WMT task 512 2048 6     @article{Tan2019MultilingualNM, title={Multilingual Neural Machine Translation with Knowledge Distillation}, author={Xu Tan and Yi Ren and Di He and Tao Qin and Zhou Zhao and Tie-Yan Liu}, journal={ICLR}, year={2019}, volume={abs/1902.10461} }   Unifying Heterogeneous Classifiers with Distillation. Vongkulbhisal et al. CVPR 2019 https://openaccess.thecvf.com/content_CVPR_2019/papers/Vongkulbhisal_Unifying_Heterogeneous_Classifiers_With_Distillation_CVPR_2019_paper.pdf\n  N个不同的模型$\\mathcal{C} = {C_i}_{i=1}^N$具有不同的结构和目标类别, $C_i$被训练以分别预测$p_i(Y=l_j)$, 并整合出样本在所有类中的概率$q(Y=i_j)$. 最后利用$q$训练student. 作者提出了基于交叉熵最小化和矩阵分解的方法，从未标记的样本中估计所有类别的soft-labels. 实验设置:  数据集: ImageNet, LSUN, Places365 $C_i$从AlexNet, VGG16, ResNet18, ResNet34中随机选择   @article{Vongkulbhisal2019UnifyingHC, title={Unifying Heterogeneous Classifiers With Distillation}, author={Jayakorn Vongkulbhisal and Phongtharin Vinayavekhin and Marco Visentini Scarzanella}, journal={2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, year={2019}, pages={3170-3179} }   Distilled Person Re-Identification: Towards a More Scalable System. Wu, Ancong et al. CVPR 2019 https://openaccess.thecvf.com/content_CVPR_2019/papers/Wu_Distilled_Person_Re-Identification_Towards_a_More_Scalable_System_CVPR_2019_paper.pdf\n  解决三个问题: 降低标签成本(减少标签的需求量); 降低跨数据库成本(利用一些先验知识); 降低测试成本(使用轻量级网络) 假设taregt domain包含10个类的图片, 先用多个个source domain分别训练多个teacher model, source domain之后并不会被用到(利用一些先验知识–降低跨数据库成本); target domain可以只包含10个labelled sample(10类均有), 其余均为unlabeled sample, 对于N个unlabelled input, 定义相似度矩阵$A$, 其中第i行第j列表示第i个图像和第j个图像在同一个模型下输出的相似度. 为了将知识从teacher迁移到student, 需要最小化teacher的相似度矩阵$A_T$和student的相似度矩阵$A_S$的距离(这句话是学习single teacher). 分别利用teacher计算target domain中每一个x的特征向量, 并分别计算相似度矩阵$A$, 使用$L_{ver}$更新每一个老师模型的权重$a$(可以理解为，权重越大，该老师模型对应的source和target越相似) 计算出每一个老师模型和学生模型得到的相似矩阵的差异，并使用上述的权重加权，从而得到$L_{ta}$. 使用$L_{ta}$对学生模型进行更新, 循环训练. 实验设置: 数据集 – Market-1501, DukeMTMC. 分别使用MSMT17, CUHK03, ViPER, DukeMTMC, Market-1501训练5个teacher model$T_1, T_2, T_3, T_4, T_5$; teacher – an advanced Re-ID model PCB, student – a lightweight mod- el MobileNetV2. @InProceedings{Wu_2019_CVPR, author = {Wu, Ancong and Zheng, Wei-Shi and Guo, Xiaowei and Lai, Jian-Huang}, title = {Distilled Person Re-Identification: Towards a More Scalable System}, booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, month = {June}, year = {2019} }   Diversity with Cooperation: Ensemble Methods for Few-Shot Classification. Dvornik, Nikita et al. ICCV 2019 https://openaccess.thecvf.com/content_ICCV_2019/papers/Dvornik_Diversity_With_Cooperation_Ensemble_Methods_for_Few-Shot_Classification_ICCV_2019_paper.pdf\n  meta learning – learning to learn 模型间的关系有三种 - 合作(预测的结果无论是属于正确结果的概率还是属于错误结果的概率都是比较一致的), 独立(两个模型预测的结果之间不存在明显的关系), 多样性(除了正确结果，预测为其他结果的概率差异明显). 文章通过出了交叉熵损失外设计不同的损失函数$\\psi(y_i,f_{\\theta_j}(x_i),f_{\\theta_l}(x_i))$诱导模型的关系向不同方向发展, 例如基于cos或KL散度. 实验设置:  数据集: mini-ImageNet, tiered-ImageNet, Caltech-UCSD Birds (CUB) 2002011. ensemble of ResNet18 and WideResNet28   @INPROCEEDINGS{9010380, title={Diversity With Cooperation: Ensemble Methods for Few-Shot Classification},author={Dvornik, Nikita and Mairal, Julien and Schmid, Cordelia}, booktitle={2019 IEEE/CVF International Conference on Computer Vision (ICCV)}, pages={3722-3730},\nyear={2019} }   Model Compression with Two-stage Multi-teacher Knowledge Distillation for Web Question Answering System. Yang, Ze et al. WSDM 2020 https://arxiv.org/pdf/1910.08381.pdf\n  一种用于网络问答系统的两阶段多教师知识蒸馏(简称 TMKD)方法, 首先用一个通用的问答提炼任务对student进行预训练(貌似也是使用Multi-teacher), 并在下游任务(如 Web Q\u0026A 任务, MNLI, SNLI, 来自 GLUE 的 RTE 任务)上使用Multi-Teacher KD进一步微调这个预训练的student. “early calibration” effect缓解了单个teacher造成的过拟合偏差. 实验设置:  数据集 - DeepQA, CommQA-Unlabeled, CommQA-Labeled, MNLI, SNLI, QNLI, RTE. Baseline: teacher - BERT-3, BERT_{large}, BERT_{large}Ensemble; student(Traditional Distillation Model) - Bi-LSTM(1-o-1, 1_{avg}-o-1, m-o-m), BERT3(1-o-1, 1_{avg}-o-1, m-o-m), student(TMKD) - Bi-LSTM(TMKD), TMKD_{base}, TMKD_{large}(后两者都是BERT-3 models).   @inproceedings{inproceedings, author = {Ze, Yang and Shou, Linjun and Gong, Ming and Lin, Wutao and Jiang, Daxin}, title = {Model Compression with Two-stage Multi-teacher Knowledge Distillation for Web Question Answering System}, publisher = {Association for Computing Machinery}, doi = {10.1145/3336191.3371792}， pages = {690-698}, year = {2020} }   FEED: Feature-level Ensemble for Knowledge Distillation. Park, SeongUk and Kwak, Nojun. AAAI 2020 https://openreview.net/pdf?id=BJxYEsAqY7\n  实验方法就是让student直接学teacher的feature. 实验设置: 数据集: CIFAR-100; 选取模型: student – ResNet-56, ResNet-110, WRN28-10, ResNext29-16x64d; 没说teacher是谁. @article{Park2019FEEDFE, title={FEED: Feature-level Ensemble for Knowledge Distillation}, author={Seonguk Park and Nojun Kwak}, journal={ECAI}, year={2019}, volume={abs/1909.10754} }   Stochasticity and Skip Connection Improve Knowledge Transfer. Lee, Kwangjin et al. ICLR 2020 https://openreview.net/pdf?id=HklA93NYwS\n  利用单个教师网络生成多个教师网络(加入stochastic blocks和skip connections)并训练学生网络, 分块并含有skip connections的网络可以看成树状网络, 从input到output有多条路径. 实验设置: 数据集 – CIFAR-100 和 tiny imagenet, 并将这种方法应用到KD, AT(attention tranfer), ML. 实验中涉及到的teacher有ResNet 32, ResNet 110, WRN 28-10, MobileNet, WRN 40-4; 涉及到的student有VGG 13, ResNet 20, ResNet 32, WRN 40-4. @INPROCEEDINGS{9287227, author={Nguyen, Luong Trung and Lee, Kwangjin and Shim, Byonghyo}, title={Stochasticity and Skip Connection Improve Knowledge Transfer}, booktitle={2020 28th European Signal Processing Conference (EUSIPCO)}, pages={1537-1541}, year={2021} }   Hydra: Preserving Ensemble Diversity for Model Distillation. Tran, Linh et al. arXiv:2001.04694 http://www.gatsby.ucl.ac.uk/~balaji/udl2020/accepted-papers/UDL2020-paper-026.pdf\n  普通multi-teacher KD对teacher的预测值取平均, 这样会丧失多teacher结果包含的不确定性信息(?), 本文将student拆分成body和多个head, 每个head对应一个teacher, 以保留多teacher输出的多样性 假设有M个teacher, 首先训练一个head直至其收敛至teacher的平均, 再添加其他M-1个head, M个head一起训练, 实验证明如果没有第一个head会很难收敛. 作者定义了一个模型不确定性, 由数据不确定性和总不确定性组成(我不理解为什么是这个顺序). 实验设置:  数据集: a spiral toy dataset(用于可视化并解释模型不确定性), MNIST(测试时用了它的测试集和Fashion-MNIST), CIFAR-10(测试时用了它的测试集, cyclic translated test set, 80 different corrupted test sets 和 SVHN). 模型: toy dataset - 两层MLP, 每层100个结点; MNIST - MLP; CIFAR-10 - ResNet-20 V1. 在回归问题中, 所有数据集均使用MLP.   @article{DBLP:journals/corr/abs-2001-04694, author = {Linh Tran, Bastiaan S. Veeling, Kevin Roth, Jakub Swiatkowski, Joshua V. Dillon, Jasper Snoek, Stephan Mandt, Tim Salimans, Sebastian Nowozin, Rodolphe Jenatton}, title = {Hydra: Preserving Ensemble Diversity for Model Distillation}, journal = {CoRR}, year = {2020} }   Distilling Knowledge from Ensembles of Acoustic Models for Joint CTC-Attention End-to-End Speech Recognition. Gao, Yan et al. arXiv:2005.09310 https://arxiv.org/pdf/2005.09310v1.pdf\n  @article{DBLP:journals/corr/abs-2005-09310, author = {Yan Gao, Titouan Parcollet, Nicholas D. Lane}, title = {Distilling Knowledge from Ensembles of Acoustic Models for Joint CTC-Attention End-to-End Speech Recognition}, journal = {CoRR}, year = {2020} }   Temporal Self-Ensembling Teacher for Semi-Supervised Object Detection. Chen, Cong et al. IEEE 2020 [code]\n  Dual-Teacher: Integrating Intra-domain and Inter-domain Teachers for Annotation-efficient Cardiac Segmentation. MICCAI 2020\n  Knowledge Distillation for Multi-task Learning. Li, WeiHong \u0026 Bilen, Hakan. arXiv:2007.06889 [project]\n  Adaptive Multi-Teacher Multi-level Knowledge Distillation. Liu, Yuang et al. Neurocomputing 2020 [code] https://arxiv.org/pdf/2103.04062.pdf\n  loss: $\\mathcal{L} = \\mathcal{L}{KD}+\\alpha\\mathcal{L}{angle}+\\beta\\mathcal{L}_{HT}$  $\\mathcal{L}{KD}$: 对于每个样本, student需要赋予teachers的输出不同的权重, student中fc之前的表示经过maxpooling后和每个teacherfc前的表示分别做点积作为权重, teacher的加权和作为weighted target, 将weighted target与student的soft-target间的KL散度和student输出与groungtruth的交叉熵作为$\\mathcal{L}{KD}$. $\\mathcal{L}{angle}$: 对于样本组成的三元组, 计算它们的teacher和student表示的空间相对位置, 计算二者的Huber loss作为$\\mathcal{L}{angle}$. $\\mathcal{L}_{HT}$: 计算teacher和student中间层表示的差的二范式, student的中间层需要经过一个单层FitNet使其规模等于teacher的中间层表示.   实验设置: 数据集有CIFAR-10, CIFAR-100和Tiny-ImageNet.  CIFAR-10, CIFAR-100: teacher使用ResNet110, VGG-19, DenseNet121, student为ResNet20; 比较不同baseline (OKD, FitNet, RKD, AvgMKD, DML) 在数据集上的表现; 比较不同baseline(OKD, AvgMKD, DML)在teacher数量为2,3,5时的表现. Tiny-ImageNet: teacher(ResNet110, ResNet56, ResNet32), student - ResNet20.   @article{LIU2020106, author={Yuang Liu and W. Zhang and Jijie Wang}, title = {Adaptive multi-teacher multi-level knowledge distillation}, journal = {Neurocomputing}, pages = {106-113}, year = {2020} }  ",
+  "wordCount" : "6020",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Michelia-zhx"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://michelia-zhx.github.io/posts/2022-02-23-multi_teacher_knowledge_distillation-1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Michelia's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://michelia-zhx.github.io/img/Cheese.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://michelia-zhx.github.io" accesskey="h" title="Michelia&#39;s Blog (Alt + H)">Michelia&#39;s Blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://michelia-zhx.github.io/" title="🏠Home">
+                    <span>🏠Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/posts" title="📖Posts">
+                    <span>📖Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/archives/" title="⏱Archives">
+                    <span>⏱Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/tags" title="🔖Tags">
+                    <span>🔖Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/about" title="👧🏻About">
+                    <span>👧🏻About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/search" title="🔍Search (Alt &#43; /)" accesskey=/>
+                    <span>🔍Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://michelia-zhx.github.io">Home</a>&nbsp;»&nbsp;<a href="https://michelia-zhx.github.io/posts/">Posts</a></div>
+    <h1 class="post-title">
+      Paper Notes - Multi-Teacher Knowledge Distillation - 1
+    </h1>
+    <div class="post-description">
+      My first blog
+    </div>
+    <div class="post-meta">13 min&nbsp;·&nbsp;Michelia-zhx
+
+</div>
+  </header> 
+
+  <div class="post-content"><blockquote>
+<p>Learning from Multiple Teacher Networks <a href="http://library.usc.edu.ph/ACM/KKD%202017/pdfs/p1285.pdf">http://library.usc.edu.ph/ACM/KKD%202017/pdfs/p1285.pdf</a></p>
+</blockquote>
+<ul>
+<li>loss:
+<ul>
+<li>teachers的softmax输出取平均和student的交叉熵</li>
+<li>中间层表示的相对相异度(仅适用于MTKD), 三元组$(q_i,q_i^+,q_i^-)$, 其中$q$是中间层的输出, 偏序关系$q_i^+ &gt; q_i^-$由两者和$q_i$的距离$d$决定, 参数$w_s$决定选取哪些层. 在不同teacher中, 中间层输出的偏序关系可能不同, 因此用投票法决定中间层输出应当的偏序关系, 设计和student对应层输出的loss, 以此鼓励student拥有和teacher中间层类似的相对相似(相异)关系.</li>
+<li>student和groudtruth的交叉熵</li>
+</ul>
+</li>
+<li>实验设置: 基于CIFAR-10, CIFAR-100, MNIST, SVHN的实验
+<ul>
+<li>CIFAR-10, 比较student不同层数和参数量(11/250K, 11/862K, 13/1.6M, 19/2.5M)时的表现(compression rate, acceleration rate and classification accuracy)(和Fitnets比较)</li>
+<li>CIFAR-10, student均为11层, 比较当student的参数为250K和862K时, teacher数量为1, 3, 5时, Teacher, RDL, FitNets, KD和他们的准确率</li>
+<li>CIFAR-10, CIFAR-100, 比较不同方法(Teacher(5层), FitNets, KD, Maxout Networks, Network in Network, Deeply-Supervised Networks和此方法(19层))在两个数据集上的准确率</li>
+<li>MNIST, 比较不同方法(Teacher(4层), FitNets, KD, Maxout Networks, Network in Network, Deeply-Supervised Networks和此方法(7层))的准确率</li>
+<li>SVHN, 比较不同方法(Teacher(5层), FitNets, KD, Maxout Networks, Network in Network, Deeply-Supervised Networks和此方法(19层))的准确率</li>
+</ul>
+</li>
+<li>@inproceedings{you2017learning,
+author={You, Shan and Xu, Chang and Xu, Chao and Tao, Dacheng},
+booktitle={Proceedings of the 23rd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
+title={Learning from multiple teacher networks},
+pages={1285&ndash;1294},
+year={2017}
+}</li>
+</ul>
+<blockquote>
+<p>Semi-Supervised Knowledge Transfer for Deep Learning from Private Training Data. ICLR 2017 <a href="https://openreview.net/pdf?id=HkwoSDPgg">https://openreview.net/pdf?id=HkwoSDPgg</a></p>
+</blockquote>
+<ul>
+<li>学习算法应当保护用户私人数据, 但模型会记住数据, 也会受到攻击(black/white box attack).</li>
+<li>将样本分成n份, 分别训练teacher model, 将这些teachers聚合:
+<ul>
+<li>如果大多数teacher有相同的输出, 则输出不依赖于分别训练teacher的不相交集</li>
+<li>如果有某两类票数相近, 则分歧可能会泄露私人信息(我不理解)</li>
+<li>在投票中引入随机噪声</li>
+</ul>
+</li>
+<li>student是半监督, 一部分是利用private data通过teacher得到的label, 之后使用无标记的public data. 利用GAN训练student, discriminator增加1类(m+由生成器生成), 训练后只使用discriminator.</li>
+<li>实验设置:
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Teacher</th>
+<th>Student</th>
+<th>Student Public Data</th>
+<th>testing Data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MNIST</td>
+<td>2 conv + 1 relu</td>
+<td>GANS(6 fc layers)</td>
+<td>test[:1000]</td>
+<td>test[1000:]</td>
+</tr>
+<tr>
+<td>SVHN</td>
+<td>2 conv + 2 relu</td>
+<td>GANS(7 conv + 2 NIN)</td>
+<td>test[:1000]</td>
+<td>test[1000:]</td>
+</tr>
+<tr>
+<td>UCI Adult</td>
+<td>RF(100 trees)</td>
+<td>RF(100 trees)</td>
+<td>test[:500]</td>
+<td>test[500:]</td>
+</tr>
+<tr>
+<td>UCI Diabetes</td>
+<td>RF(100 trees)</td>
+<td>RF(100 trees)</td>
+<td>test[:500]</td>
+<td>test[500:]</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>@article{Papernot2017SemisupervisedKT,
+title={Semi-supervised Knowledge Transfer for Deep Learning from Private Training Data},
+author={Nicolas Papernot and Mart{'i}n Abadi and {'U}lfar Erlingsson and Ian J. Goodfellow and Kunal Talwar},
+journal={arXiv preprint},
+pages = {},
+year={2016}
+}</li>
+</ul>
+<blockquote>
+<p>Knowledge Adaptation: Teaching to Adapt. ICLR, 2017 <a href="https://openreview.net/pdf?id=rJRhzzKxl">https://openreview.net/pdf?id=rJRhzzKxl</a></p>
+</blockquote>
+<ul>
+<li>teachers的domain和student $\mathcal{D}<em>{T_i}, \mathcal{D}<em>S$不完全一致, 因此student对teacher的信任度取决于两者表示空间的相似度 $\mathcal{L} = \mathcal{H}(\sum</em>{i=1}sim(\mathcal{D}</em>{T_i}, \mathcal{D}<em>S)\cdot D</em>{T_i}, D_S)$</li>
+<li>定义MCD, MCD越大表示越远离分类边界, 输入teacher得到的结果置信度越高. 因此选取MCD最大(即置信度最高)的n个样本, 在teacher中得到的结果作为伪标记以训练student可以使无监督学习的性能得到提升.</li>
+<li>实验设置: 基于Amazon product reviews sentiment analysis dataset. 包含Book, DVD, Electronics, Kitchen四类.
+<ul>
+<li>比较teacher, 由以相同类别样本训练的teacher训练出来的student, 由以所有样本训练的teacher训练出来的student, 结合以上两种teacher训练出来的student, 以及许多其他模型(SCL, SFA, SCL-com, SFA-com, SST, IDDIWP, DWHC, DAM, CP-MDA, SDAMS-SVM, SDAMS-Log)在四种类别上的性能.</li>
+<li>比较分别以其中三类为domain的teacher训练以第四类为domain的student(B$\rightarrow$D,E$\rightarrow$D,K$\rightarrow$D依次轮换)在不同方法下的性能</li>
+</ul>
+</li>
+<li>@article{ruder2017knowledge,
+title={Knowledge adaptation: Teaching to adapt},
+author={Ruder, Sebastian and Ghaffari, Parsa and Breslin, John G},
+journal={arXiv preprint arXiv:1702.02052},
+pages = {},
+year={2017}
+}</li>
+</ul>
+<blockquote>
+<p>Deep Model Compression: Distilling Knowledge from Noisy Teachers. Sau, Bharat Bhusan et al. arXiv:1610.09650 <a href="https://arxiv.org/pdf/1610.09650.pdf">https://arxiv.org/pdf/1610.09650.pdf</a></p>
+</blockquote>
+<ul>
+<li>在teacher的输出(student的目标)上加扰动, 等价于基于噪声的正则化. 可用于模型压缩.</li>
+<li>实验设置: 基于MNIST, SVHN, CIFAR-10.
+<ul>
+<li>MNIST: teacher &ndash; a modified network of LeNet([C5(S1P0)@20-MP2(S2)]- [C5(S1P0)@50-MP2(S2)]- FC500- FC10); student &ndash; FC800-FC800-FC10</li>
+<li>SVHN: Network-in-Network([C5(S1P2)@192]- [C1(S1P0)@160]- [C1(S1P0)@96-MP3(S2)]- D0.5- [C5(S1P2)@192]- [C1(S1P0)@192]- [C1(S1P0)@192- AP3(S2)]- D0.5- [C3(S1P1)@192]- [C1(S1P0)@192]- [C1(S1P0)@10]- AP8(S1)); student: LeNet([C5(S1P2)@32-MP3(S2)]- [C5(S1P2)@64-MP3(S2)]- FC1024-FC10)</li>
+<li>CIFAR-10: teacher: same as SVHN; student: a modified version of the LeNet([C5(S1P2)@64-MP2(S2)]- [C5(S1P2)@128- MP2(S2)]-FC1024-FC10).</li>
+</ul>
+</li>
+<li>@article{sau2016deep,
+title={Deep model compression: Distilling knowledge from noisy teachers},
+author={Sau, Bharat Bhusan and Balasubramanian, Vineeth N},
+journal={CoRR},
+pages = {},
+year={2016}
+}</li>
+</ul>
+<blockquote>
+<p>Mean teachers are better role models: Weight-averaged consistency targets improve semi-supervised deep learning results. Tarvainen, Antti and Valpola, Harri. NeurIPS 2017 <a href="https://papers.nips.cc/paper/2017/file/68053af2923e00204c3ca7c6a3150cf7-Paper.pdf">https://papers.nips.cc/paper/2017/file/68053af2923e00204c3ca7c6a3150cf7-Paper.pdf</a></p>
+</blockquote>
+<ul>
+<li>算法:
+<ul>
+<li>构建一个普通的监督模型;</li>
+<li>copy一份监督学习模型, 原模型叫做student, 新的叫teacher;</li>
+<li>每步使用同样的minibatch输入到student与teacher模型中, 但在输入数据前分别加入随机增强或者噪音;</li>
+<li>加入student与teacher输出的一致性损失函数;</li>
+<li>优化器只更新student的权重;</li>
+<li>每步之后, 采用student权重的EMA更新teacher权重;</li>
+</ul>
+</li>
+<li>核心思想是: 模型既充当学生, 又充当老师. 作为老师, 用来产生学生学习时的目标; 作为学生, 则利用教师模型产生的目标来进行学习. 而教师模型的参数是由历史上(前几个step)几个学生模型的参数经过加权平均得到.</li>
+<li>可以看成是П-model中的两次计算中模型换成了两个不同的模型, 一个叫teacher, 一个叫student; 另外, 也可以看成作Temporal ensembling的改进版, 在Temporal ensembling中, 采用的是每epoch的指数移动平均值来聚合历史数内容, 而Mean teacher则是在每训练步进行对Student的权重进指数移动平均.</li>
+<li>实验设置: 基于SVHN和CIFAR-10
+<ul>
+<li>All the methods in the comparison use a similar 13-layer ConvNet architecture.</li>
+</ul>
+</li>
+<li>@inproceedings{10.5555/3294771.3294885,
+title = {Mean Teachers Are Better Role Models: Weight-Averaged Consistency Targets Improve Semi-Supervised Deep Learning Results},
+author = {Tarvainen, Antti and Valpola, Harri},
+booktitle = {Proceedings of the 31st International Conference on Neural Information Processing Systems},
+pages = {1195–1204},
+year = {2017}
+}</li>
+</ul>
+<blockquote>
+<p>Born-Again Neural Networks. Furlanello, Tommaso et al. ICML 2018 <a href="https://proceedings.mlr.press/v80/furlanello18a/furlanello18a.pdf">https://proceedings.mlr.press/v80/furlanello18a/furlanello18a.pdf</a></p>
+</blockquote>
+<ul>
+<li>基于新模型的输入和原模型的输入间的交叉熵, 使用KD项修改替代和正则化原来的loss</li>
+<li>Selves Born-Again Networks集成的学习顺序: $\mathcal{L}(f(x, \arg\min_{\theta_{k-1}}\mathcal{L}(f(x, \theta_{k-1}))),f(x,\theta_k))$, 将上一个student学到的知识作为监督信息, 教导下一个学生.</li>
+<li>实验设置:
+<ul>
+<li>CIFAR-10: Wide-ResNet with different depth and width (28-1, 28-2, 28-5, 28-10) and DenseNet of different depth and growth factor (112-33, 90-60, 80-80, 80-120)</li>
+<li>CIFAR-100: 与上同.</li>
+</ul>
+</li>
+<li>@inproceedings{Furlanello2018BornAN,
+title={Born Again Neural Networks},
+author={Tommaso Furlanello and ZaKnowledge Adaptation: Teaching to Adaptchary Chase Lipton and Michael Tschannen and Laurent Itti and Anima Anandkumar},
+booktitle={ICML},
+year={2018}
+}</li>
+</ul>
+<blockquote>
+<p>Deep Mutual Learning. Zhang, Ying et al. CVPR 2018 <a href="https://openaccess.thecvf.com/content_cvpr_2018/papers/Zhang_Deep_Mutual_Learning_CVPR_2018_paper.pdf">https://openaccess.thecvf.com/content_cvpr_2018/papers/Zhang_Deep_Mutual_Learning_CVPR_2018_paper.pdf</a></p>
+</blockquote>
+<ul>
+<li>两个(多个?)students相互学习, 对于每个student, 损失为和groundtruth的交叉熵以及相对于另一个student的softmax输出的KL散度: $\mathcal{L}<em>{\theta_1} = \mathcal{L}</em>{C_1} + D_{KL}(p_2|p_1), \theta_1\leftarrow\theta_1+\gamma_t\dfrac{\partial\mathcal{\theta_1}}{\partial\theta_1}$; $\mathcal{L}<em>{\theta_2} = \mathcal{L}</em>{C_2} + D_{KL}(p_1|p_2), \theta_2\leftarrow\theta_2+\gamma_t\dfrac{\partial\mathcal{\theta_2}}{\partial\theta_2}$</li>
+<li>优点:
+<ul>
+<li>随着学生网络的增加其效率也得到提高</li>
+<li>它可以应用在各种各样的网络中, 包括大小不同的网络</li>
+<li>即使是非常大的网络采用相互学习策略, 其性能也能够得到提升</li>
+</ul>
+</li>
+<li>实验设置:
+<ul>
+<li>数据集: ImageNet, CIFAR-10, CIFAR-100, Market-1501</li>
+<li>Networks:
+<table>
+<thead>
+<tr>
+<th>ResNet-32</th>
+<th>MobileNet</th>
+<th>InceptionV1</th>
+<th>WRN-28-10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.5M</td>
+<td>3.3M</td>
+<td>7.8M</td>
+<td>36.5M</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+<li>@inproceedings{8578552,
+title = {Deep Mutual Learning},
+author = {Y. Zhang and T. Xiang and T. M. Hospedales and H. Lu},
+booktitle = {2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+pages = {4320-4328},
+year = {2018}
+}</li>
+</ul>
+<blockquote>
+<p>Data Distillation: Towards Omni-Supervised Learning. Radosavovic, Ilija et al. CVPR 2018 <a href="https://openaccess.thecvf.com/content_cvpr_2018/papers/Radosavovic_Data_Distillation_Towards_CVPR_2018_paper.pdf">https://openaccess.thecvf.com/content_cvpr_2018/papers/Radosavovic_Data_Distillation_Towards_CVPR_2018_paper.pdf</a></p>
+</blockquote>
+<ul>
+<li>Model Distillation vs. Data Distillation: 前者ensemble同一样本在不同模型的输出, 后者ensemble同一样本经不同转换后在同一模型的输出.</li>
+<li>方法:
+<ul>
+<li>用手动标注的数据训练模型A</li>
+<li>用模型A去训练数据增广 (本文中为 scaling and horizontal flipping) 的未标注数据</li>
+<li>将未标注数据的预测结果通过 ensembling 多个预测结果, 转化为 labels</li>
+<li>在手动标注和自动标注的数据集重新训练模型</li>
+</ul>
+</li>
+<li>实验: 在COCO Keypoint Detection, Object Detection 验证. teacher和student都是Mask R-CNN keypoint detection variant</li>
+<li>@inproceedings{inproceedings,
+title = {Data Distillation: Towards Omni-Supervised Learning},
+author = {Radosavovic, Ilija and Dollar, Piotr and Girshick, Ross and Gkioxari, Georgia and He, Kaiming},
+year = {2018},
+doi = {10.1109/CVPR.2018.00433}
+pages = {4119-4128}
+}</li>
+</ul>
+<blockquote>
+<p>Multilingual Neural Machine Translation with Knowledge Distillation. ICLR 2019 <a href="https://openreview.net/pdf?id=S1gUsoR9YX">https://openreview.net/pdf?id=S1gUsoR9YX</a></p>
+</blockquote>
+<ul>
+<li>方法很简单, 就是先针对每对语言训练单独的翻译模型作为teacher, 再用multi-teacher KD训练student, loss就是student和label的交叉熵以及和teacher的softmax输出的交叉熵.</li>
+<li>实验设置: 数据集: IWSLT, WMT, Ted Talk; student和teacher均使用Transformer
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>model hidden size $d_{model}$</th>
+<th>feed-forward hidden size $d_{ff}$</th>
+<th>number of layer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IWSLT and Ted talk tasks</td>
+<td>256</td>
+<td>1024</td>
+<td>2</td>
+</tr>
+<tr>
+<td>WMT task</td>
+<td>512</td>
+<td>2048</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>@article{Tan2019MultilingualNM,
+title={Multilingual Neural Machine Translation with Knowledge Distillation},
+author={Xu Tan and Yi Ren and Di He and Tao Qin and Zhou Zhao and Tie-Yan Liu},
+journal={ICLR},
+year={2019},
+volume={abs/1902.10461}
+}</li>
+</ul>
+<blockquote>
+<p>Unifying Heterogeneous Classifiers with Distillation. Vongkulbhisal et al. CVPR 2019 <a href="https://openaccess.thecvf.com/content_CVPR_2019/papers/Vongkulbhisal_Unifying_Heterogeneous_Classifiers_With_Distillation_CVPR_2019_paper.pdf">https://openaccess.thecvf.com/content_CVPR_2019/papers/Vongkulbhisal_Unifying_Heterogeneous_Classifiers_With_Distillation_CVPR_2019_paper.pdf</a></p>
+</blockquote>
+<ul>
+<li>N个不同的模型$\mathcal{C} = {C_i}_{i=1}^N$具有不同的结构和目标类别, $C_i$被训练以分别预测$p_i(Y=l_j)$, 并整合出样本在所有类中的概率$q(Y=i_j)$. 最后利用$q$训练student.</li>
+<li>作者提出了基于交叉熵最小化和矩阵分解的方法，从未标记的样本中估计所有类别的soft-labels.</li>
+<li>实验设置:
+<ul>
+<li>数据集: ImageNet, LSUN, Places365</li>
+<li>$C_i$从AlexNet, VGG16, ResNet18, ResNet34中随机选择</li>
+</ul>
+</li>
+<li>@article{Vongkulbhisal2019UnifyingHC,
+title={Unifying Heterogeneous Classifiers With Distillation},
+author={Jayakorn Vongkulbhisal and Phongtharin Vinayavekhin and Marco Visentini Scarzanella},
+journal={2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+year={2019},
+pages={3170-3179}
+}</li>
+</ul>
+<blockquote>
+<p>Distilled Person Re-Identification: Towards a More Scalable System. Wu, Ancong et al. CVPR 2019 <a href="https://openaccess.thecvf.com/content_CVPR_2019/papers/Wu_Distilled_Person_Re-Identification_Towards_a_More_Scalable_System_CVPR_2019_paper.pdf">https://openaccess.thecvf.com/content_CVPR_2019/papers/Wu_Distilled_Person_Re-Identification_Towards_a_More_Scalable_System_CVPR_2019_paper.pdf</a></p>
+</blockquote>
+<ul>
+<li>解决三个问题: 降低标签成本(减少标签的需求量); 降低跨数据库成本(利用一些先验知识); 降低测试成本(使用轻量级网络)</li>
+<li>假设taregt domain包含10个类的图片, 先用多个个source domain分别训练多个teacher model, source domain之后并不会被用到(利用一些先验知识&ndash;降低跨数据库成本); target domain可以只包含10个labelled sample(10类均有), 其余均为unlabeled sample, 对于N个unlabelled input, 定义相似度矩阵$A$, 其中第i行第j列表示第i个图像和第j个图像在同一个模型下输出的相似度. 为了将知识从teacher迁移到student, 需要最小化teacher的相似度矩阵$A_T$和student的相似度矩阵$A_S$的距离(这句话是学习single teacher).</li>
+<li>分别利用teacher计算target domain中每一个x的特征向量, 并分别计算相似度矩阵$A$, 使用$L_{ver}$更新每一个老师模型的权重$a$(可以理解为，权重越大，该老师模型对应的source和target越相似)</li>
+<li>计算出每一个老师模型和学生模型得到的相似矩阵的差异，并使用上述的权重加权，从而得到$L_{ta}$. 使用$L_{ta}$对学生模型进行更新, 循环训练.</li>
+<li>实验设置: 数据集 &ndash; Market-1501, DukeMTMC. 分别使用MSMT17, CUHK03, ViPER, DukeMTMC, Market-1501训练5个teacher model$T_1, T_2, T_3, T_4, T_5$; teacher &ndash; an advanced Re-ID model PCB, student &ndash; a lightweight mod- el MobileNetV2.</li>
+<li>@InProceedings{Wu_2019_CVPR,
+author = {Wu, Ancong and Zheng, Wei-Shi and Guo, Xiaowei and Lai, Jian-Huang},
+title = {Distilled Person Re-Identification: Towards a More Scalable System},
+booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+month = {June},
+year = {2019}
+}</li>
+</ul>
+<blockquote>
+<p>Diversity with Cooperation: Ensemble Methods for Few-Shot Classification. Dvornik, Nikita et al. ICCV 2019 <a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Dvornik_Diversity_With_Cooperation_Ensemble_Methods_for_Few-Shot_Classification_ICCV_2019_paper.pdf">https://openaccess.thecvf.com/content_ICCV_2019/papers/Dvornik_Diversity_With_Cooperation_Ensemble_Methods_for_Few-Shot_Classification_ICCV_2019_paper.pdf</a></p>
+</blockquote>
+<ul>
+<li>meta learning &ndash; learning to learn</li>
+<li>模型间的关系有三种 - 合作(预测的结果无论是属于正确结果的概率还是属于错误结果的概率都是比较一致的), 独立(两个模型预测的结果之间不存在明显的关系), 多样性(除了正确结果，预测为其他结果的概率差异明显).</li>
+<li>文章通过出了交叉熵损失外设计不同的损失函数$\psi(y_i,f_{\theta_j}(x_i),f_{\theta_l}(x_i))$诱导模型的关系向不同方向发展, 例如基于cos或KL散度.</li>
+<li>实验设置:
+<ul>
+<li>数据集: mini-ImageNet, tiered-ImageNet, Caltech-UCSD Birds (CUB) 2002011.</li>
+<li>ensemble of ResNet18 and WideResNet28</li>
+</ul>
+</li>
+<li>@INPROCEEDINGS{9010380,
+title={Diversity With Cooperation: Ensemble Methods for Few-Shot Classification},author={Dvornik, Nikita and Mairal, Julien and Schmid, Cordelia},
+booktitle={2019 IEEE/CVF International Conference on Computer Vision (ICCV)},
+pages={3722-3730},<br>
+year={2019}
+}</li>
+</ul>
+<blockquote>
+<p>Model Compression with Two-stage Multi-teacher Knowledge Distillation for Web Question Answering System. Yang, Ze et al. WSDM 2020 <a href="https://arxiv.org/pdf/1910.08381.pdf">https://arxiv.org/pdf/1910.08381.pdf</a></p>
+</blockquote>
+<ul>
+<li>一种用于网络问答系统的两阶段多教师知识蒸馏(简称 TMKD)方法, 首先用一个通用的问答提炼任务对student进行预训练(貌似也是使用Multi-teacher), 并在下游任务(如 Web Q&amp;A 任务, MNLI, SNLI, 来自 GLUE 的 RTE 任务)上使用Multi-Teacher KD进一步微调这个预训练的student.</li>
+<li>“early calibration” effect缓解了单个teacher造成的过拟合偏差.</li>
+<li>实验设置:
+<ul>
+<li>数据集 - DeepQA, CommQA-Unlabeled, CommQA-Labeled, MNLI, SNLI, QNLI, RTE.</li>
+<li>Baseline: teacher - BERT-3, BERT_{large}, BERT_{large}Ensemble; student(Traditional Distillation Model) - Bi-LSTM(1-o-1, 1_{avg}-o-1, m-o-m), BERT3(1-o-1, 1_{avg}-o-1, m-o-m), student(TMKD) - Bi-LSTM(TMKD), TMKD_{base}, TMKD_{large}(后两者都是BERT-3 models).</li>
+</ul>
+</li>
+<li>@inproceedings{inproceedings,
+author = {Ze, Yang and Shou, Linjun and Gong, Ming and Lin, Wutao and Jiang, Daxin},
+title = {Model Compression with Two-stage Multi-teacher Knowledge Distillation for Web Question Answering System},
+publisher = {Association for Computing Machinery},
+doi = {10.1145/3336191.3371792}，
+pages = {690-698},
+year = {2020}
+}</li>
+</ul>
+<blockquote>
+<p>FEED: Feature-level Ensemble for Knowledge Distillation. Park, SeongUk and Kwak, Nojun. AAAI 2020 <a href="https://openreview.net/pdf?id=BJxYEsAqY7">https://openreview.net/pdf?id=BJxYEsAqY7</a></p>
+</blockquote>
+<ul>
+<li>实验方法就是让student直接学teacher的feature.</li>
+<li>实验设置: 数据集: CIFAR-100; 选取模型: student &ndash; ResNet-56, ResNet-110, WRN28-10, ResNext29-16x64d; 没说teacher是谁.</li>
+<li>@article{Park2019FEEDFE,
+title={FEED: Feature-level Ensemble for Knowledge Distillation},
+author={Seonguk Park and Nojun Kwak},
+journal={ECAI},
+year={2019},
+volume={abs/1909.10754}
+}</li>
+</ul>
+<blockquote>
+<p>Stochasticity and Skip Connection Improve Knowledge Transfer. Lee, Kwangjin et al. ICLR 2020 <a href="https://openreview.net/pdf?id=HklA93NYwS">https://openreview.net/pdf?id=HklA93NYwS</a></p>
+</blockquote>
+<ul>
+<li>利用单个教师网络生成多个教师网络(加入stochastic blocks和skip connections)并训练学生网络, 分块并含有skip connections的网络可以看成树状网络, 从input到output有多条路径.</li>
+<li>实验设置: 数据集 &ndash; CIFAR-100 和 tiny imagenet, 并将这种方法应用到KD, AT(attention tranfer), ML. 实验中涉及到的teacher有ResNet 32, ResNet 110, WRN 28-10, MobileNet, WRN 40-4; 涉及到的student有VGG 13, ResNet 20, ResNet 32, WRN 40-4.</li>
+<li>@INPROCEEDINGS{9287227,
+author={Nguyen, Luong Trung and Lee, Kwangjin and Shim, Byonghyo},
+title={Stochasticity and Skip Connection Improve Knowledge Transfer},
+booktitle={2020 28th European Signal Processing Conference (EUSIPCO)},
+pages={1537-1541},
+year={2021}
+}</li>
+</ul>
+<blockquote>
+<p>Hydra: Preserving Ensemble Diversity for Model Distillation. Tran, Linh et al. arXiv:2001.04694 <a href="http://www.gatsby.ucl.ac.uk/~balaji/udl2020/accepted-papers/UDL2020-paper-026.pdf">http://www.gatsby.ucl.ac.uk/~balaji/udl2020/accepted-papers/UDL2020-paper-026.pdf</a></p>
+</blockquote>
+<ul>
+<li>普通multi-teacher KD对teacher的预测值取平均, 这样会丧失多teacher结果包含的不确定性信息(?), 本文将student拆分成body和多个head, 每个head对应一个teacher, 以保留多teacher输出的多样性</li>
+<li>假设有M个teacher, 首先训练一个head直至其收敛至teacher的平均, 再添加其他M-1个head, M个head一起训练, 实验证明如果没有第一个head会很难收敛. 作者定义了一个模型不确定性, 由数据不确定性和总不确定性组成(我不理解为什么是这个顺序).</li>
+<li>实验设置:
+<ul>
+<li>数据集: a spiral toy dataset(用于可视化并解释模型不确定性), MNIST(测试时用了它的测试集和Fashion-MNIST), CIFAR-10(测试时用了它的测试集, cyclic translated test set, 80 different corrupted test sets 和 SVHN).</li>
+<li>模型: toy dataset - 两层MLP, 每层100个结点; MNIST - MLP; CIFAR-10 - ResNet-20 V1. 在回归问题中, 所有数据集均使用MLP.</li>
+</ul>
+</li>
+<li>@article{DBLP:journals/corr/abs-2001-04694,
+author = {Linh Tran, Bastiaan S. Veeling, Kevin Roth, Jakub Swiatkowski, Joshua V. Dillon, Jasper Snoek, Stephan Mandt, Tim Salimans, Sebastian Nowozin, Rodolphe Jenatton},
+title = {Hydra: Preserving Ensemble Diversity for Model Distillation},
+journal = {CoRR},
+year = {2020}
+}</li>
+</ul>
+<blockquote>
+<p>Distilling Knowledge from Ensembles of Acoustic Models for Joint CTC-Attention End-to-End Speech Recognition. Gao, Yan et al. arXiv:2005.09310 <a href="https://arxiv.org/pdf/2005.09310v1.pdf">https://arxiv.org/pdf/2005.09310v1.pdf</a></p>
+</blockquote>
+<ul>
+<li>@article{DBLP:journals/corr/abs-2005-09310,
+author = {Yan Gao, Titouan Parcollet, Nicholas D. Lane},
+title = {Distilling Knowledge from Ensembles of Acoustic Models for Joint CTC-Attention End-to-End Speech Recognition},
+journal = {CoRR},
+year = {2020}
+}</li>
+</ul>
+<blockquote>
+<p>Temporal Self-Ensembling Teacher for Semi-Supervised Object Detection. Chen, Cong et al. IEEE 2020 [code]</p>
+</blockquote>
+<blockquote>
+<p>Dual-Teacher: Integrating Intra-domain and Inter-domain Teachers for Annotation-efficient Cardiac Segmentation. MICCAI 2020</p>
+</blockquote>
+<blockquote>
+<p>Knowledge Distillation for Multi-task Learning. Li, WeiHong &amp; Bilen, Hakan. arXiv:2007.06889 [project]</p>
+</blockquote>
+<blockquote>
+<p>Adaptive Multi-Teacher Multi-level Knowledge Distillation. Liu, Yuang et al. Neurocomputing 2020 [code] <a href="https://arxiv.org/pdf/2103.04062.pdf">https://arxiv.org/pdf/2103.04062.pdf</a></p>
+</blockquote>
+<ul>
+<li>loss: $\mathcal{L} = \mathcal{L}<em>{KD}+\alpha\mathcal{L}</em>{angle}+\beta\mathcal{L}_{HT}$
+<ul>
+<li>$\mathcal{L}<em>{KD}$: 对于每个样本, student需要赋予teachers的输出不同的权重, student中fc之前的表示经过maxpooling后和每个teacherfc前的表示分别做点积作为权重, teacher的加权和作为weighted target, 将weighted target与student的soft-target间的KL散度和student输出与groungtruth的交叉熵作为$\mathcal{L}</em>{KD}$.</li>
+<li>$\mathcal{L}<em>{angle}$: 对于样本组成的三元组, 计算它们的teacher和student表示的空间相对位置, 计算二者的Huber loss作为$\mathcal{L}</em>{angle}$.</li>
+<li>$\mathcal{L}_{HT}$: 计算teacher和student中间层表示的差的二范式, student的中间层需要经过一个单层FitNet使其规模等于teacher的中间层表示.</li>
+</ul>
+</li>
+<li>实验设置: 数据集有CIFAR-10, CIFAR-100和Tiny-ImageNet.
+<ul>
+<li>CIFAR-10, CIFAR-100: teacher使用ResNet110, VGG-19, DenseNet121, student为ResNet20; 比较不同baseline (OKD, FitNet, RKD, AvgMKD, DML) 在数据集上的表现; 比较不同baseline(OKD, AvgMKD, DML)在teacher数量为2,3,5时的表现.</li>
+<li>Tiny-ImageNet: teacher(ResNet110, ResNet56, ResNet32), student - ResNet20.</li>
+</ul>
+</li>
+<li>@article{LIU2020106,
+author={Yuang Liu and W. Zhang and Jijie Wang},
+title = {Adaptive multi-teacher multi-level knowledge distillation},
+journal = {Neurocomputing},
+pages = {106-113},
+year = {2020}
+}</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://michelia-zhx.github.io/tags/%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE1/">文章标签1</a></li>
+      <li><a href="https://michelia-zhx.github.io/tags/%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE2/">文章标签2</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://michelia-zhx.github.io/posts/2021-04-10-image-object-detection/">
+    <span class="title">« Prev Page</span>
+    <br>
+    <span>Paper Notes - Image Object Detection</span>
+  </a>
+  <a class="next" href="https://michelia-zhx.github.io/posts/2022-02-24-multi_teacher_knowledge_distillation-2/">
+    <span class="title">Next Page »</span>
+    <br>
+    <span>Paper Notes - Multi-Teacher Knowledge Distillation - 2</span>
+  </a>
+</nav>
+
+
+<div class="share-buttons">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Multi-Teacher Knowledge Distillation - 1 on twitter"
+        href="https://twitter.com/intent/tweet/?text=Paper%20Notes%20-%20Multi-Teacher%20Knowledge%20Distillation%20-%201&amp;url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2022-02-23-multi_teacher_knowledge_distillation-1%2f&amp;hashtags=%e6%96%87%e7%ab%a0%e6%a0%87%e7%ad%be1%2c%e6%96%87%e7%ab%a0%e6%a0%87%e7%ad%be2">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-253.927,424.544c135.939,0 210.268,-112.643 210.268,-210.268c0,-3.218 0,-6.437 -0.153,-9.502c14.406,-10.421 26.973,-23.448 36.935,-38.314c-13.18,5.824 -27.433,9.809 -42.452,11.648c15.326,-9.196 26.973,-23.602 32.49,-40.92c-14.252,8.429 -30.038,14.56 -46.896,17.931c-13.487,-14.406 -32.644,-23.295 -53.946,-23.295c-40.767,0 -73.87,33.104 -73.87,73.87c0,5.824 0.613,11.494 1.992,16.858c-61.456,-3.065 -115.862,-32.49 -152.337,-77.241c-6.284,10.881 -9.962,23.601 -9.962,37.088c0,25.594 13.027,48.276 32.95,61.456c-12.107,-0.307 -23.448,-3.678 -33.41,-9.196l0,0.92c0,35.862 25.441,65.594 59.311,72.49c-6.13,1.686 -12.72,2.606 -19.464,2.606c-4.751,0 -9.348,-0.46 -13.946,-1.38c9.349,29.426 36.628,50.728 68.965,51.341c-25.287,19.771 -57.164,31.571 -91.8,31.571c-5.977,0 -11.801,-0.306 -17.625,-1.073c32.337,21.15 71.264,33.41 112.95,33.41Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Multi-Teacher Knowledge Distillation - 1 on linkedin"
+        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2022-02-23-multi_teacher_knowledge_distillation-1%2f&amp;title=Paper%20Notes%20-%20Multi-Teacher%20Knowledge%20Distillation%20-%201&amp;summary=Paper%20Notes%20-%20Multi-Teacher%20Knowledge%20Distillation%20-%201&amp;source=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2022-02-23-multi_teacher_knowledge_distillation-1%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Multi-Teacher Knowledge Distillation - 1 on reddit"
+        href="https://reddit.com/submit?url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2022-02-23-multi_teacher_knowledge_distillation-1%2f&title=Paper%20Notes%20-%20Multi-Teacher%20Knowledge%20Distillation%20-%201">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Multi-Teacher Knowledge Distillation - 1 on facebook"
+        href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2022-02-23-multi_teacher_knowledge_distillation-1%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Multi-Teacher Knowledge Distillation - 1 on whatsapp"
+        href="https://api.whatsapp.com/send?text=Paper%20Notes%20-%20Multi-Teacher%20Knowledge%20Distillation%20-%201%20-%20https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2022-02-23-multi_teacher_knowledge_distillation-1%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Multi-Teacher Knowledge Distillation - 1 on telegram"
+        href="https://telegram.me/share/url?text=Paper%20Notes%20-%20Multi-Teacher%20Knowledge%20Distillation%20-%201&amp;url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2022-02-23-multi_teacher_knowledge_distillation-1%2f">
+        <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28">
+            <path
+                d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+        </svg>
+    </a>
+</div>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://michelia-zhx.github.io">Michelia&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

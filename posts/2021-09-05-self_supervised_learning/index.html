@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Paper Notes - Self-Supervised Learning | Michelia&#39;s Blog</title>
+<meta name="keywords" content="Hugo, static, generator" />
+<meta name="description" content="My first blog">
+<meta name="author" content="Michelia-zhx">
+<link rel="canonical" href="https://michelia-zhx.github.io/posts/2021-09-05-self_supervised_learning/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="apple-touch-icon" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="mask-icon" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Paper Notes - Self-Supervised Learning" />
+<meta property="og:description" content="My first blog" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://michelia-zhx.github.io/posts/2021-09-05-self_supervised_learning/" /><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Paper Notes - Self-Supervised Learning"/>
+<meta name="twitter:description" content="My first blog"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://michelia-zhx.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Paper Notes - Self-Supervised Learning",
+      "item": "https://michelia-zhx.github.io/posts/2021-09-05-self_supervised_learning/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Paper Notes - Self-Supervised Learning",
+  "name": "Paper Notes - Self-Supervised Learning",
+  "description": "My first blog",
+  "keywords": [
+    "Hugo", "static", "generator"
+  ],
+  "articleBody": " Why self-supervised learning: 主要的问题在于获取数据及其标注部分. Definition:  Self-supervised learning is a method that poses the following question to formulate an unsupervised learning problem as a supervised one: “Can we design the task in such a way that we can generate virtually unlimited labels from our existing images and use that to learn the representations?” Replace the human annotation block by creatively exploiting some property of data to set up a pseudo-supervised task. 学到这些特征后, 利用迁移学习将特征在下游的监督任务上进行微调, 从而利用更少的数据进行训练.    Self-Supervised Learning from Image Pattern 1: Reconstruction  Image Colorization: 生成彩色和黑白的图片对, 黑白图片经过encoder-decoder生成预测的图片, 和真是图片计算L2 loss. 如此可以学到图片中的物体及其关联部分以正确上色. Image Superresolution: 基于GAN的SRGAN, 低分辨率的图片经过卷积网络生成高分辨率图片, 计算和原图的MSE. 同时将生成的图片和真实图片送入二分类器, 判断哪个是真实图片, 以此使生成器学到如何生成具有细节的高分辨率图片. Image Impainting: 将图片扣掉一块, 由生成器生成完整的图片, 后续步骤同上. Cross-Channel Prediction: 一张图分成灰度图和颜色信道, 用灰度图预测颜色信道, 用颜色信道预测灰度图, 将预测的两个channel复合成预测的图片, 和原图对比计算loss以改进模型.  Pattern 2: Common Sense Tasks  Image Jigsaw Puzzle: 图像分成9个patch, 按照汉明距离最大的64种打乱方式打乱, 输入是9个patch, 需要预测是按照哪一种方式 (1-64) 打乱的. 这一任务要求模型学习物体里的各部分是如何组合的, 以及物体的形状. Context Prediction: 图中取9个相邻的patch选取中心的patch和周围随意一个patch, 输入和前一条类似的网络, 预测两者位置关系. Geometric Transformation Recognition: 将旋转后的图片输入, 预测旋转了多少度 (0, 90, 180, 270). 这个任务要求模型学习物体的地点, 类型和造型.  Pattern 3: Automatic Label Generation  Image Clustering: 在无标注数据集上对图片进行聚类. Deep Clustering, 图片首先被聚类, 然后这些类才被作为classes. Synthetic Imagery: 用game engine生成人造图片, 和真实的图片送入convnet, 并判断生成的特征是属于人造的or真实存在的场景图片.  Self-Supervised Learning from Video  Frame Order Verification: (不)打乱帧的顺序, 送入convnet, 预测输入顺序是否是正确的.  SimCLR  Contrastive Learning: It attempts to teach machines to distinguish between similar and dissimilar images. 需要构造相似的图片对和不相似的图片对. 一张图片被经过随机变换后和原图构成相似图片对 $(x_i,x_j)$, 两张图片分别送入encoder以获取表示 $(h_i,h_j)$, 在经过非线性全连接层以获得新的表示 $(z_i,z_j)$, 最后判断 $(z_i,z_j)$ 的相似性.  步骤  Self-supervised Formulation  Batch Size = N Transformation function T = random(crop + flip + color jitter + grayscale).   Getting Representation  针对一个batch里的所有图片做随机变换, 共获得2N张图片. 增强后的图片对经过共享参数的encoder生成表示$(h_i, h_j)$. 作者使用ResNet-50, 输出的特征为2048维向量.   Projection Head  Projection Head g(·) = Dense + Relu + Dense $(h_i, h_j)$经过 g 生成新的表示$(z_i, z_j)$, 在他们之间计算相似度.   Tuning Model, 针对N张图片生成的增强后的2N个表示, 进行如下操作  计算cosine相似度, 同一张图增强后相似性高, 其余很低 将2N张图片组成很多对, 用softmax计算两张图片相似的概率, 除了同一张图生成的两个表示很相似, 其余的图片对全部是负例. 且这个方法不需要memory bank, queue等特别的结构. 计算损失: $l(i,j) = -\\log\\dfrac{\\exp(s_{i,j})}{\\sum_{k=1}^{2N}l_{[k!=i]}\\exp(s_{i,k})}$ 一个batch的损失: $L = \\dfrac{1}{2N}\\sum_{k=1}^M[l(2k-1, 2k) + l(2k, 2k-1)]$ 优化这个损失函数可以提升图片表示能力, 是模型学会区分图片是否相似 (如果两张图片属于同一类是否需要更高的相似度? 但是没有标注, 无法判断两张照片是否属于同一类.)    Downstream Tasks PIRL: Pretext-Invariant Representation Learning  存在的问题: 随机变换有可能导致不同的图生成相似的新图. 解决方法: 使同一张图变换后的新图尽可能相似, 不同图变换后的新图尽可能不相似.  PIRL Framework  原图经过一个转换后生成新图, 两张图经过共享参数的convnet $\\theta$ 后得到两个表示$V_I, V_{I^T}$, $V_I$经过projection head $f$后得到新的表示 $f(V_I)$, $V_{I^T}$经过projection head $g$后得到新的表示 $g(V_{I^T})$. 优化损失函数使得两个表示尽量相似, 而$f(V_I)$和memory bank里其他图生成的表示尽量不相似. 用memory bank存储别的图像生成的表示, 以避免更大的batch size 损失函数: $h(f(V_I), g(V_{I^T})) = \\dfrac{\\exp(\\frac{s(f(V_I), g(V_{I^T}))}{\\tau})}{\\exp(\\frac{s(f(V_I), g(V_{I^T})}{\\tau}) + \\sum_{I'\\in D_N}\\exp(\\frac{g(V_{I^T}), s(f(V_{I'})}{\\tau})}$ $L_{NCE}(I, I^t) = -\\log[h(m_I, g(V_{I^t}))] - \\sum_{I'\\in D_N}\\log[1-h(g(V_{I^t}), m_{I'})]$  Self-Labelling Combining clustering and representation learning together to learn both features and labels simultaneously.\n 生成标签然后用标签训练一个模型 由训练好的模型生成新的标签 重复以上操作 以上形成鸡蛋问题, 最初用随机初始化的Alexnet, 在Imageet上评估.  Self-Labelling Pipeline  利用一个随机初始化的模型为增强后的无标签数据生成标签 使用Sinkhorn-Knopp算法将无标签图片聚类, 得到新的标签 利用新生成的标签训练模型上, 利用交叉熵损失优化 重复以上步骤  Sinkhron-Knopp Algorithm: 源于最优运输问题 (仓库, 商店, 运输距离) - 原问题: 将N个样本分到K个类中 - 限制条件: N个样本被均分到K个类中 - 代价矩阵: 将 使用这种分类方式训练出的模型的模型表现 作为这种划分方式的代价. 如果代价很高, 说明需要调整划分方式以接近理想效果.\nFixMatch for Semi-Supervised Learning  Intuition: 数据集中只有少部分标注数据和大部分未标注数据, 先用标注数据有监督训练一个模型. 对于未标注数据, 将所有图片做两种变换, 分别送入之前训练的模型, 由于是同一张图片生成的输入, 因此模型的输出应该相同. 模型结构:  将已标记数据用于训练, 交叉熵损失作为监督学习的损失函数: $l_s = \\dfrac{1}{B}\\sum_{b=1}^BH(p_b, p_m(y|\\alpha(x_b)))$ 伪标记: 对于一张未标记图片, 先对它进行weak augmentation, 输入模型得到伪标签, 再和strongly augmented image的输出对比. 针对未标记数据, 半监督部分损失函数: $l_u = \\dfrac{1}{\\mu B}\\sum_{b=1}^{\\mu B}1(max(q_b\\geq \\tau)H(\\hat{q}_b, p_m(y|A(u_b))))$, $loss = l_s + \\mu l_u$, 其中$\\tau$代表伪标记生成的阈值, 当weakly augmented image的softmax超过阈值则生成伪标记, 并和strongly augmented image的结果计算较差熵. 在最终loss的计算中, 随着训练的进度$\\mu$逐渐增大, 具体可以解释为前期对用少量样本训练出的模型不信任, 后期会逐渐加入对未标记数据的考量.    DeepCluster  主要思想: 图片经过augmentation之后送入convnetm 取分类之前的特征, 经过pca降维, 用kmeans聚类得到各个类别. 将kmeans的结果作为伪标记, 和convnet输出的表示经过分类层得到的结果计算交叉熵.  ",
+  "wordCount" : "2362",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Michelia-zhx"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://michelia-zhx.github.io/posts/2021-09-05-self_supervised_learning/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Michelia's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://michelia-zhx.github.io/img/Cheese.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://michelia-zhx.github.io" accesskey="h" title="Michelia&#39;s Blog (Alt + H)">Michelia&#39;s Blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://michelia-zhx.github.io/" title="🏠Home">
+                    <span>🏠Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/posts" title="📖Posts">
+                    <span>📖Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/archives/" title="⏱Archives">
+                    <span>⏱Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/tags" title="🔖Tags">
+                    <span>🔖Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/about" title="👧🏻About">
+                    <span>👧🏻About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/search" title="🔍Search (Alt &#43; /)" accesskey=/>
+                    <span>🔍Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://michelia-zhx.github.io">Home</a>&nbsp;»&nbsp;<a href="https://michelia-zhx.github.io/posts/">Posts</a></div>
+    <h1 class="post-title">
+      Paper Notes - Self-Supervised Learning
+    </h1>
+    <div class="post-description">
+      My first blog
+    </div>
+    <div class="post-meta">5 min&nbsp;·&nbsp;Michelia-zhx
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#self-supervised-learning-from-image" aria-label="Self-Supervised Learning from Image">Self-Supervised Learning from Image</a><ul>
+                        
+                <li>
+                    <a href="#pattern-1-reconstruction" aria-label="Pattern 1: Reconstruction">Pattern 1: Reconstruction</a></li>
+                <li>
+                    <a href="#pattern-2-common-sense-tasks" aria-label="Pattern 2: Common Sense Tasks">Pattern 2: Common Sense Tasks</a></li>
+                <li>
+                    <a href="#pattern-3-automatic-label-generation" aria-label="Pattern 3: Automatic Label Generation">Pattern 3: Automatic Label Generation</a></li></ul>
+                </li>
+                <li>
+                    <a href="#self-supervised-learning-from-video" aria-label="Self-Supervised Learning from Video">Self-Supervised Learning from Video</a></li>
+                <li>
+                    <a href="#simclr" aria-label="SimCLR">SimCLR</a><ul>
+                        
+                <li>
+                    <a href="#%e6%ad%a5%e9%aa%a4" aria-label="步骤">步骤</a></li>
+                <li>
+                    <a href="#downstream-tasks" aria-label="Downstream Tasks">Downstream Tasks</a></li></ul>
+                </li>
+                <li>
+                    <a href="#pirl-pretext-invariant-representation-learning" aria-label="PIRL: Pretext-Invariant Representation Learning">PIRL: Pretext-Invariant Representation Learning</a><ul>
+                        
+                <li>
+                    <a href="#pirl-framework" aria-label="PIRL Framework">PIRL Framework</a></li></ul>
+                </li>
+                <li>
+                    <a href="#self-labelling" aria-label="Self-Labelling">Self-Labelling</a><ul>
+                        
+                <li>
+                    <a href="#self-labelling-pipeline" aria-label="Self-Labelling Pipeline">Self-Labelling Pipeline</a></li></ul>
+                </li>
+                <li>
+                    <a href="#fixmatch-for-semi-supervised-learning" aria-label="FixMatch for Semi-Supervised Learning">FixMatch for Semi-Supervised Learning</a></li>
+                <li>
+                    <a href="#deepcluster" aria-label="DeepCluster">DeepCluster</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><ol>
+<li>Why self-supervised learning: 主要的问题在于获取数据及其标注部分.</li>
+<li>Definition:
+<ul>
+<li>Self-supervised learning is a method that poses the following question to formulate an unsupervised learning problem as a supervised one: &ldquo;Can we design the task in such a way that we can generate virtually unlimited labels from our existing images and use that to learn the representations?&rdquo;</li>
+<li>Replace the human annotation block by creatively exploiting some property of data to set up a pseudo-supervised task.</li>
+<li>学到这些特征后, 利用迁移学习将特征在下游的监督任务上进行微调, 从而利用更少的数据进行训练.</li>
+</ul>
+</li>
+</ol>
+<h2 id="self-supervised-learning-from-image">Self-Supervised Learning from Image<a hidden class="anchor" aria-hidden="true" href="#self-supervised-learning-from-image">#</a></h2>
+<h3 id="pattern-1-reconstruction">Pattern 1: Reconstruction<a hidden class="anchor" aria-hidden="true" href="#pattern-1-reconstruction">#</a></h3>
+<ol>
+<li>Image Colorization: 生成彩色和黑白的图片对, 黑白图片经过encoder-decoder生成预测的图片, 和真是图片计算L2 loss. 如此可以学到图片中的物体及其关联部分以正确上色.</li>
+<li>Image Superresolution: 基于GAN的SRGAN, 低分辨率的图片经过卷积网络生成高分辨率图片, 计算和原图的MSE. 同时将生成的图片和真实图片送入二分类器, 判断哪个是真实图片, 以此使生成器学到如何生成具有细节的高分辨率图片.</li>
+<li>Image Impainting: 将图片扣掉一块, 由生成器生成完整的图片, 后续步骤同上.</li>
+<li>Cross-Channel Prediction: 一张图分成灰度图和颜色信道, 用灰度图预测颜色信道, 用颜色信道预测灰度图, 将预测的两个channel复合成预测的图片, 和原图对比计算loss以改进模型.</li>
+</ol>
+<h3 id="pattern-2-common-sense-tasks">Pattern 2: Common Sense Tasks<a hidden class="anchor" aria-hidden="true" href="#pattern-2-common-sense-tasks">#</a></h3>
+<ol>
+<li>Image Jigsaw Puzzle: 图像分成9个patch, 按照汉明距离最大的64种打乱方式打乱, 输入是9个patch, 需要预测是按照哪一种方式 (1-64) 打乱的. 这一任务要求模型学习物体里的各部分是如何组合的, 以及物体的形状.</li>
+<li>Context Prediction: 图中取9个相邻的patch选取中心的patch和周围随意一个patch, 输入和前一条类似的网络, 预测两者位置关系.</li>
+<li>Geometric Transformation Recognition: 将旋转后的图片输入, 预测旋转了多少度 (0, 90, 180, 270). 这个任务要求模型学习物体的地点, 类型和造型.</li>
+</ol>
+<h3 id="pattern-3-automatic-label-generation">Pattern 3: Automatic Label Generation<a hidden class="anchor" aria-hidden="true" href="#pattern-3-automatic-label-generation">#</a></h3>
+<ol>
+<li>Image Clustering: 在无标注数据集上对图片进行聚类. Deep Clustering, 图片首先被聚类, 然后这些类才被作为classes.</li>
+<li>Synthetic Imagery: 用game engine生成人造图片, 和真实的图片送入convnet, 并判断生成的特征是属于人造的or真实存在的场景图片.</li>
+</ol>
+<h2 id="self-supervised-learning-from-video">Self-Supervised Learning from Video<a hidden class="anchor" aria-hidden="true" href="#self-supervised-learning-from-video">#</a></h2>
+<ol>
+<li>Frame Order Verification: (不)打乱帧的顺序, 送入convnet, 预测输入顺序是否是正确的.</li>
+</ol>
+<h2 id="simclr">SimCLR<a hidden class="anchor" aria-hidden="true" href="#simclr">#</a></h2>
+<ol>
+<li>Contrastive Learning: It attempts to teach machines to distinguish between similar and dissimilar images.</li>
+<li>需要构造相似的图片对和不相似的图片对. 一张图片被经过随机变换后和原图构成相似图片对 $(x_i,x_j)$, 两张图片分别送入encoder以获取表示 $(h_i,h_j)$, 在经过非线性全连接层以获得新的表示 $(z_i,z_j)$, 最后判断 $(z_i,z_j)$ 的相似性.</li>
+</ol>
+<h3 id="步骤">步骤<a hidden class="anchor" aria-hidden="true" href="#步骤">#</a></h3>
+<ol>
+<li>Self-supervised Formulation
+<ul>
+<li>Batch Size = N</li>
+<li>Transformation function T = random(crop + flip + color jitter + grayscale).</li>
+</ul>
+</li>
+<li>Getting Representation
+<ul>
+<li>针对一个batch里的所有图片做随机变换, 共获得2N张图片. 增强后的图片对经过共享参数的encoder生成表示$(h_i, h_j)$.</li>
+<li>作者使用ResNet-50, 输出的特征为2048维向量.</li>
+</ul>
+</li>
+<li>Projection Head
+<ul>
+<li>Projection Head g(·) = Dense + Relu + Dense</li>
+<li>$(h_i, h_j)$经过 g 生成新的表示$(z_i, z_j)$, 在他们之间计算相似度.</li>
+</ul>
+</li>
+<li>Tuning Model, 针对N张图片生成的增强后的2N个表示, 进行如下操作
+<ul>
+<li>计算cosine相似度, 同一张图增强后相似性高, 其余很低</li>
+<li>将2N张图片组成很多对, 用softmax计算两张图片相似的概率, 除了同一张图生成的两个表示很相似, 其余的图片对全部是负例. 且这个方法不需要memory bank, queue等特别的结构.</li>
+<li>计算损失: $l(i,j) = -\log\dfrac{\exp(s_{i,j})}{\sum_{k=1}^{2N}l_{[k!=i]}\exp(s_{i,k})}$</li>
+<li>一个batch的损失: $L = \dfrac{1}{2N}\sum_{k=1}^M[l(2k-1, 2k) + l(2k, 2k-1)]$</li>
+<li>优化这个损失函数可以提升图片表示能力, 是模型学会区分图片是否相似 (如果两张图片属于同一类是否需要更高的相似度? 但是没有标注, 无法判断两张照片是否属于同一类.)</li>
+</ul>
+</li>
+</ol>
+<h3 id="downstream-tasks">Downstream Tasks<a hidden class="anchor" aria-hidden="true" href="#downstream-tasks">#</a></h3>
+<h2 id="pirl-pretext-invariant-representation-learning">PIRL: Pretext-Invariant Representation Learning<a hidden class="anchor" aria-hidden="true" href="#pirl-pretext-invariant-representation-learning">#</a></h2>
+<ol>
+<li>存在的问题: 随机变换有可能导致不同的图生成相似的新图.</li>
+<li>解决方法: 使同一张图变换后的新图尽可能相似, 不同图变换后的新图尽可能不相似.</li>
+</ol>
+<h3 id="pirl-framework">PIRL Framework<a hidden class="anchor" aria-hidden="true" href="#pirl-framework">#</a></h3>
+<ol>
+<li>原图经过一个转换后生成新图, 两张图经过共享参数的convnet $\theta$ 后得到两个表示$V_I, V_{I^T}$, $V_I$经过projection head $f$后得到新的表示 $f(V_I)$, $V_{I^T}$经过projection head $g$后得到新的表示 $g(V_{I^T})$. 优化损失函数使得两个表示尽量相似, 而$f(V_I)$和memory bank里其他图生成的表示尽量不相似.</li>
+<li>用memory bank存储别的图像生成的表示, 以避免更大的batch size</li>
+<li>损失函数: $h(f(V_I), g(V_{I^T})) = \dfrac{\exp(\frac{s(f(V_I), g(V_{I^T}))}{\tau})}{\exp(\frac{s(f(V_I), g(V_{I^T})}{\tau}) + \sum_{I'\in D_N}\exp(\frac{g(V_{I^T}), s(f(V_{I'})}{\tau})}$
+$L_{NCE}(I, I^t) = -\log[h(m_I, g(V_{I^t}))] - \sum_{I'\in D_N}\log[1-h(g(V_{I^t}), m_{I'})]$</li>
+</ol>
+<h2 id="self-labelling">Self-Labelling<a hidden class="anchor" aria-hidden="true" href="#self-labelling">#</a></h2>
+<p>Combining clustering and representation learning together to learn both features and labels simultaneously.</p>
+<ul>
+<li>生成标签然后用标签训练一个模型</li>
+<li>由训练好的模型生成新的标签</li>
+<li>重复以上操作
+以上形成鸡蛋问题, 最初用随机初始化的Alexnet, 在Imageet上评估.</li>
+</ul>
+<h3 id="self-labelling-pipeline">Self-Labelling Pipeline<a hidden class="anchor" aria-hidden="true" href="#self-labelling-pipeline">#</a></h3>
+<ol>
+<li>利用一个随机初始化的模型为增强后的无标签数据生成标签</li>
+<li>使用Sinkhorn-Knopp算法将无标签图片聚类, 得到新的标签</li>
+<li>利用新生成的标签训练模型上, 利用交叉熵损失优化</li>
+<li>重复以上步骤</li>
+</ol>
+<p><strong>Sinkhron-Knopp Algorithm</strong>: 源于最优运输问题 (仓库, 商店, 运输距离)
+- 原问题: 将N个样本分到K个类中
+- 限制条件: N个样本被均分到K个类中
+- 代价矩阵: 将 使用这种分类方式训练出的模型的模型表现 作为这种划分方式的代价. 如果代价很高, 说明需要调整划分方式以接近理想效果.</p>
+<h2 id="fixmatch-for-semi-supervised-learning">FixMatch for Semi-Supervised Learning<a hidden class="anchor" aria-hidden="true" href="#fixmatch-for-semi-supervised-learning">#</a></h2>
+<ol>
+<li>Intuition: 数据集中只有少部分标注数据和大部分未标注数据, 先用标注数据有监督训练一个模型. 对于未标注数据, 将所有图片做两种变换, 分别送入之前训练的模型, 由于是同一张图片生成的输入, 因此模型的输出应该相同.</li>
+<li>模型结构:
+<ul>
+<li>将已标记数据用于训练, 交叉熵损失作为监督学习的损失函数: $l_s = \dfrac{1}{B}\sum_{b=1}^BH(p_b, p_m(y|\alpha(x_b)))$</li>
+<li>伪标记: 对于一张未标记图片, 先对它进行weak augmentation, 输入模型得到伪标签, 再和strongly augmented image的输出对比.</li>
+<li>针对未标记数据, 半监督部分损失函数: $l_u = \dfrac{1}{\mu B}\sum_{b=1}^{\mu B}1(max(q_b\geq \tau)H(\hat{q}_b, p_m(y|A(u_b))))$, $loss = l_s + \mu l_u$, 其中$\tau$代表伪标记生成的阈值, 当weakly augmented image的softmax超过阈值则生成伪标记, 并和strongly augmented image的结果计算较差熵.</li>
+<li>在最终loss的计算中, 随着训练的进度$\mu$逐渐增大, 具体可以解释为前期对用少量样本训练出的模型不信任, 后期会逐渐加入对未标记数据的考量.</li>
+</ul>
+</li>
+</ol>
+<h2 id="deepcluster">DeepCluster<a hidden class="anchor" aria-hidden="true" href="#deepcluster">#</a></h2>
+<ol>
+<li>主要思想: 图片经过augmentation之后送入convnetm 取分类之前的特征, 经过pca降维, 用kmeans聚类得到各个类别. 将kmeans的结果作为伪标记, 和convnet输出的表示经过分类层得到的结果计算交叉熵.</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://michelia-zhx.github.io/tags/%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE1/">文章标签1</a></li>
+      <li><a href="https://michelia-zhx.github.io/tags/%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE2/">文章标签2</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://michelia-zhx.github.io/posts/2021-09-12-object_detection/">
+    <span class="title">« Prev Page</span>
+    <br>
+    <span>Paper Notes - Object Detection</span>
+  </a>
+  <a class="next" href="https://michelia-zhx.github.io/posts/2021-07-15-pros_paper_notes/">
+    <span class="title">Next Page »</span>
+    <br>
+    <span>Paper Notes - Week 1</span>
+  </a>
+</nav>
+
+
+<div class="share-buttons">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Self-Supervised Learning on twitter"
+        href="https://twitter.com/intent/tweet/?text=Paper%20Notes%20-%20Self-Supervised%20Learning&amp;url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-09-05-self_supervised_learning%2f&amp;hashtags=%e6%96%87%e7%ab%a0%e6%a0%87%e7%ad%be1%2c%e6%96%87%e7%ab%a0%e6%a0%87%e7%ad%be2">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-253.927,424.544c135.939,0 210.268,-112.643 210.268,-210.268c0,-3.218 0,-6.437 -0.153,-9.502c14.406,-10.421 26.973,-23.448 36.935,-38.314c-13.18,5.824 -27.433,9.809 -42.452,11.648c15.326,-9.196 26.973,-23.602 32.49,-40.92c-14.252,8.429 -30.038,14.56 -46.896,17.931c-13.487,-14.406 -32.644,-23.295 -53.946,-23.295c-40.767,0 -73.87,33.104 -73.87,73.87c0,5.824 0.613,11.494 1.992,16.858c-61.456,-3.065 -115.862,-32.49 -152.337,-77.241c-6.284,10.881 -9.962,23.601 -9.962,37.088c0,25.594 13.027,48.276 32.95,61.456c-12.107,-0.307 -23.448,-3.678 -33.41,-9.196l0,0.92c0,35.862 25.441,65.594 59.311,72.49c-6.13,1.686 -12.72,2.606 -19.464,2.606c-4.751,0 -9.348,-0.46 -13.946,-1.38c9.349,29.426 36.628,50.728 68.965,51.341c-25.287,19.771 -57.164,31.571 -91.8,31.571c-5.977,0 -11.801,-0.306 -17.625,-1.073c32.337,21.15 71.264,33.41 112.95,33.41Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Self-Supervised Learning on linkedin"
+        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-09-05-self_supervised_learning%2f&amp;title=Paper%20Notes%20-%20Self-Supervised%20Learning&amp;summary=Paper%20Notes%20-%20Self-Supervised%20Learning&amp;source=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-09-05-self_supervised_learning%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Self-Supervised Learning on reddit"
+        href="https://reddit.com/submit?url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-09-05-self_supervised_learning%2f&title=Paper%20Notes%20-%20Self-Supervised%20Learning">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Self-Supervised Learning on facebook"
+        href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-09-05-self_supervised_learning%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Self-Supervised Learning on whatsapp"
+        href="https://api.whatsapp.com/send?text=Paper%20Notes%20-%20Self-Supervised%20Learning%20-%20https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-09-05-self_supervised_learning%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Self-Supervised Learning on telegram"
+        href="https://telegram.me/share/url?text=Paper%20Notes%20-%20Self-Supervised%20Learning&amp;url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-09-05-self_supervised_learning%2f">
+        <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28">
+            <path
+                d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+        </svg>
+    </a>
+</div>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://michelia-zhx.github.io">Michelia&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

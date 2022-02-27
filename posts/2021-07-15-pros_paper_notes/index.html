@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Paper Notes - Week 1 | Michelia&#39;s Blog</title>
+<meta name="keywords" content="Hugo, static, generator" />
+<meta name="description" content="My first blog">
+<meta name="author" content="Michelia-zhx">
+<link rel="canonical" href="https://michelia-zhx.github.io/posts/2021-07-15-pros_paper_notes/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="apple-touch-icon" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<link rel="mask-icon" href="https://michelia-zhx.github.io/img/Cheese.ico">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Paper Notes - Week 1" />
+<meta property="og:description" content="My first blog" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://michelia-zhx.github.io/posts/2021-07-15-pros_paper_notes/" /><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Paper Notes - Week 1"/>
+<meta name="twitter:description" content="My first blog"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://michelia-zhx.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Paper Notes - Week 1",
+      "item": "https://michelia-zhx.github.io/posts/2021-07-15-pros_paper_notes/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Paper Notes - Week 1",
+  "name": "Paper Notes - Week 1",
+  "description": "My first blog",
+  "keywords": [
+    "Hugo", "static", "generator"
+  ],
+  "articleBody": "Mining Typhoon Knowledge with Neural Networks – Zhi-Hua Zhou, Shi-Fu Chen, Zhao-Qian Chen - 1999  需解决的问题: 神经网络的两个缺点 – 数据量大, 训练时间长; 神经网络对知识的学习果不能直接用于决策. Fast neural model - FTART (Firld Theory based Adaptive Resonance Theory): 隐层的激活函数是Sigmoid函数, 输入层和第二层之间使用Gaussian权重, 并更新. 第二层用于分类输入,第三层用于分类输出, 在这两层之间建立关系来进行有监督学习. Rule extraction algorithm - SPT (Statistic based Producing and Testing):  用大量实例来训练一个神经网络 结合输入和神经网络的输出来构造一个虚拟示例集, 如果存在多个输入分量的组合, 且投影到它时等价的示例属于某个类的概率为$\\lambda$, 则通过将组合作为前因, 类别作为后继来构造规则. 如果没有这样的组合, 则选择具有最佳聚类效果的连续输入组件并离散化. (?) 如何去噪: (?).    FANRE: A Fast Adaptive Neural Regression Estimator – Zhi-Hua Zhou, Shi-Fu Chen, Zhao-Qian Chen - 1999  Adaptive Resonance Theory: 像是一个KNN网络, 可以实现神经元的动态扩充. 对于新来的样本, 和之前的聚类中心进行比较, 如果符合阈值设定(形成共振), 则单独训练与之匹配的聚类中心对应的神经元的相关链接权重, 其他神经元保持不变; 如果所有神经元都不匹配, 那就创造一个新的神经元分配给这个数据形成新的一类. FANRE的结构: 输入层, 输出层, 中间两层隐层. 最初隐层为空, 随输入动态添加隐层结点. 增量学习, 每个样例只过一遍.  两个参数$\\theta_{ij}, \\alpha_{ij}$, 代表从第一层的$unit_i$到第二层的$unit_j$的高斯权重的响应中心和响应特征宽度. $Err_{max}$: 最大容错值, $Vig_1$: first-degree vigilance, $Vig_2$: second-degree vigilance. 且有$Err_{max}   FANRE的学习流程: 输入新样例 $\\Rightarrow$ 第二层竞争 $\\Rightarrow$ 第三层竞争 $\\Rightarrow$ 计算网络输出:(*)  $Err $Err \\geq Err_{max}$:  $Err_{max} \\leq Err $Vig_1 \\leq Err $Err \\geq Vig_2$ [由结点$u$表示的对输出的近似, 和由第二层结点表示的对输入的近似均不合适] $\\Rightarrow$ 第二层和第三层各添加一个结点, 回到(**)      Ensemble of GA based Selective Neural Network Ensembles – Jian-Xin Wu, Zhi-Hua Zhou, Zhao-Qian Chen - 2002 $\\textbf{GASEN}$\n $N$个基学习器$f_i:\\mathbf{R}^m\\rightarrow\\mathbf{R}^n$加权: $\\overline{f}(x) = \\sum_{i=1}^Nw_if_i(x)$ 设对于输入$x$, 期望输出为$d(x)$, 则基学习器和ensemble的误差为 $$E_i(x) = (f_i(x)-d(x))^2, E(x) = (\\overline{f}(x)-d(x))^2$$ 设$x$服从分布$p(x)$, 则基学习器和ensemble在分布上的泛化误差为 $$E_i = \\int p(x)E_i(x)\\rm{d}x, E = \\int p(x)E(x)\\rm{d}x$$ 平均误差为$\\overline{E}(x) = \\sum_{i=1}^Nw_iE_i(x)$, 平均泛化误差为$\\overline{E} = \\int p(x)\\overline{E}(x)\\rm{d}x$ Ambiguity of the i-th learner on input $x$: $$A_i(x) = (f_i(x)-\\overline{f}(x))^2, A_i = \\int p(x)A_i(x)\\rm{d}x$$ $$\\overline{A}(x)=\\sum_{i=1}^Nw_iA_i(x), \\overline{A} = \\int p(x)\\overline{A}(x)\\rm{d}x$$ 定义ensemble的泛化性能: $E = \\overline{E} - \\overline{A}$ 两个基学习器的相关性: $$C_{ij} = \\int p(x)(f_i(x)-d(x))(f_j(x)-d(x))\\rm{d}x$$ $$E = \\sum_{i=1}^N\\sum_{j=1}^Nw_iw_jC_{ij}$$ 当对于第$k$个基学习器, 满足 $$(2N-1)\\sum_{i=1,i\\neq k}^N\\sum_{j=1,j\\neq k}^NC_{ij}  $\\textbf{e-GASEN}$ 先用GASEN算法训几个ensembles, 再用简单的集成算法把这几个ensembles集成起来.\nHybrid Decision Tree – Zhi-Hua Zhou, Zhao-Qian Chen, 2002  处理有序属性 – 定量分析; 无序属性 – 定性分析. 结合symbolic leanring (无序属性) 和 neural learning (有序属性). 树的扩展: 将属性集分为无序属性$\\mathcal{L}_0$和有序属性$\\mathcal{L}_1$, 先将HDT按照无序属性扩展, 当树的分支因为结点里的样本属于同一类别而无法扩展时, 终止扩展; 当因为结点中无序属性均被使用过而无法扩展时, 将这个叶结点标记为neural node. Neural Processing: 落入neural node的样本被连续属性集重新表示, 并被归一化. 然后使用FANNC做分类 (增量学习) 几种增量学习:  E-IL (Example-Incremental Learning) —— 新的样本到来时, 保证学到新知识的同时不要牺牲过多的旧知识. 非增量学习方法会有灾难性遗忘的缺陷. C-IL (Class-Incremental Learning) —— 当新样例属于新类时, 学到新的知识且不用牺牲太多旧的知识 (例如重新学习整个系统) A-IL (Attribute-Incremental Learning) —— 当新样例带有新属性时, 学到新的知识且不用牺牲太多旧的知识 (例如重新学习整个系统)    Face recognition with one training image per person – Jian-Xin Wu, Zhi-Hua Zhou, 2002  人脸识别算法主要有两种类别: geometric feature-based and template-based techniques. PCA属于后者, 但没有考虑标签信息; 而考虑标签信息的每个类别至少需要两张图片 (LDA). $(PC)^2A$ —— projection-combined principal component analysis: 针对每张图片对其进行变换  $x\\in [1,N_1], y\\in [1,N_2], P(x,y)\\in [0,1]$, $P(x,y)$是灰度图 $V_P(x) = \\sum_{y=1}^{N_2}P(x,y), H_P(y) = \\sum_{x=1}^{N_1}P(x,y)$ $\\overline{P} = \\dfrac{\\sum_{x=1}^{N_1}\\sum_{y=1}^{N_2}P(x,y)}{N_1N_2}, M_P(x,y) = \\dfrac{V_P(x)H_P(y)}{N_1N_2\\overline{P}}$ $P_{\\alpha}(x,y) = \\dfrac{P(x,y)+\\alpha M_P(x,y)}{1+\\alpha}$ $P_{\\alpha}'(x,y) = \\dfrac{P_{\\alpha}(x,y) - \\min(P_{\\alpha}(x,y))}{\\max(P_{\\alpha}(x,y)) - \\min(P_{\\alpha}(x,y))}$   最后在projection-combined version of image $P_{\\alpha}(x,y)$上使用$PCA$.  Learning a Rare Event Detection Cascade by Direct Feature Selection – Jianxin Wu, James M.Rehg, Matthew D.Mullin, 2003  人脸检测是稀有事件检测的典型例子, 给一些人脸大小的图片, 其中很少的部分会包含人脸, target patterns occur with much lower frequency than non-targets. 搜索-分类: 搜索图片中可能的区域, 再判别是否包含脸. Viola-Jones framework 包含三个元素: 层叠式结构, 一些长方形特征, 基于AdaBoost的算法 - 在每个分类器中构造长方形特征的ensemble. 每个分类器拒绝一部分不包含人脸的区域, 并使包含人脸的通过. 在每个结点, 给定一个训练集${x_i,y_i}$, 训练目标是从总共$F$个特征中选出一些弱分类器${h_t}$, 集成的分类器$H_i$需要有很高的检测率$d_i$和中等的假正率$f_i$, 则整个层叠式模型的检测率$d = \\prod_{i=1}^nd_i$和假正率$f = \\prod_{i=1}^nf_i$, 可以保证有较高的检测率和很低的假正率. 第$t$轮boosting后, ensemble表示为 $$H(x) = \\left{\\begin{aligned} 1\\quad \u0026 \\sum_{t=1}^T\\alpha_th_t(x) \\geq \\theta\\ 0\\quad \u0026 otherwise \\end{aligned}\\right.$$ 训练一个结点的过程:  训练所有的弱分类器, (*)判断是否$d  D?$  yes $\\Rightarrow$ 添加这个特征以最小化ensemble的假正率 no $\\Rightarrow$ 添加这个特征以最大化ensemble的检测率 (以上的最大化和最小化均通过穷举法完成, 选择加入ensemble后能给ensemble带来最大提升的classifier)   如果 $f \\geq F or d \\leq D$ $\\Rightarrow$ 返回(*)   和Viola-Jones相比, 本算法在每个结点每个弱学习器之训练一次, 而Viola-Jones算法中每个弱学习器每针对一个特征就要训练一次.(?)  A Scalable Approach to Activity Recognition based on Object Use – Jianxin-Wu, Adebola Osuntogun, Tanzeem Choudhury, ICCV 2006  使用动态贝叶斯网络 (Dynamic Bayesian Network), 从视频中稀疏且有噪声的RFID传感器数据和一些活动的常识学习训练模型. Object-use Based Activity Recognition:  $A^t, O^t, R^t, V^t$分别代表活动, 使用的物体, RFID和视频帧. DBN具有的参数: 先验$P(A^1)$, 观测模型$P(O^1|A^1), P(O^{t+1}|O^{t}, A^{t+1})$, 状态转移模型$P(A^{t+1}|A^{t})$, 输出模型$P(V^t|O^t), P(R^t|O^t)$ 如何确定正在使用的物体 —— 除了RFID传感器数据, 借助视频, 将像素组成$8\\times 8$的superpixels, 对比当前帧$t$和$t-3$$t+3$两帧的superpixels, 计算差距, 若差距均超过阈值则将其中的物体认定为正在使用的物体. 将segmented area中提取SIFT特征, 将视频帧看成的集合$V^t = (v^t_1,v^t_2,…,v^t_{n^t})$, 其中任两个SIFT特征相互独立, 且$P(V^t|O^t) = \\prod_{i=1}^{n^t}P(v^t_i|O^t) = \\prod_{i=1}^{n^t}\\mathbf{h}_{O^t}(v_i^t)$   Learning object models w/o human labeling  在EM算法中使用RFID readings和common knowledge去学习object models. E步: 估计给定$R^t, V^t, \\mathbf{h}_{O^t}(v_i^t)$时$O^t$的边际概率 用standard junction tree算法估计每一个时刻$O^t$的边际概率 给定$O^t$的边际概率, $V^t$和$A^t$独立 M步: 计数, 更新$\\mathbf{h}_{O^t}(v_i^t)$   Specify parameters from domain knowledge  不想细看了    P.S. without = w/o\n",
+  "wordCount" : "3002",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Michelia-zhx"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://michelia-zhx.github.io/posts/2021-07-15-pros_paper_notes/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Michelia's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://michelia-zhx.github.io/img/Cheese.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://michelia-zhx.github.io" accesskey="h" title="Michelia&#39;s Blog (Alt + H)">Michelia&#39;s Blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://michelia-zhx.github.io/" title="🏠Home">
+                    <span>🏠Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/posts" title="📖Posts">
+                    <span>📖Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/archives/" title="⏱Archives">
+                    <span>⏱Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/tags" title="🔖Tags">
+                    <span>🔖Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/about" title="👧🏻About">
+                    <span>👧🏻About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://michelia-zhx.github.io/search" title="🔍Search (Alt &#43; /)" accesskey=/>
+                    <span>🔍Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://michelia-zhx.github.io">Home</a>&nbsp;»&nbsp;<a href="https://michelia-zhx.github.io/posts/">Posts</a></div>
+    <h1 class="post-title">
+      Paper Notes - Week 1
+    </h1>
+    <div class="post-description">
+      My first blog
+    </div>
+    <div class="post-meta">6 min&nbsp;·&nbsp;Michelia-zhx
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul><ul>
+                <li>
+                    <a href="#mining-typhoon-knowledge-with-neural-networks----zhi-hua-zhou-shi-fu-chen-zhao-qian-chen---1999" aria-label="Mining Typhoon Knowledge with Neural Networks &amp;ndash; Zhi-Hua Zhou, Shi-Fu Chen, Zhao-Qian Chen - 1999">Mining Typhoon Knowledge with Neural Networks &ndash; Zhi-Hua Zhou, Shi-Fu Chen, Zhao-Qian Chen - 1999</a></li>
+                <li>
+                    <a href="#fanre-a-fast-adaptive-neural-regression-estimator----zhi-hua-zhou-shi-fu-chen-zhao-qian-chen---1999" aria-label="FANRE: A Fast Adaptive Neural Regression Estimator &amp;ndash; Zhi-Hua Zhou, Shi-Fu Chen, Zhao-Qian Chen - 1999">FANRE: A Fast Adaptive Neural Regression Estimator &ndash; Zhi-Hua Zhou, Shi-Fu Chen, Zhao-Qian Chen - 1999</a></li>
+                <li>
+                    <a href="#ensemble-of-ga-based-selective-neural-network-ensembles----jian-xin-wu-zhi-hua-zhou-zhao-qian-chen---2002" aria-label="Ensemble of GA based Selective Neural Network Ensembles &amp;ndash; Jian-Xin Wu, Zhi-Hua Zhou, Zhao-Qian Chen - 2002">Ensemble of GA based Selective Neural Network Ensembles &ndash; Jian-Xin Wu, Zhi-Hua Zhou, Zhao-Qian Chen - 2002</a></li>
+                <li>
+                    <a href="#hybrid-decision-tree----zhi-hua-zhou-zhao-qian-chen-2002" aria-label="Hybrid Decision Tree &amp;ndash; Zhi-Hua Zhou, Zhao-Qian Chen, 2002">Hybrid Decision Tree &ndash; Zhi-Hua Zhou, Zhao-Qian Chen, 2002</a></li></ul>
+                    
+                <li>
+                    <a href="#face-recognition-with-one-training-image-per-person----jian-xin-wu-zhi-hua-zhou-2002" aria-label="Face recognition with one training image per person &amp;ndash; Jian-Xin Wu, Zhi-Hua Zhou, 2002">Face recognition with one training image per person &ndash; Jian-Xin Wu, Zhi-Hua Zhou, 2002</a></li>
+                <li>
+                    <a href="#learning-a-rare-event-detection-cascade-by-direct-feature-selection----jianxin-wu-james-mrehg-matthew-dmullin-2003" aria-label="Learning a Rare Event Detection Cascade by Direct Feature Selection &amp;ndash; Jianxin Wu, James M.Rehg, Matthew D.Mullin, 2003">Learning a Rare Event Detection Cascade by Direct Feature Selection &ndash; Jianxin Wu, James M.Rehg, Matthew D.Mullin, 2003</a></li>
+                <li>
+                    <a href="#a-scalable-approach-to-activity-recognition-based-on-object-use----jianxin-wu-adebola-osuntogun-tanzeem-choudhury-iccv-2006" aria-label="A Scalable Approach to Activity Recognition based on Object Use &amp;ndash; Jianxin-Wu, Adebola Osuntogun, Tanzeem Choudhury, ICCV 2006">A Scalable Approach to Activity Recognition based on Object Use &ndash; Jianxin-Wu, Adebola Osuntogun, Tanzeem Choudhury, ICCV 2006</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h3 id="mining-typhoon-knowledge-with-neural-networks----zhi-hua-zhou-shi-fu-chen-zhao-qian-chen---1999">Mining Typhoon Knowledge with Neural Networks &ndash; Zhi-Hua Zhou, Shi-Fu Chen, Zhao-Qian Chen - 1999<a hidden class="anchor" aria-hidden="true" href="#mining-typhoon-knowledge-with-neural-networks----zhi-hua-zhou-shi-fu-chen-zhao-qian-chen---1999">#</a></h3>
+<ol>
+<li>需解决的问题: 神经网络的两个缺点 &ndash; 数据量大, 训练时间长; 神经网络对知识的学习果不能直接用于决策.</li>
+<li>Fast neural model - FTART (Firld Theory based Adaptive Resonance Theory): 隐层的激活函数是Sigmoid函数, 输入层和第二层之间使用Gaussian权重, 并更新. 第二层用于分类输入,第三层用于分类输出, 在这两层之间建立关系来进行有监督学习.</li>
+<li>Rule extraction algorithm - SPT (Statistic based Producing and Testing):
+<ul>
+<li>用大量实例来训练一个神经网络</li>
+<li>结合输入和神经网络的输出来构造一个虚拟示例集, 如果存在多个输入分量的组合, 且投影到它时等价的示例属于某个类的概率为$\lambda$, 则通过将组合作为前因, 类别作为后继来构造规则.</li>
+<li>如果没有这样的组合, 则选择具有最佳聚类效果的连续输入组件并离散化. (?)</li>
+<li>如何去噪: (?).</li>
+</ul>
+</li>
+</ol>
+<h3 id="fanre-a-fast-adaptive-neural-regression-estimator----zhi-hua-zhou-shi-fu-chen-zhao-qian-chen---1999">FANRE: A Fast Adaptive Neural Regression Estimator &ndash; Zhi-Hua Zhou, Shi-Fu Chen, Zhao-Qian Chen - 1999<a hidden class="anchor" aria-hidden="true" href="#fanre-a-fast-adaptive-neural-regression-estimator----zhi-hua-zhou-shi-fu-chen-zhao-qian-chen---1999">#</a></h3>
+<ol>
+<li>Adaptive Resonance Theory: 像是一个KNN网络, 可以实现神经元的动态扩充. 对于新来的样本, 和之前的聚类中心进行比较, 如果符合阈值设定(形成共振), 则单独训练与之匹配的聚类中心对应的神经元的相关链接权重, 其他神经元保持不变; 如果所有神经元都不匹配, 那就创造一个新的神经元分配给这个数据形成新的一类.</li>
+<li>FANRE的结构: 输入层, 输出层, 中间两层隐层. 最初隐层为空, 随输入动态添加隐层结点. 增量学习, 每个样例只过一遍.
+<ul>
+<li>两个参数$\theta_{ij}, \alpha_{ij}$, 代表从第一层的$unit_i$到第二层的$unit_j$的高斯权重的响应中心和响应特征宽度.</li>
+<li>$Err_{max}$: 最大容错值, $Vig_1$: first-degree vigilance, $Vig_2$: second-degree vigilance. 且有$Err_{max} &lt; Vig_1 &lt; Vig_2$</li>
+</ul>
+</li>
+<li>FANRE的学习流程: 输入新样例 $\Rightarrow$ 第二层竞争 $\Rightarrow$ 第三层竞争 $\Rightarrow$ 计算网络输出:(*)
+<ul>
+<li>$Err &lt; Err_{max}$ [已有的attracting basin能覆盖当前样例, 不需要调整] $\Rightarrow$ 下一个样例(**)</li>
+<li>$Err \geq Err_{max}$:
+<ul>
+<li>$Err_{max} \leq Err &lt; Vig_1$ [虽然总体的近似表现不尽如人意, 但内部对输入输出模式的近似还是可用的] $\Rightarrow$ 调整$\theta_{ij}'$和$\alpha_{ij}$, 回到(*)</li>
+<li>$Vig_1 \leq Err &lt; Vig_2$ [由结点$u$表示的对输出的近似可用, 但由第二层结点表示的对输入的近似不合适] $\Rightarrow$ 第二层添加一个结点, 回到(**)</li>
+<li>$Err \geq Vig_2$ [由结点$u$表示的对输出的近似, 和由第二层结点表示的对输入的近似均不合适] $\Rightarrow$ 第二层和第三层各添加一个结点, 回到(**)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="ensemble-of-ga-based-selective-neural-network-ensembles----jian-xin-wu-zhi-hua-zhou-zhao-qian-chen---2002">Ensemble of GA based Selective Neural Network Ensembles &ndash; Jian-Xin Wu, Zhi-Hua Zhou, Zhao-Qian Chen - 2002<a hidden class="anchor" aria-hidden="true" href="#ensemble-of-ga-based-selective-neural-network-ensembles----jian-xin-wu-zhi-hua-zhou-zhao-qian-chen---2002">#</a></h3>
+<p>$\textbf{GASEN}$</p>
+<ol>
+<li>$N$个基学习器$f_i:\mathbf{R}^m\rightarrow\mathbf{R}^n$加权: $\overline{f}(x) = \sum_{i=1}^Nw_if_i(x)$</li>
+<li>设对于输入$x$, 期望输出为$d(x)$, 则基学习器和ensemble的误差为
+$$E_i(x) = (f_i(x)-d(x))^2, E(x) = (\overline{f}(x)-d(x))^2$$</li>
+<li>设$x$服从分布$p(x)$, 则基学习器和ensemble在分布上的泛化误差为
+$$E_i = \int p(x)E_i(x)\rm{d}x, E = \int p(x)E(x)\rm{d}x$$</li>
+<li>平均误差为$\overline{E}(x) = \sum_{i=1}^Nw_iE_i(x)$, 平均泛化误差为$\overline{E} = \int p(x)\overline{E}(x)\rm{d}x$</li>
+<li>Ambiguity of the i-th learner on input $x$:
+$$A_i(x) = (f_i(x)-\overline{f}(x))^2, A_i = \int p(x)A_i(x)\rm{d}x$$
+$$\overline{A}(x)=\sum_{i=1}^Nw_iA_i(x), \overline{A} = \int p(x)\overline{A}(x)\rm{d}x$$</li>
+<li>定义ensemble的泛化性能: $E = \overline{E} - \overline{A}$</li>
+<li>两个基学习器的相关性:
+$$C_{ij} = \int p(x)(f_i(x)-d(x))(f_j(x)-d(x))\rm{d}x$$
+$$E = \sum_{i=1}^N\sum_{j=1}^Nw_iw_jC_{ij}$$</li>
+<li>当对于第$k$个基学习器, 满足
+$$(2N-1)\sum_{i=1,i\neq k}^N\sum_{j=1,j\neq k}^NC_{ij} &lt; 2(N-1)^2\sum_{i=1,i\neq k}^NC_{ik} + (N-1)^2E_k$$</li>
+</ol>
+<p>$\textbf{e-GASEN}$
+先用GASEN算法训几个ensembles, 再用简单的集成算法把这几个ensembles集成起来.</p>
+<h3 id="hybrid-decision-tree----zhi-hua-zhou-zhao-qian-chen-2002">Hybrid Decision Tree &ndash; Zhi-Hua Zhou, Zhao-Qian Chen, 2002<a hidden class="anchor" aria-hidden="true" href="#hybrid-decision-tree----zhi-hua-zhou-zhao-qian-chen-2002">#</a></h3>
+<ol>
+<li>处理有序属性 &ndash; 定量分析; 无序属性 &ndash; 定性分析. 结合symbolic leanring (无序属性) 和 neural learning (有序属性).</li>
+<li>树的扩展: 将属性集分为无序属性$\mathcal{L}_0$和有序属性$\mathcal{L}_1$, 先将HDT按照无序属性扩展, 当树的分支因为结点里的样本属于同一类别而无法扩展时, 终止扩展; 当因为结点中无序属性均被使用过而无法扩展时, 将这个叶结点标记为neural node.</li>
+<li>Neural Processing: 落入neural node的样本被连续属性集重新表示, 并被归一化. 然后使用FANNC做分类 (增量学习)</li>
+<li>几种增量学习:
+<ul>
+<li>E-IL (Example-Incremental Learning) —— 新的样本到来时, 保证学到新知识的同时不要牺牲过多的旧知识. 非增量学习方法会有灾难性遗忘的缺陷.</li>
+<li>C-IL (Class-Incremental Learning) —— 当新样例属于新类时, 学到新的知识且不用牺牲太多旧的知识 (例如重新学习整个系统)</li>
+<li>A-IL (Attribute-Incremental Learning) —— 当新样例带有新属性时, 学到新的知识且不用牺牲太多旧的知识 (例如重新学习整个系统)</li>
+</ul>
+</li>
+</ol>
+<h2 id="face-recognition-with-one-training-image-per-person----jian-xin-wu-zhi-hua-zhou-2002">Face recognition with one training image per person &ndash; Jian-Xin Wu, Zhi-Hua Zhou, 2002<a hidden class="anchor" aria-hidden="true" href="#face-recognition-with-one-training-image-per-person----jian-xin-wu-zhi-hua-zhou-2002">#</a></h2>
+<ol>
+<li>人脸识别算法主要有两种类别: geometric feature-based and template-based techniques.</li>
+<li>PCA属于后者, 但没有考虑标签信息; 而考虑标签信息的每个类别至少需要两张图片 (LDA).</li>
+<li>$(PC)^2A$ —— projection-combined principal component analysis: 针对每张图片对其进行变换
+<ul>
+<li>$x\in [1,N_1], y\in [1,N_2], P(x,y)\in [0,1]$, $P(x,y)$是灰度图</li>
+<li>$V_P(x) = \sum_{y=1}^{N_2}P(x,y), H_P(y) = \sum_{x=1}^{N_1}P(x,y)$</li>
+<li>$\overline{P} = \dfrac{\sum_{x=1}^{N_1}\sum_{y=1}^{N_2}P(x,y)}{N_1N_2}, M_P(x,y) = \dfrac{V_P(x)H_P(y)}{N_1N_2\overline{P}}$</li>
+<li>$P_{\alpha}(x,y) = \dfrac{P(x,y)+\alpha M_P(x,y)}{1+\alpha}$</li>
+<li>$P_{\alpha}'(x,y) = \dfrac{P_{\alpha}(x,y) - \min(P_{\alpha}(x,y))}{\max(P_{\alpha}(x,y)) - \min(P_{\alpha}(x,y))}$</li>
+</ul>
+</li>
+<li>最后在projection-combined version of image $P_{\alpha}(x,y)$上使用$PCA$.</li>
+</ol>
+<h2 id="learning-a-rare-event-detection-cascade-by-direct-feature-selection----jianxin-wu-james-mrehg-matthew-dmullin-2003">Learning a Rare Event Detection Cascade by Direct Feature Selection &ndash; Jianxin Wu, James M.Rehg, Matthew D.Mullin, 2003<a hidden class="anchor" aria-hidden="true" href="#learning-a-rare-event-detection-cascade-by-direct-feature-selection----jianxin-wu-james-mrehg-matthew-dmullin-2003">#</a></h2>
+<ol>
+<li>人脸检测是稀有事件检测的典型例子, 给一些人脸大小的图片, 其中很少的部分会包含人脸, target patterns occur with much lower frequency than non-targets.</li>
+<li>搜索-分类: 搜索图片中可能的区域, 再判别是否包含脸. Viola-Jones framework 包含三个元素: 层叠式结构, 一些长方形特征, 基于AdaBoost的算法 - 在每个分类器中构造长方形特征的ensemble. 每个分类器拒绝一部分不包含人脸的区域, 并使包含人脸的通过.</li>
+<li>在每个结点, 给定一个训练集${x_i,y_i}$, 训练目标是从总共$F$个特征中选出一些弱分类器${h_t}$, 集成的分类器$H_i$需要有很高的检测率$d_i$和中等的假正率$f_i$, 则整个层叠式模型的检测率$d = \prod_{i=1}^nd_i$和假正率$f = \prod_{i=1}^nf_i$, 可以保证有较高的检测率和很低的假正率. 第$t$轮boosting后, ensemble表示为
+$$H(x) = \left{\begin{aligned}
+1\quad &amp; \sum_{t=1}^T\alpha_th_t(x) \geq \theta\
+0\quad &amp; otherwise
+\end{aligned}\right.$$</li>
+<li>训练一个结点的过程:
+<ul>
+<li>训练所有的弱分类器, (*)判断是否$d &gt; D?$
+<ul>
+<li>yes $\Rightarrow$ 添加这个特征以最小化ensemble的假正率</li>
+<li>no $\Rightarrow$ 添加这个特征以最大化ensemble的检测率</li>
+<li>(以上的最大化和最小化均通过穷举法完成, 选择加入ensemble后能给ensemble带来最大提升的classifier)</li>
+</ul>
+</li>
+<li>如果 $f \geq F or d \leq D$ $\Rightarrow$ 返回(*)</li>
+</ul>
+</li>
+<li>和Viola-Jones相比, 本算法在每个结点每个弱学习器之训练一次, 而Viola-Jones算法中每个弱学习器每针对一个特征就要训练一次.(?)</li>
+</ol>
+<h2 id="a-scalable-approach-to-activity-recognition-based-on-object-use----jianxin-wu-adebola-osuntogun-tanzeem-choudhury-iccv-2006">A Scalable Approach to Activity Recognition based on Object Use &ndash; Jianxin-Wu, Adebola Osuntogun, Tanzeem Choudhury, ICCV 2006<a hidden class="anchor" aria-hidden="true" href="#a-scalable-approach-to-activity-recognition-based-on-object-use----jianxin-wu-adebola-osuntogun-tanzeem-choudhury-iccv-2006">#</a></h2>
+<ol>
+<li>使用动态贝叶斯网络 (Dynamic Bayesian Network), 从视频中稀疏且有噪声的RFID传感器数据和一些活动的常识学习训练模型.</li>
+<li>Object-use Based Activity Recognition:
+<ul>
+<li>$A^t, O^t, R^t, V^t$分别代表活动, 使用的物体, RFID和视频帧.</li>
+<li>DBN具有的参数: 先验$P(A^1)$, 观测模型$P(O^1|A^1), P(O^{t+1}|O^{t}, A^{t+1})$, 状态转移模型$P(A^{t+1}|A^{t})$, 输出模型$P(V^t|O^t), P(R^t|O^t)$</li>
+<li>如何确定正在使用的物体 —— 除了RFID传感器数据, 借助视频, 将像素组成$8\times 8$的superpixels, 对比当前帧$t$和$t-3$$t+3$两帧的superpixels, 计算差距, 若差距均超过阈值则将其中的物体认定为正在使用的物体.</li>
+<li>将segmented area中提取SIFT特征, 将视频帧看成的集合$V^t = (v^t_1,v^t_2,&hellip;,v^t_{n^t})$, 其中任两个SIFT特征相互独立, 且$P(V^t|O^t) = \prod_{i=1}^{n^t}P(v^t_i|O^t) = \prod_{i=1}^{n^t}\mathbf{h}_{O^t}(v_i^t)$</li>
+</ul>
+</li>
+<li>Learning object models w/o human labeling
+<ul>
+<li>在EM算法中使用RFID readings和common knowledge去学习object models.</li>
+<li>E步: 估计给定$R^t, V^t, \mathbf{h}_{O^t}(v_i^t)$时$O^t$的边际概率</li>
+<li>用standard junction tree算法估计每一个时刻$O^t$的边际概率</li>
+<li>给定$O^t$的边际概率, $V^t$和$A^t$独立</li>
+<li>M步: 计数, 更新$\mathbf{h}_{O^t}(v_i^t)$</li>
+</ul>
+</li>
+<li>Specify parameters from domain knowledge
+<ul>
+<li>不想细看了</li>
+</ul>
+</li>
+</ol>
+<p>P.S. without = w/o</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://michelia-zhx.github.io/tags/%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE1/">文章标签1</a></li>
+      <li><a href="https://michelia-zhx.github.io/tags/%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE2/">文章标签2</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://michelia-zhx.github.io/posts/2021-09-05-self_supervised_learning/">
+    <span class="title">« Prev Page</span>
+    <br>
+    <span>Paper Notes - Self-Supervised Learning</span>
+  </a>
+  <a class="next" href="https://michelia-zhx.github.io/posts/2021-07-22-pros_paper_notes/">
+    <span class="title">Next Page »</span>
+    <br>
+    <span>Paper Notes - Week 2</span>
+  </a>
+</nav>
+
+
+<div class="share-buttons">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Week 1 on twitter"
+        href="https://twitter.com/intent/tweet/?text=Paper%20Notes%20-%20Week%201&amp;url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-07-15-pros_paper_notes%2f&amp;hashtags=%e6%96%87%e7%ab%a0%e6%a0%87%e7%ad%be1%2c%e6%96%87%e7%ab%a0%e6%a0%87%e7%ad%be2">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-253.927,424.544c135.939,0 210.268,-112.643 210.268,-210.268c0,-3.218 0,-6.437 -0.153,-9.502c14.406,-10.421 26.973,-23.448 36.935,-38.314c-13.18,5.824 -27.433,9.809 -42.452,11.648c15.326,-9.196 26.973,-23.602 32.49,-40.92c-14.252,8.429 -30.038,14.56 -46.896,17.931c-13.487,-14.406 -32.644,-23.295 -53.946,-23.295c-40.767,0 -73.87,33.104 -73.87,73.87c0,5.824 0.613,11.494 1.992,16.858c-61.456,-3.065 -115.862,-32.49 -152.337,-77.241c-6.284,10.881 -9.962,23.601 -9.962,37.088c0,25.594 13.027,48.276 32.95,61.456c-12.107,-0.307 -23.448,-3.678 -33.41,-9.196l0,0.92c0,35.862 25.441,65.594 59.311,72.49c-6.13,1.686 -12.72,2.606 -19.464,2.606c-4.751,0 -9.348,-0.46 -13.946,-1.38c9.349,29.426 36.628,50.728 68.965,51.341c-25.287,19.771 -57.164,31.571 -91.8,31.571c-5.977,0 -11.801,-0.306 -17.625,-1.073c32.337,21.15 71.264,33.41 112.95,33.41Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Week 1 on linkedin"
+        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-07-15-pros_paper_notes%2f&amp;title=Paper%20Notes%20-%20Week%201&amp;summary=Paper%20Notes%20-%20Week%201&amp;source=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-07-15-pros_paper_notes%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Week 1 on reddit"
+        href="https://reddit.com/submit?url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-07-15-pros_paper_notes%2f&title=Paper%20Notes%20-%20Week%201">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Week 1 on facebook"
+        href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-07-15-pros_paper_notes%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Week 1 on whatsapp"
+        href="https://api.whatsapp.com/send?text=Paper%20Notes%20-%20Week%201%20-%20https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-07-15-pros_paper_notes%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Paper Notes - Week 1 on telegram"
+        href="https://telegram.me/share/url?text=Paper%20Notes%20-%20Week%201&amp;url=https%3a%2f%2fmichelia-zhx.github.io%2fposts%2f2021-07-15-pros_paper_notes%2f">
+        <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28">
+            <path
+                d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+        </svg>
+    </a>
+</div>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://michelia-zhx.github.io">Michelia&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
