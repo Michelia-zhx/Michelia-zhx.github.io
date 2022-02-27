@@ -98,8 +98,8 @@
   "keywords": [
     "Hugo", "static", "generator"
   ],
-  "articleBody": "Active Learning 也称为查询学习或者最优实验设计. 主动学习通过设计合理的查询函数, 不断从未标注的数据中挑选出数据标注后放入训练集. 有效的主动学习数据选择策略可以有效地降低训练的代价并同时提高模型的识别能力.\n一. 主动学习的场景   Membership Query Sythesis 生成一个询问, 并请求这个样本的标签, 这个样本可能是未标注数据中的任意一个, 甚至是从头生成的, 反正这些数据一般不是简单的服从一个自然分布的随机.\n  Stream-Based (Sequential) Selective Sampling 基于流的有选择性地选择目标, 这种通常是假设会有大量廉价的无标签数据. 它将采样一个无标签的数据, 然后决定是要询问它的标签还是忽略它 (如果数据是均匀分布, 那么和上一种情况一样), 通常基于下面的两个度量:\n 更大的信息量: 选择这些具有高信息量的数据 不确定性原则: 选择落在这种不确定域之中的数据    Pool Based Sampling 基于池的采样, 假设能够一次性获得大量未标注的数据, 并进行同时处理. 可以对数据池中的数据进行信息量排序, 直接采最有信息量的数据进行分析.\n  基于流的场景下, 数据是顺序来到的, 不会有全局的视野, 而基于池的则是更加常见的做法可以一次性对所有数据的信息量进行分析. 但是有的时候因为数据的生成情况或者计算带宽内存等的限制, 人们还是不得已还是要使用基于流的场景.\n二. Query Strategy Frameworks 用$x^*_A$表示某种采样算法$A$下最有信息量的样本.\nUncertainty Sampling  用熵作度量: $x^*_{ENT} = \\argmax_x -\\sum_iP(y_i|x;\\theta)\\log P(y_i|x;\\theta)$ 用置信度作度量: $x^_{LC} = \\argmin_x P(y^|x;\\theta), y^* = \\argmax_yP_{\\theta}(y|x)$, 选取最大置信度最小的样本 用最小间隔作度量: $x^{SM} = \\argmax_xP{\\theta}(y^1|x) - P{\\theta}(y^_2|x), y^_1, y^*_2$为可能性最高的两个样本.  Query-By-Committee (QBC)  选择一定数量的模型构成委员会$\\mathcal{C}={\\theta^{(1)},…,\\theta^{(C)}}$, 对未标注的数据进行处理, 挑选出所有未标记数据中各个模型意见最不一致的样本. 不一致的度量:  用投票熵作度量: $$x^*_{VE} = \\argmax_x-\\sum_i\\dfrac{V(y_i)}{C}\\log\\dfrac{V(y_i)}{C}$$ 用KL散度(衡量两个分布的差异)作度量: $$x^*{KL} = \\argmax_x\\dfrac{1}{C}\\sum{c=1}^CD(P_{\\theta^{(c)}}|P_{\\mathcal{C}})$$ 其中 $$D(P_{\\theta^{(c)}}|P_{\\mathcal{C}}) = \\sum_iP(y_i|x;\\theta^{(c)})\\log\\dfrac{P(y_i|x;\\theta^{(c)})}{P(y_i|x;\\mathcal{C})}$$    Expected Model Change  去采的样本应当具备条件: 当它被赋予标记, 应当最大程度优化模型 —— 用训练梯度作为这种优化的衡量. $$x^*_{EGL} = \\argmax_x\\sum_iP(y_i|x;\\theta)|\\nabla \\mathcal{l}(\\mathcal{L}\\cup\\langle x, y_i\\rangle;\\theta)|$$  Variance Reduction and Fisher Information Ratio   最小化学习器的未来误差 (偏置-方差分解): $$E_T[(o-y)^2|x] = E[(y-E[y|x])^2] + (E_{\\mathcal{L}}[o] - E[y|x])^2 + E_{\\mathcal{L}}[(o-E_{\\mathcal{L}}[o])^2]$$\n  右边三项分别为噪音、偏置的平方、方差. 只适用于回归任务.\n  离散分类器使用Fisher Information: $$\\mathcal{I}(\\theta) = -\\int_xP(x)\\int_yP(y|x;\\theta)\\dfrac{\\partial^2}{\\partial\\theta^2}\\log P(y|x;\\theta)$$\n  最佳检索样本应最小化Fisher Information Ratio: $$x^*_{FIR} = \\argmin_xtr(\\mathcal{I}x(\\theta)^{-1}\\mathcal{I}{\\mathcal{U}}(\\theta))$$\n  $\\mathcal{I}x(\\theta)$不仅说明模型对样本$x$的不确定性有多大, 而且说明了是哪个参数造成了这种不确定性. $\\mathcal{I}{\\mathcal{U}}(\\theta)$表明了在整个数据集上的不确定性.\n  Estimated Error Reduction Density-Weight Methods 三. 主动学习分析 理论分析 四. Problem Setting Varients (变体) 结构化输出的主动学习  序列化模型 (CRF 或 HMM) 产生的输出. 树状输出.  批处理模式下的主动学习  适合并行处理. 每次选取最优的N个样本不一定能达到很好的效果, 因为没有考虑这些样本间信息的重合度.  主动学习的代价 多种访问类型 ",
-  "wordCount" : "1156",
+  "articleBody": "Active Learning 也称为查询学习或者最优实验设计. 主动学习通过设计合理的查询函数, 不断从未标注的数据中挑选出数据标注后放入训练集. 有效的主动学习数据选择策略可以有效地降低训练的代价并同时提高模型的识别能力.\n一. 主动学习的场景   Membership Query Sythesis 生成一个询问, 并请求这个样本的标签, 这个样本可能是未标注数据中的任意一个, 甚至是从头生成的, 反正这些数据一般不是简单的服从一个自然分布的随机.\n  Stream-Based (Sequential) Selective Sampling 基于流的有选择性地选择目标, 这种通常是假设会有大量廉价的无标签数据. 它将采样一个无标签的数据, 然后决定是要询问它的标签还是忽略它 (如果数据是均匀分布, 那么和上一种情况一样), 通常基于下面的两个度量:\n 更大的信息量: 选择这些具有高信息量的数据 不确定性原则: 选择落在这种不确定域之中的数据    Pool Based Sampling 基于池的采样, 假设能够一次性获得大量未标注的数据, 并进行同时处理. 可以对数据池中的数据进行信息量排序, 直接采最有信息量的数据进行分析.\n  基于流的场景下, 数据是顺序来到的, 不会有全局的视野, 而基于池的则是更加常见的做法可以一次性对所有数据的信息量进行分析. 但是有的时候因为数据的生成情况或者计算带宽内存等的限制, 人们还是不得已还是要使用基于流的场景.\n二. Query Strategy Frameworks 用$x^*_A$表示某种采样算法$A$下最有信息量的样本.\nUncertainty Sampling  用熵作度量: $x^*_{ENT} = \\rm{argmax}_x -\\sum_i P(y_i|x;\\theta)\\log P(y_i|x;\\theta)$ 用置信度作度量: $x^_{LC} = \\rm{argmin}_x P(y^|x; \\theta)$, $y^* = \\rm{argmin}y P{\\theta}(y|x)$, 选取最大置信度最小的样本 用最小间隔作度量: $x^_{SM} = \\rm{argmax}x P{\\theta}(y^1|x) - P{\\theta}(y^_2|x), y^_1, y^*_2$ 为可能性最高的两个样本.  Query-By-Committee (QBC)  选择一定数量的模型构成委员会 $\\mathcal{C}={\\theta^{(1)},…,\\theta^{(C)}}$, 对未标注的数据进行处理, 挑选出所有未标记数据中各个模型意见最不一致的样本. 不一致的度量:  用投票熵作度量: $$x^*_{VE} = \\rm{argmax}_x-\\sum_i\\dfrac{V(y_i)}{C}\\log\\dfrac{V(y_i)}{C}$$ 用KL散度(衡量两个分布的差异)作度量: $$x^*{KL} = \\argmax_x\\dfrac{1}{C}\\sum{c=1}^CD(P_{\\theta^{(c)}}|P_{\\mathcal{C}})$$, 其中 $$D(P_{\\theta^{(c)}}|P_{\\mathcal{C}}) = \\sum_iP(y_i|x;\\theta^{(c)})\\log\\dfrac{P(y_i|x;\\theta^{(c)})}{P(y_i|x;\\mathcal{C})}$$    Expected Model Change  去采的样本应当具备条件: 当它被赋予标记, 应当最大程度优化模型 —— 用训练梯度作为这种优化的衡量. $$x^*_{EGL} = \\rm{argmax}_x\\sum_iP(y_i|x;\\theta)|\\nabla \\mathcal{l}(\\mathcal{L}\\cup\\langle x, y_i\\rangle;\\theta)|$$  Variance Reduction and Fisher Information Ratio   最小化学习器的未来误差 (偏置-方差分解): $$E_T[(o-y)^2|x] = E[(y-E[y|x])^2] + (E_{\\mathcal{L}}[o] - E[y|x])^2 + E_{\\mathcal{L}}[(o-E_{\\mathcal{L}}[o])^2]$$\n  右边三项分别为噪音、偏置的平方、方差. 只适用于回归任务.\n  离散分类器使用Fisher Information: $$\\mathcal{I}(\\theta) = -\\int_xP(x)\\int_yP(y|x;\\theta)\\dfrac{\\partial^2}{\\partial\\theta^2}\\log P(y|x;\\theta)$$\n  最佳检索样本应最小化Fisher Information Ratio: $$x^*_{FIR} = \\argmin_xtr(\\mathcal{I}x(\\theta)^{-1}\\mathcal{I}{\\mathcal{U}}(\\theta))$$\n  $\\mathcal{I}x(\\theta)$不仅说明模型对样本$x$的不确定性有多大, 而且说明了是哪个参数造成了这种不确定性. $\\mathcal{I}{\\mathcal{U}}(\\theta)$表明了在整个数据集上的不确定性.\n  Estimated Error Reduction Density-Weight Methods 三. 主动学习分析 理论分析 四. Problem Setting Varients (变体) 结构化输出的主动学习  序列化模型 (CRF 或 HMM) 产生的输出. 树状输出.  批处理模式下的主动学习  适合并行处理. 每次选取最优的N个样本不一定能达到很好的效果, 因为没有考虑这些样本间信息的重合度.  主动学习的代价 多种访问类型 ",
+  "wordCount" : "1105",
   "inLanguage": "en",
   "datePublished": "0001-01-01T00:00:00Z",
   "dateModified": "0001-01-01T00:00:00Z",
@@ -288,27 +288,23 @@
 <p>用$x^*_A$表示某种采样算法$A$下最有信息量的样本.</p>
 <h3 id="uncertainty-sampling">Uncertainty Sampling<a hidden class="anchor" aria-hidden="true" href="#uncertainty-sampling">#</a></h3>
 <ul>
-<li>用熵作度量: $x^*_{ENT} = \argmax_x -\sum_iP(y_i|x;\theta)\log P(y_i|x;\theta)$</li>
-<li>用置信度作度量: $x^<em>_{LC} = \argmin_x P(y^</em>|x;\theta), y^* = \argmax_yP_{\theta}(y|x)$, 选取最大置信度最小的样本</li>
-<li>用最小间隔作度量: $x^<em><em>{SM} = \argmax_xP</em>{\theta}(y^</em><em>1|x) - P</em>{\theta}(y^<em>_2|x), y^</em>_1, y^*_2$为可能性最高的两个样本.</li>
+<li>用熵作度量: $x^*_{ENT} = \rm{argmax}_x -\sum_i P(y_i|x;\theta)\log P(y_i|x;\theta)$</li>
+<li>用置信度作度量: $x^<em>_{LC} = \rm{argmin}_x P(y^</em>|x; \theta)$, $y^* = \rm{argmin}<em>y P</em>{\theta}(y|x)$, 选取最大置信度最小的样本</li>
+<li>用最小间隔作度量: $x^<em>_{SM} = \rm{argmax}<em>x P</em>{\theta}(y^</em><em>1|x) - P</em>{\theta}(y^<em>_2|x), y^</em>_1, y^*_2$ 为可能性最高的两个样本.</li>
 </ul>
 <h3 id="query-by-committee-qbc">Query-By-Committee (QBC)<a hidden class="anchor" aria-hidden="true" href="#query-by-committee-qbc">#</a></h3>
 <ul>
-<li>选择一定数量的模型构成委员会$\mathcal{C}={\theta^{(1)},&hellip;,\theta^{(C)}}$, 对未标注的数据进行处理, 挑选出所有未标记数据中各个模型意见最不一致的样本. 不一致的度量:
+<li>选择一定数量的模型构成委员会 $\mathcal{C}={\theta^{(1)},&hellip;,\theta^{(C)}}$, 对未标注的数据进行处理, 挑选出所有未标记数据中各个模型意见最不一致的样本. 不一致的度量:
 <ul>
-<li>用投票熵作度量:
-$$x^*_{VE} = \argmax_x-\sum_i\dfrac{V(y_i)}{C}\log\dfrac{V(y_i)}{C}$$</li>
-<li>用KL散度(衡量两个分布的差异)作度量:
-$$x^*<em>{KL} = \argmax_x\dfrac{1}{C}\sum</em>{c=1}^CD(P_{\theta^{(c)}}|P_{\mathcal{C}})$$
-其中
-$$D(P_{\theta^{(c)}}|P_{\mathcal{C}}) = \sum_iP(y_i|x;\theta^{(c)})\log\dfrac{P(y_i|x;\theta^{(c)})}{P(y_i|x;\mathcal{C})}$$</li>
+<li>用投票熵作度量: $$x^*_{VE} = \rm{argmax}_x-\sum_i\dfrac{V(y_i)}{C}\log\dfrac{V(y_i)}{C}$$</li>
+<li>用KL散度(衡量两个分布的差异)作度量: $$x^*<em>{KL} = \argmax_x\dfrac{1}{C}\sum</em>{c=1}^CD(P_{\theta^{(c)}}|P_{\mathcal{C}})$$, 其中 $$D(P_{\theta^{(c)}}|P_{\mathcal{C}}) = \sum_iP(y_i|x;\theta^{(c)})\log\dfrac{P(y_i|x;\theta^{(c)})}{P(y_i|x;\mathcal{C})}$$</li>
 </ul>
 </li>
 </ul>
 <h3 id="expected-model-change">Expected Model Change<a hidden class="anchor" aria-hidden="true" href="#expected-model-change">#</a></h3>
 <ul>
 <li>去采的样本应当具备条件: 当它被赋予标记, 应当最大程度优化模型 —— 用训练梯度作为这种优化的衡量.
-$$x^*_{EGL} = \argmax_x\sum_iP(y_i|x;\theta)|\nabla \mathcal{l}(\mathcal{L}\cup\langle x, y_i\rangle;\theta)|$$</li>
+$$x^*_{EGL} = \rm{argmax}_x\sum_iP(y_i|x;\theta)|\nabla \mathcal{l}(\mathcal{L}\cup\langle x, y_i\rangle;\theta)|$$</li>
 </ul>
 <h3 id="variance-reduction-and-fisher-information-ratio">Variance Reduction and Fisher Information Ratio<a hidden class="anchor" aria-hidden="true" href="#variance-reduction-and-fisher-information-ratio">#</a></h3>
 <ul>
@@ -418,6 +414,158 @@ $$x^*_{FIR} = \argmin_xtr(\mathcal{I}<em>x(\theta)^{-1}\mathcal{I}</em>{\mathcal
   </footer>
 </article>
     </main>
-    </body>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://michelia-zhx.github.io">Michelia&#39;Log</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style></body>
 
 </html>
