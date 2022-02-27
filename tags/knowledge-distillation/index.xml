@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Knowledge Distillation on Michelia&#39;Log</title>
+    <link>https://michelia-zhx.github.io/tags/knowledge-distillation/</link>
+    <description>Recent content in Knowledge Distillation on Michelia&#39;Log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language><atom:link href="https://michelia-zhx.github.io/tags/knowledge-distillation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Paper Notes - Multi-Teacher Knowledge Distillation - 1</title>
+      <link>https://michelia-zhx.github.io/posts/2022-02-23-multi_teacher_knowledge_distillation-1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-02-23-multi_teacher_knowledge_distillation-1/</guid>
+      <description>Learning from Multiple Teacher Networks http://library.usc.edu.ph/ACM/KKD%202017/pdfs/p1285.pdf loss: teachers的softmax输出取平均和student的交叉熵 中间层表示的相对相异度(仅适用于MTKD), 三元组$(q_i</description>
+    </item>
+    
+    <item>
+      <title>Paper Notes - Multi-Teacher Knowledge Distillation - 2</title>
+      <link>https://michelia-zhx.github.io/posts/2022-02-24-multi_teacher_knowledge_distillation-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-02-24-multi_teacher_knowledge_distillation-2/</guid>
+      <description>Knowledge Distillation and Student-Teacher Learning for Visual Intelligence: A Review and New Outlooks https://arxiv.org/pdf/2004.05937.pdf Learning from Multiple Teacher Networks, KDD 2017 Efficient knowledge distillation from an ensemble of teachers. Interspeech 2017: 对teacher的logits取加权平均, 加权平均和student的logit</description>
+    </item>
+    
+  </channel>
+</rss>

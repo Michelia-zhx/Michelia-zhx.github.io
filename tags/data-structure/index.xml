@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Data Structure on Michelia&#39;Log</title>
+    <link>https://michelia-zhx.github.io/tags/data-structure/</link>
+    <description>Recent content in Data Structure on Michelia&#39;Log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language><atom:link href="https://michelia-zhx.github.io/tags/data-structure/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数据结构(一)</title>
+      <link>https://michelia-zhx.github.io/posts/2021-05-07-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%841/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2021-05-07-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%841/</guid>
+      <description>My first blog</description>
+    </item>
+    
+    <item>
+      <title>数据结构(三)</title>
+      <link>https://michelia-zhx.github.io/posts/2021-05-12-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%843/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2021-05-12-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%843/</guid>
+      <description>系统为某一程序分配空间所需时间，与空间大小无关，与申请次数有关！ 哈希 存储结构（一般只有添加和查找操作，如果要删，在点上打一个标记即可） 拉链法</description>
+    </item>
+    
+    <item>
+      <title>数据结构(二)</title>
+      <link>https://michelia-zhx.github.io/posts/2021-05-09-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%842/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2021-05-09-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%842/</guid>
+      <description>1 Trie树 高效存储字符串集合 存储：按字符串内容，从左到右依次设置结点，并标记结束位置 查找：查找字符串是否存在 &amp;amp; 出现几次 1 2 3 4 5 6 7 8 9 10</description>
+    </item>
+    
+  </channel>
+</rss>

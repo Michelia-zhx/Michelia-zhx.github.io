@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Object Detection on Michelia&#39;Log</title>
+    <link>https://michelia-zhx.github.io/tags/object-detection/</link>
+    <description>Recent content in Object Detection on Michelia&#39;Log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language><atom:link href="https://michelia-zhx.github.io/tags/object-detection/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Paper Notes - Object Detection</title>
+      <link>https://michelia-zhx.github.io/posts/2021-09-12-object_detection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2021-09-12-object_detection/</guid>
+      <description>Definition Image Classification: 输入图片, 输出图中目标物体的类别. Object Localization: 输入图片, 输出图中物体的 bounding box. Object Detection: 输入图片, 输出图中物体的 bounding box 和类别. R-CNN Model Family 采用region proposal methods, 首</description>
+    </item>
+    
+  </channel>
+</rss>

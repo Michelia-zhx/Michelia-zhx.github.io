@@ -10,7 +10,7 @@
 <meta name="description" content="search">
 <meta name="author" content="Michelia-zhx">
 <link rel="canonical" href="https://michelia-zhx.github.io/search/" />
-<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ea9ea0caec1794d2965d8de86891fb44ee689c6e2027d70fc53f063de9a41a70.css" integrity="sha256-6p6gyuwXlNKWXY3oaJH7RO5onG4gJ9cPxT8GPemkGnA=" rel="preload stylesheet" as="style"><link crossorigin="anonymous" rel="preload" as="fetch" href="../index.json">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.4bcc1deda0e644393cb3bd3d41e049ce42f56b7a20b296422238fe37ee023d76.css" integrity="sha256-S8wd7aDmRDk8s709QeBJzkL1a3ogspZCIjj&#43;N&#43;4CPXY=" rel="preload stylesheet" as="style"><link crossorigin="anonymous" rel="preload" as="fetch" href="../index.json">
 <script defer crossorigin="anonymous" src="/assets/js/search.min.4e5a56da88d4727bb8670046c1cc137b0e796e1145e0f851c4938f930e2aed0c.js" integrity="sha256-TlpW2ojUcnu4ZwBGwcwTew55bhFF4PhRxJOPkw4q7Qw="></script>
 <link rel="icon" href="https://michelia-zhx.github.io/images/Cheese.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://michelia-zhx.github.io/images/Cheese.ico">
@@ -207,75 +207,6 @@
     <ul id="searchResults" aria-label="search results"></ul>
 </div>
     </main>
-    
-<footer class="footer">
-    <span>&copy; 2022 <a href="https://michelia-zhx.github.io">Michelia&#39;Log</a></span>
-    <span>
-        Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
-    </span>
-</footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
-    </svg>
-</a>
-
-<script>
-    let menu = document.getElementById('menu')
-    if (menu) {
-        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-        menu.onscroll = function () {
-            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
-        }
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            var id = this.getAttribute("href").substr(1);
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
-                    behavior: "smooth"
-                });
-            } else {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
-            }
-            if (id === "top") {
-                history.replaceState(null, null, " ");
-            } else {
-                history.pushState(null, null, `#${id}`);
-            }
-        });
-    });
-
-</script>
-<script>
-    var mybutton = document.getElementById("top-link");
-    window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
-        } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
-        }
-    };
-
-</script>
-<script>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-            document.body.classList.remove('dark');
-            localStorage.setItem("pref-theme", 'light');
-        } else {
-            document.body.classList.add('dark');
-            localStorage.setItem("pref-theme", 'dark');
-        }
-    })
-
-</script>
-</body>
+    </body>
 
 </html>

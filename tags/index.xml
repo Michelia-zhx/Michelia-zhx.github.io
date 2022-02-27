@@ -7,20 +7,83 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language><atom:link href="https://michelia-zhx.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>文章标签1</title>
-      <link>https://michelia-zhx.github.io/tags/%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE1/</link>
+      <title>Active Learning</title>
+      <link>https://michelia-zhx.github.io/tags/active-learning/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://michelia-zhx.github.io/tags/%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE1/</guid>
+      <guid>https://michelia-zhx.github.io/tags/active-learning/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>文章标签2</title>
-      <link>https://michelia-zhx.github.io/tags/%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE2/</link>
+      <title>Algorithm</title>
+      <link>https://michelia-zhx.github.io/tags/algorithm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://michelia-zhx.github.io/tags/%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE2/</guid>
+      <guid>https://michelia-zhx.github.io/tags/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Computer Network</title>
+      <link>https://michelia-zhx.github.io/tags/computer-network/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/tags/computer-network/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data Structure</title>
+      <link>https://michelia-zhx.github.io/tags/data-structure/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/tags/data-structure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Knowledge Distillation</title>
+      <link>https://michelia-zhx.github.io/tags/knowledge-distillation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/tags/knowledge-distillation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Object Detection</title>
+      <link>https://michelia-zhx.github.io/tags/object-detection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/tags/object-detection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Paper Notes</title>
+      <link>https://michelia-zhx.github.io/tags/paper-notes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/tags/paper-notes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Self-Supervised Learning</title>
+      <link>https://michelia-zhx.github.io/tags/self-supervised-learning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/tags/self-supervised-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Study Notes</title>
+      <link>https://michelia-zhx.github.io/tags/study-notes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/tags/study-notes/</guid>
       <description></description>
     </item>
     
