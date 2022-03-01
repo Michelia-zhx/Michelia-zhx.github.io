@@ -7,6 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language><atom:link href="https://michelia-zhx.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Hugo 博客搭建 | PaperMod 主题</title>
+      <link>https://michelia-zhx.github.io/posts/2022-03-01-%E5%BB%BA%E7%AB%99/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-03-01-%E5%BB%BA%E7%AB%99/</guid>
+      <description>1. 安装 Hugo 苹果用户有安装 HomeBrew 工具的话可以直接输入 brew install hugo 进行安装. 下载完成后检查是否安装成功，输入: hugo version, 若出现版本信息则表示安装成功. 2. 新建站点 输</description>
+    </item>
+    
+    <item>
       <title>Notes - Computer Networking</title>
       <link>https://michelia-zhx.github.io/posts/2022-02-26-computer_networking_notes/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
