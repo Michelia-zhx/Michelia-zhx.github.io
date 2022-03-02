@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language><atom:link href="https://michelia-zhx.github.io/tags/computer-network/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Notes - Computer Networking</title>
-      <link>https://michelia-zhx.github.io/posts/2022-02-26-computer_networking_notes/</link>
+      <title>Notes - Computer Networking -- Chap 1</title>
+      <link>https://michelia-zhx.github.io/posts/2022-02-26-computer_networking_chap1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://michelia-zhx.github.io/posts/2022-02-26-computer_networking_notes/</guid>
+      <guid>https://michelia-zhx.github.io/posts/2022-02-26-computer_networking_chap1/</guid>
       <description>Chap 1 计算机网络和因特网 1.1 什么是因特网 1.1.1 因特网的具体构成描述 各种各样的设备都被连接到因特网,这些设备都被称为主机或端系统. 端系统通过通信链路和</description>
     </item>
     
