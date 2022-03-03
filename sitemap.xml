@@ -2,11 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://michelia-zhx.github.io/about/</loc>
+  </url><url>
     <loc>https://michelia-zhx.github.io/tags/active-learning/</loc>
   </url><url>
     <loc>https://michelia-zhx.github.io/tags/algorithm/</loc>
   </url><url>
     <loc>https://michelia-zhx.github.io/archives/</loc>
+  </url><url>
+    <loc>https://michelia-zhx.github.io/posts/2022-03-03-bias-variance-decomposition/</loc>
   </url><url>
     <loc>https://michelia-zhx.github.io/tags/blog/</loc>
   </url><url>
@@ -21,6 +25,10 @@
     <loc>https://michelia-zhx.github.io/posts/2022-03-01-%E5%BB%BA%E7%AB%99/</loc>
   </url><url>
     <loc>https://michelia-zhx.github.io/tags/knowledge-distillation/</loc>
+  </url><url>
+    <loc>https://michelia-zhx.github.io/tags/machine-learning/</loc>
+  </url><url>
+    <loc>https://michelia-zhx.github.io/tags/math/</loc>
   </url><url>
     <loc>https://michelia-zhx.github.io/</loc>
   </url><url>

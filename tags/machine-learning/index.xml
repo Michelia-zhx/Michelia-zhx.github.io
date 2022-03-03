@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Machine Learning on Michelia&#39;Log</title>
+    <link>https://michelia-zhx.github.io/tags/machine-learning/</link>
+    <description>Recent content in Machine Learning on Michelia&#39;Log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language><atom:link href="https://michelia-zhx.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bias-Variance-Decomposition</title>
+      <link>https://michelia-zhx.github.io/posts/2022-03-03-bias-variance-decomposition/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-03-03-bias-variance-decomposition/</guid>
+      <description>Bias–variance tradeoff The bias–variance dilemma or bias–variance problem is the conflict in trying to simultaneously minimize these two sources of error that prevent supervised learning algorithms from generalizing beyond their training set: - The</description>
+    </item>
+    
+  </channel>
+</rss>
