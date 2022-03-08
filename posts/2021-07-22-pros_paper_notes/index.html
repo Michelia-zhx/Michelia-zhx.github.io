@@ -228,7 +228,7 @@
     </details>
 </div>
 
-  <div class="post-content"><h3 id="multi-instance-multi-label-learning-with-application-to-scene-classification----zhi-hua-zhou-min-ling-zhang-nips-2006">Multi-Instance Multi-Label Learning with Application to Scene Classification &ndash; Zhi-Hua Zhou, Min-Ling Zhang, NIPS 2006<a hidden class="anchor" aria-hidden="true" href="#multi-instance-multi-label-learning-with-application-to-scene-classification----zhi-hua-zhou-min-ling-zhang-nips-2006">#</a></h3>
+  <div class="post-content"><h2 id="multi-instance-multi-label-learning-with-application-to-scene-classification----zhi-hua-zhou-min-ling-zhang-nips-2006">Multi-Instance Multi-Label Learning with Application to Scene Classification &ndash; Zhi-Hua Zhou, Min-Ling Zhang, NIPS 2006<a hidden class="anchor" aria-hidden="true" href="#multi-instance-multi-label-learning-with-application-to-scene-classification----zhi-hua-zhou-min-ling-zhang-nips-2006">#</a></h2>
 <ol>
 <li>Multi-instance: 一个example包含多个instance, example只对应1个label; Multi-label: 一个example对应多个label.</li>
 <li>以Multi-instance或Multi-label为桥梁, 将multi-instance multi-label learning ($f_{MIML}: 2^{\mathcal{X}}\rightarrow 2^{\mathcal{Y}}$) 转化为传统机器学习任务.
@@ -280,7 +280,7 @@ E_{\mathcal{B}}E_{\mathcal{G}|\mathcal{B}}[\exp(-g\mathcal{F}(B)+c(-g\mathcal{F}
 </ul>
 </li>
 </ol>
-<h3 id="on-multi-class-cost-sensitive-learning----zhihua-zhou-xuying-liu-aaai-2006">On Multi-Class Cost-Sensitive Learning &ndash; Zhihua Zhou, Xuying Liu, AAAI 2006<a hidden class="anchor" aria-hidden="true" href="#on-multi-class-cost-sensitive-learning----zhihua-zhou-xuying-liu-aaai-2006">#</a></h3>
+<h2 id="on-multi-class-cost-sensitive-learning----zhihua-zhou-xuying-liu-aaai-2006">On Multi-Class Cost-Sensitive Learning &ndash; Zhihua Zhou, Xuying Liu, AAAI 2006<a hidden class="anchor" aria-hidden="true" href="#on-multi-class-cost-sensitive-learning----zhihua-zhou-xuying-liu-aaai-2006">#</a></h2>
 <ol>
 <li>rescale classes 针对二分类问题有很好的效果, 但是针对多分类代价敏感问题效果不好. 原理: rescale让代价不敏感的算法变得代价敏感, 对于二分类问题, $p = P(class=1|\mathbf{x})$, 作出最优选择的阈值$p^<em>$满足
 $$p^</em>\times\epsilon_{11}+(1-p^<em>)\times\epsilon_{21} = p^</em>\times\epsilon_{12}+(1-p^*)\times\epsilon_{22}$$</li>
@@ -295,7 +295,7 @@ $$\begin{aligned}
 \end{aligned}$$
 可以构造出一个$c$元一次方程组.</li>
 </ol>
-<h3 id="where-am-i-place-instance-and-category-recognition-using-spatial-ttpact----jianxin-wu-james-mrehg-2008-cvpr">Where am I: Place instance and category recognition using spatial $\tt{PACT}$ &ndash; Jianxin Wu, James M.Rehg, 2008, CVPR<a hidden class="anchor" aria-hidden="true" href="#where-am-i-place-instance-and-category-recognition-using-spatial-ttpact----jianxin-wu-james-mrehg-2008-cvpr">#</a></h3>
+<h2 id="where-am-i-place-instance-and-category-recognition-using-spatial-ttpact----jianxin-wu-james-mrehg-2008-cvpr">Where am I: Place instance and category recognition using spatial $\tt{PACT}$ &ndash; Jianxin Wu, James M.Rehg, 2008, CVPR<a hidden class="anchor" aria-hidden="true" href="#where-am-i-place-instance-and-category-recognition-using-spatial-ttpact----jianxin-wu-james-mrehg-2008-cvpr">#</a></h2>
 <ol>
 <li>&ldquo;Where am I&rdquo; 问题: 经典的机器人问题, recognize instances and categories of places or scenes. 在视觉中常被处理为场景识别问题 (场景的类别而不是具体位置)</li>
 <li>PACT: Principal component Analysis of Census Transform histograms.
@@ -308,7 +308,7 @@ $$\begin{aligned}
 </li>
 <li>Spatial PACT: 将图片分成小份, 在区域中其中计算相关性. 构造 &ldquo;spatial pyramid&rdquo;, 0,1,2-level对应不同的划分方式.</li>
 </ol>
-<h3 id="semi-supervised-learning-with-very-few-labeled-training-examples">Semi-Supervised Learning with Very Few Labeled Training Examples<a hidden class="anchor" aria-hidden="true" href="#semi-supervised-learning-with-very-few-labeled-training-examples">#</a></h3>
+<h2 id="semi-supervised-learning-with-very-few-labeled-training-examples">Semi-Supervised Learning with Very Few Labeled Training Examples<a hidden class="anchor" aria-hidden="true" href="#semi-supervised-learning-with-very-few-labeled-training-examples">#</a></h2>
 <ol>
 <li>传统半监督学习算法需要先通过少量标注数据训练一个初始弱学习器$h$, 再利用$h$和无标注数据. 但是在现实中很多任务能获得的标注数据很少, 比如基于内容的图像检索(搜索相似图片)或在线网页推荐(只拥有一个用户感兴趣的页面)</li>
 <li>OLTV (learning with One Labeled example and Two Views):
