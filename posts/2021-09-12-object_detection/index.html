@@ -265,7 +265,7 @@
 <p>The feature extractor used by the model was the AlexNet deep CNN that won the ILSVRC-2012 image classification competition.
 The output of the CNN was a 4,096 element vector that describes the contents of the image that is fed to a linear SVM for classification,
 specifically one SVM is trained for each known class.  问题是运行很慢, test阶段CNN要从约2000个proposed region上提取特征.</p>
-<img src="/images/object_detection/Summary-of-the-R-CNN-Model-Architecture.png" width = "500" align=center />
+<img src="/images/object_detection/Summary-of-the-R-CNN-Model-Architecture.png" width = "500" div align=center />
 <h3 id="fast-r-cnnhttpsarxivorgpdf150408083pdf"><a href="https://arxiv.org/pdf/1504.08083.pdf">Fast R-CNN</a><a hidden class="anchor" aria-hidden="true" href="#fast-r-cnnhttpsarxivorgpdf150408083pdf">#</a></h3>
 <p>提出了R-CNN的三个限制:</p>
 <ul>
@@ -277,14 +277,14 @@ specifically one SVM is trained for each known class.  问题是运行很慢, te
 经过deep CNN, 进行特征提取.  CNN的结尾是 Region of Interest Pooling Layer (ROI Pooling), 针对输入的candidate
 进行特征提取.  CNN的输出送入一个FC, 得到两个输出, 一个用于softmax layer预测类别, 另一个用于regression用于生成bounding box.</p>
 <p>这个过程针对每一个region of interest进行循环.</p>
-<img src="/images/object_detection/Summary-of-the-Fast-R-CNN-Model-Architecture.png" width = "500" align=center />
+<img src="/images/object_detection/Summary-of-the-Fast-R-CNN-Model-Architecture.png" width = "500" div align=center />
 <h3 id="faster-r-cnnhttpsarxivorgpdf150601497pdf"><a href="https://arxiv.org/pdf/1506.01497.pdf">Faster R-CNN</a><a hidden class="anchor" aria-hidden="true" href="#faster-r-cnnhttpsarxivorgpdf150601497pdf">#</a></h3>
 <p>由两部分组成:</p>
 <ul>
 <li>Region Proposal Network: Convolutional neural network for proposing regions and the type of object to consider in the region.</li>
 <li>Fast R-CNN: Convolutional neural network for extracting features from the proposed regions and outputting the bounding box and class labels.</li>
 </ul>
-<img src="/images/object_detection/Summary-of-the-Faster-R-CNN-Model-Architecture.png" width = "500" align=center />
+<img src="/images/object_detection/Summary-of-the-Faster-R-CNN-Model-Architecture.png" width = "500" div align=center />
 <p>RPN网络接受CNN的输出, feature map送入一个小型网络得到许多region proposals,
 每个对应一个分类. Region proposals是bounding boxes, 或者说anchor boxes, 后续优化.
 Class prediction is binary, indicating the presence of an object, or not, so-called &ldquo;objectness&rdquo; of the proposed region.</p>
@@ -312,7 +312,7 @@ $$Pr(Class_i|Object)$$
 在测试时, 每个box通过类别概率和box置信度相乘来得到特定类别置信分数:
 $$Pr(Class_i|Object)*Pr(Object)*IOU^{truth}<em>{pred} = Pr(Class_i)*IOU^{truth}</em>{pred}$$</p>
 <p>这个分数代表该类别出现在box中的概率和box和目标的合适度. <a href="https://developer.aliyun.com/article/679591">例子讲解</a></p>
-<img src="/images/object_detection/Summary-of-Predictions-made-by-YOLO-Model.png" width = "500" align=center />
+<img src="/images/object_detection/Summary-of-Predictions-made-by-YOLO-Model.png" width = "500" div align=center />
 <p>当一个目标不止一次被识别, 非极大值抑制可以显着提高YOLO的效果.</p>
 <p>YOLO相对于传统方法有如下有优点：</p>
 <ul>
