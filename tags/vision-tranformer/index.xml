@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Vision Tranformer on Michelia&#39;Log</title>
+    <link>https://michelia-zhx.github.io/tags/vision-tranformer/</link>
+    <description>Recent content in Vision Tranformer on Michelia&#39;Log</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language><atom:link href="https://michelia-zhx.github.io/tags/vision-tranformer/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Paper Notes - Vision Transformer</title>
+      <link>https://michelia-zhx.github.io/posts/2022-04-02-vit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-04-02-vit/</guid>
+      <description>An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale https://arxiv.org/abs/2010.11929 在整体的实现上, 原文完全使用原始bert的transformer结构, 主要是对图片转换成类似token的处理, 原文</description>
+    </item>
+    
+  </channel>
+</rss>

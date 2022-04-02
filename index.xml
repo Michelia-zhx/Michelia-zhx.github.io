@@ -53,6 +53,15 @@
     </item>
     
     <item>
+      <title>Notes - Computer Networking -- Chap 3</title>
+      <link>https://michelia-zhx.github.io/posts/2022-03-28-computer_network_chep3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-03-28-computer_network_chep3/</guid>
+      <description>Chap 3 传输层 3.1 概述和传输层服务 3.2 多路复用与解复用 3.3 无连接传输: UDP 3.4 可靠数据传输的原理 3.5 面向连接的传输: TCP 3.6 拥塞控制原理 3.7 TCP 拥塞机制</description>
+    </item>
+    
+    <item>
       <title>Paper Notes - Active Learning</title>
       <link>https://michelia-zhx.github.io/posts/2021-08-31-active_learning/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -95,6 +104,15 @@
       
       <guid>https://michelia-zhx.github.io/posts/2021-09-05-self_supervised_learning/</guid>
       <description>Why self-supervised learning: 主要的问题在于获取数据及其标注部分. Definition: Self-supervised learning is a method that poses the following question to formulate an unsupervised learning problem as a supervised one: &amp;ldquo;Can we design the task in such a way that we can generate virtually unlimited labels from our existing images and use that to learn the representations?&amp;rdquo; Replace</description>
+    </item>
+    
+    <item>
+      <title>Paper Notes - Vision Transformer</title>
+      <link>https://michelia-zhx.github.io/posts/2022-04-02-vit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-04-02-vit/</guid>
+      <description>An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale https://arxiv.org/abs/2010.11929 在整体的实现上, 原文完全使用原始bert的transformer结构, 主要是对图片转换成类似token的处理, 原文</description>
     </item>
     
     <item>

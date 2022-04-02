@@ -25,6 +25,15 @@
     </item>
     
     <item>
+      <title>Notes - Computer Networking -- Chap 3</title>
+      <link>https://michelia-zhx.github.io/posts/2022-03-28-computer_network_chep3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-03-28-computer_network_chep3/</guid>
+      <description>Chap 3 传输层 3.1 概述和传输层服务 3.2 多路复用与解复用 3.3 无连接传输: UDP 3.4 可靠数据传输的原理 3.5 面向连接的传输: TCP 3.6 拥塞控制原理 3.7 TCP 拥塞机制</description>
+    </item>
+    
+    <item>
       <title>基础算法(一)</title>
       <link>https://michelia-zhx.github.io/posts/2021-05-01-%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%951/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
