@@ -71,6 +71,15 @@
     </item>
     
     <item>
+      <title>Paper Notes - Attention</title>
+      <link>https://michelia-zhx.github.io/posts/2022-04-02-attention/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-04-02-attention/</guid>
+      <description>1. Attention 机制 1a. 背景知识 我们最为熟悉的NMT模型便是经典的Seq2Seq, 这篇文章从一个Seq2Seq模型开始介绍, 然后进一步看如何将Attent</description>
+    </item>
+    
+    <item>
       <title>Paper Notes - Multi-Teacher Knowledge Distillation - 1</title>
       <link>https://michelia-zhx.github.io/posts/2022-02-23-multi_teacher_knowledge_distillation-1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -98,6 +107,15 @@
     </item>
     
     <item>
+      <title>Paper Notes - Self-Attention</title>
+      <link>https://michelia-zhx.github.io/posts/2022-04-03-self_attention/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-04-03-self_attention/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Paper Notes - Self-Supervised Learning</title>
       <link>https://michelia-zhx.github.io/posts/2021-09-05-self_supervised_learning/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -108,10 +126,10 @@
     
     <item>
       <title>Paper Notes - Vision Transformer</title>
-      <link>https://michelia-zhx.github.io/posts/2022-04-02-vit/</link>
+      <link>https://michelia-zhx.github.io/posts/2022-04-04-vit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://michelia-zhx.github.io/posts/2022-04-02-vit/</guid>
+      <guid>https://michelia-zhx.github.io/posts/2022-04-04-vit/</guid>
       <description>An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale 在整体的实现上, 原文完全使用原始bert的transformer结构, 主要是对图片转换成类似token的处理, 原文引</description>
     </item>
     

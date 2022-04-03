@@ -15,5 +15,23 @@
       <description>Bias–variance tradeoff The bias–variance dilemma or bias–variance problem is the conflict in trying to simultaneously minimize these two sources of error that prevent supervised learning algorithms from generalizing beyond their training set: - The</description>
     </item>
     
+    <item>
+      <title>Paper Notes - Attention</title>
+      <link>https://michelia-zhx.github.io/posts/2022-04-02-attention/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-04-02-attention/</guid>
+      <description>1. Attention 机制 1a. 背景知识 我们最为熟悉的NMT模型便是经典的Seq2Seq, 这篇文章从一个Seq2Seq模型开始介绍, 然后进一步看如何将Attent</description>
+    </item>
+    
+    <item>
+      <title>Paper Notes - Self-Attention</title>
+      <link>https://michelia-zhx.github.io/posts/2022-04-03-self_attention/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-04-03-self_attention/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
