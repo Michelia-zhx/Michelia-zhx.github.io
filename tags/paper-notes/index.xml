@@ -57,7 +57,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://michelia-zhx.github.io/posts/2022-04-03-self_attention/</guid>
-      <description></description>
+      <description>Self-Attention 机制和代码 BERT, RoBERTa, ALBERT, SpanBERT, DistilBERT, SesameBERT, SemBERT, SciBERT, BioBERT, MobileBERT, TinyBERT 和 CamemBERT 的共同点是 self-attention 机制. Self-attention 机制不仅是使某种架构被称为&amp;quot;BERT&amp;quot;的原因, 更准确地, 是基于</description>
     </item>
     
     <item>

@@ -7,7 +7,7 @@
 <meta name="robots" content="index, follow">
 <title>Paper Notes - Self-Attention | Michelia&#39;Log</title>
 <meta name="keywords" content="Hugo, static, generator" />
-<meta name="description" content="Paper Notes - Self-Attention - Michelia&#39;Log">
+<meta name="description" content="Self-Attention 机制和代码 BERT, RoBERTa, ALBERT, SpanBERT, DistilBERT, SesameBERT, SemBERT, SciBERT, BioBERT, MobileBERT, TinyBERT 和 CamemBERT 的共同点是 self-attention 机制. Self-attention 机制不仅是使某种架构被称为&quot;BERT&quot;的原因, 更准确地, 是基于">
 <meta name="author" content="Michelia-zhx">
 <link rel="canonical" href="https://michelia-zhx.github.io/posts/2022-04-03-self_attention/" />
 <link crossorigin="anonymous" href="/assets/css/stylesheet.min.b4e56809ad1af109341b420815dac8f1ff8bd9c7001b1da936d3583077f503ac.css" integrity="sha256-tOVoCa0a8Qk0G0IIFdrI8f&#43;L2ccAGx2pNtNYMHf1A6w=" rel="preload stylesheet" as="style">
@@ -57,7 +57,7 @@
 
     </style>
 </noscript><meta property="og:title" content="Paper Notes - Self-Attention" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="Self-Attention 机制和代码 BERT, RoBERTa, ALBERT, SpanBERT, DistilBERT, SesameBERT, SemBERT, SciBERT, BioBERT, MobileBERT, TinyBERT 和 CamemBERT 的共同点是 self-attention 机制. Self-attention 机制不仅是使某种架构被称为&quot;BERT&quot;的原因, 更准确地, 是基于" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://michelia-zhx.github.io/posts/2022-04-03-self_attention/" /><meta property="article:section" content="posts" />
 
@@ -65,7 +65,7 @@
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Paper Notes - Self-Attention"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="Self-Attention 机制和代码 BERT, RoBERTa, ALBERT, SpanBERT, DistilBERT, SesameBERT, SemBERT, SciBERT, BioBERT, MobileBERT, TinyBERT 和 CamemBERT 的共同点是 self-attention 机制. Self-attention 机制不仅是使某种架构被称为&quot;BERT&quot;的原因, 更准确地, 是基于"/>
 
 
 <script type="application/ld+json">
@@ -94,12 +94,12 @@
   "@type": "BlogPosting",
   "headline": "Paper Notes - Self-Attention",
   "name": "Paper Notes - Self-Attention",
-  "description": "",
+  "description": "Self-Attention 机制和代码 BERT, RoBERTa, ALBERT, SpanBERT, DistilBERT, SesameBERT, SemBERT, SciBERT, BioBERT, MobileBERT, TinyBERT 和 CamemBERT 的共同点是 self-attention 机制. Self-attention 机制不仅是使某种架构被称为\u0026quot;BERT\u0026quot;的原因, 更准确地, 是基于",
   "keywords": [
     "Hugo", "static", "generator"
   ],
-  "articleBody": "",
-  "wordCount" : "0",
+  "articleBody": "Self-Attention 机制和代码 BERT, RoBERTa, ALBERT, SpanBERT, DistilBERT, SesameBERT, SemBERT, SciBERT, BioBERT, MobileBERT, TinyBERT 和 CamemBERT 的共同点是 self-attention 机制. Self-attention 机制不仅是使某种架构被称为\"BERT\"的原因, 更准确地, 是基于 Tranformer 的架构的共同点. 基于 Transformer 的架构避开了 RNN, 只使用 self-attention 机制来获得输入输出之间的全局依赖关系.\n对 self-attention 机制的介绍分为以下几步:\n 准备输入 初始化权重 分离 key, query 和 value 计算对 Input 1 的注意力分数 计算 softmax 将分数和 value 相乘 求 value 的加权和得到 Output 1 针对 Input 2, 3 重复步骤 4-7  Step 1: Prepare inputs Step 2: Initialise weights 每个输入需要有三种表示, 分别被称为 key, query 和 value. 为了得到这三种表示, 每个输入都要分别和三种权重相乘, 得到各自的 key, query 和 value.\n这些权重通常是一些较小的数字, 用一些合适的随机分布 (like Gaussian, Xavier and Kaiming distributions) 在训练前进行初始化.\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21  w_key = [ [0, 0, 1], [1, 1, 0], [0, 1, 0], [1, 1, 0] ] w_query = [ [1, 0, 1], [1, 0, 0], [0, 0, 1], [0, 1, 1] ] w_value = [ [0, 2, 0], [0, 3, 0], [1, 0, 3], [1, 1, 0] ] w_key = torch.tensor(w_key, dtype=torch.float32) w_query = torch.tensor(w_query, dtype=torch.float32) w_value = torch.tensor(w_value, dtype=torch.float32)   Step 3: Derive key, query and value 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  keys = x @ w_key querys = x @ w_query values = x @ w_value print(keys) # tensor([[0., 1., 1.], # [4., 4., 0.], # [2., 3., 1.]]) print(querys) # tensor([[1., 0., 2.], # [2., 2., 2.], # [2., 1., 3.]]) print(values) # tensor([[1., 2., 3.], # [2., 8., 0.], # [2., 6., 3.]])   Step 4: Calculate attention scores for Input 1 为了得到 Input 1 的分数, 将 Input 1 的 query 和所有输入的 key 做点积 (包括和它自己).\n1 2 3 4 5  attn_scores = querys @ keys.T # tensor([[ 2., 4., 4.], # attention scores from Query 1 # [ 4., 16., 12.], # attention scores from Query 2 # [ 4., 12., 10.]]) # attention scores from Query 3   Step 5: Calculate softmax 1 2 3 4 5 6 7 8 9 10 11 12 13 14  from torch.nn.functional import softmax attn_scores_softmax = softmax(attn_scores, dim=-1) # tensor([[6.3379e-02, 4.6831e-01, 4.6831e-01], # [6.0337e-06, 9.8201e-01, 1.7986e-02], # [2.9539e-04, 8.8054e-01, 1.1917e-01]]) # For readability, approximate the above as follows attn_scores_softmax = [ [0.0, 0.5, 0.5], [0.0, 1.0, 0.0], [0.0, 0.9, 0.1] ] attn_scores_softmax = torch.tensor(attn_scores_softmax)   Step 6: Multiply scores with values 将经过 softmax 的分数作为权重与 value 相乘, 得到加权后的表示.\n1 2 3 4 5 6 7 8 9 10 11 12 13  weighted_values = values[:,None] * attn_scores_softmax.T[:,:,None] # tensor([[[0.0000, 0.0000, 0.0000], # [0.0000, 0.0000, 0.0000], # [0.0000, 0.0000, 0.0000]], #  # [[1.0000, 4.0000, 0.0000], # [2.0000, 8.0000, 0.0000], # [1.8000, 7.2000, 0.0000]], #  # [[1.0000, 3.0000, 1.5000], # [0.0000, 0.0000, 0.0000], # [0.2000, 0.6000, 0.3000]]])   Step 7: Sum weighted values to get Output 1 将输入的 value 经过 Input 1 所给分数的加权和作为 Ouput 1.\n1 2 3 4 5  outputs = weighted_values.sum(dim=0) # tensor([[2.0000, 7.0000, 1.5000], # Output 1 # [2.0000, 8.0000, 0.0000], # Output 2 # [2.0000, 7.8000, 0.3000]]) # Output 3   Step 8: Repeat for Input 2 \u0026 Input 3 Self-Attention to Transformer 在 self-attention 模块内:\n Dimension Bias  输入到 self-attention 模块:\n Embedding module Positional encoding Truncating Masking  加入更多的 self-attention 模块:\n Multihead Layer stacking  Self-attention 模块之间的模块:\n Linear transformation LayerNorm  ",
+  "wordCount" : "797",
   "inLanguage": "en",
   "datePublished": "0001-01-01T00:00:00Z",
   "dateModified": "0001-01-01T00:00:00Z",
@@ -204,11 +204,291 @@
     <h1 class="post-title">
       Paper Notes - Self-Attention
     </h1>
-    <div class="post-meta">0 min&nbsp;·&nbsp;Michelia-zhx
+    <div class="post-meta">2 min&nbsp;·&nbsp;Michelia-zhx
 
 </div>
-  </header> 
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
 
+        <div class="inner"><ul>
+                <li>
+                    <a href="#self-attention-%e6%9c%ba%e5%88%b6%e5%92%8c%e4%bb%a3%e7%a0%81" aria-label="Self-Attention 机制和代码">Self-Attention 机制和代码</a><ul>
+                        
+                <li>
+                    <a href="#step-1-prepare-inputs" aria-label="Step 1: Prepare inputs">Step 1: Prepare inputs</a></li>
+                <li>
+                    <a href="#step-2-initialise-weights" aria-label="Step 2: Initialise weights">Step 2: Initialise weights</a></li>
+                <li>
+                    <a href="#step-3-derive-key-query-and-value" aria-label="Step 3: Derive key, query and value">Step 3: Derive key, query and value</a></li>
+                <li>
+                    <a href="#step-4-calculate-attention-scores-for-input-1" aria-label="Step 4: Calculate attention scores for Input 1">Step 4: Calculate attention scores for Input 1</a></li>
+                <li>
+                    <a href="#step-5-calculate-softmax" aria-label="Step 5: Calculate softmax">Step 5: Calculate softmax</a></li>
+                <li>
+                    <a href="#step-6-multiply-scores-with-values" aria-label="Step 6: Multiply scores with values">Step 6: Multiply scores with values</a></li>
+                <li>
+                    <a href="#step-7-sum-weighted-values-to-get-output-1" aria-label="Step 7: Sum weighted values to get Output 1">Step 7: Sum weighted values to get Output 1</a></li>
+                <li>
+                    <a href="#step-8-repeat-for-input-2--input-3" aria-label="Step 8: Repeat for Input 2 &amp;amp; Input 3">Step 8: Repeat for Input 2 &amp; Input 3</a></li></ul>
+                </li>
+                <li>
+                    <a href="#self-attention-to-transformer" aria-label="Self-Attention to Transformer">Self-Attention to Transformer</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="self-attention-机制和代码">Self-Attention 机制和代码<a hidden class="anchor" aria-hidden="true" href="#self-attention-机制和代码">#</a></h2>
+<p>BERT, RoBERTa, ALBERT, SpanBERT, DistilBERT, SesameBERT, SemBERT, SciBERT, BioBERT, MobileBERT, TinyBERT 和 CamemBERT 的共同点是 self-attention 机制. Self-attention 机制不仅是使某种架构被称为&quot;BERT&quot;的原因, 更准确地, 是基于 Tranformer 的架构的共同点. 基于 Transformer 的架构避开了 RNN, 只使用 self-attention 机制来获得输入输出之间的全局依赖关系.</p>
+<p>对 self-attention 机制的介绍分为以下几步:</p>
+<ol>
+<li>准备输入</li>
+<li>初始化权重</li>
+<li>分离 key, query 和 value</li>
+<li>计算对 Input 1 的注意力分数</li>
+<li>计算 softmax</li>
+<li>将分数和 value 相乘</li>
+<li>求 value 的加权和得到 Output 1</li>
+<li>针对 Input 2, 3 重复步骤 4-7</li>
+</ol>
+<h3 id="step-1-prepare-inputs">Step 1: Prepare inputs<a hidden class="anchor" aria-hidden="true" href="#step-1-prepare-inputs">#</a></h3>
+<img src="images/transformer/self-attention1.png" width = "500" div align=center />
+<h3 id="step-2-initialise-weights">Step 2: Initialise weights<a hidden class="anchor" aria-hidden="true" href="#step-2-initialise-weights">#</a></h3>
+<p>每个输入需要有三种表示, 分别被称为 key, query 和 value. 为了得到这三种表示, 每个输入都要分别和三种权重相乘, 得到各自的 key, query 和 value.</p>
+<p>这些权重通常是一些较小的数字, 用一些合适的随机分布 (like Gaussian, Xavier and Kaiming distributions) 在训练前进行初始化.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w_key <span style="color:#f92672">=</span> [
+  [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>],
+  [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>],
+  [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>],
+  [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>]
+]
+w_query <span style="color:#f92672">=</span> [
+  [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>],
+  [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+  [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>],
+  [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>]
+]
+w_value <span style="color:#f92672">=</span> [
+  [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>],
+  [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>],
+  [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>],
+  [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>]
+]
+w_key <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor(w_key, dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+w_query <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor(w_query, dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+w_value <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor(w_value, dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="step-3-derive-key-query-and-value">Step 3: Derive key, query and value<a hidden class="anchor" aria-hidden="true" href="#step-3-derive-key-query-and-value">#</a></h3>
+<img src="images/transformer/self-attention2.gif" width = "500" div align=center />
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">keys <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> w_key
+querys <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> w_query
+values <span style="color:#f92672">=</span> x <span style="color:#f92672">@</span> w_value
+
+print(keys)
+<span style="color:#75715e"># tensor([[0., 1., 1.],</span>
+<span style="color:#75715e">#         [4., 4., 0.],</span>
+<span style="color:#75715e">#         [2., 3., 1.]])</span>
+
+print(querys)
+<span style="color:#75715e"># tensor([[1., 0., 2.],</span>
+<span style="color:#75715e">#         [2., 2., 2.],</span>
+<span style="color:#75715e">#         [2., 1., 3.]])</span>
+
+print(values)
+<span style="color:#75715e"># tensor([[1., 2., 3.],</span>
+<span style="color:#75715e">#         [2., 8., 0.],</span>
+<span style="color:#75715e">#         [2., 6., 3.]])</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="step-4-calculate-attention-scores-for-input-1">Step 4: Calculate attention scores for Input 1<a hidden class="anchor" aria-hidden="true" href="#step-4-calculate-attention-scores-for-input-1">#</a></h3>
+<p>为了得到 Input 1 的分数, 将 Input 1 的 query 和所有输入的 key 做点积 (包括和它自己).</p>
+<img src="images/transformer/self-attention3.gif" width = "500" div align=center />
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">attn_scores <span style="color:#f92672">=</span> querys <span style="color:#f92672">@</span> keys<span style="color:#f92672">.</span>T
+
+<span style="color:#75715e"># tensor([[ 2.,  4.,  4.],  # attention scores from Query 1</span>
+<span style="color:#75715e">#         [ 4., 16., 12.],  # attention scores from Query 2</span>
+<span style="color:#75715e">#         [ 4., 12., 10.]]) # attention scores from Query 3</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="step-5-calculate-softmax">Step 5: Calculate softmax<a hidden class="anchor" aria-hidden="true" href="#step-5-calculate-softmax">#</a></h3>
+<img src="images/transformer/self-attention4.gif" width = "500" div align=center />
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> torch.nn.functional <span style="color:#f92672">import</span> softmax
+
+attn_scores_softmax <span style="color:#f92672">=</span> softmax(attn_scores, dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+<span style="color:#75715e"># tensor([[6.3379e-02, 4.6831e-01, 4.6831e-01],</span>
+<span style="color:#75715e">#         [6.0337e-06, 9.8201e-01, 1.7986e-02],</span>
+<span style="color:#75715e">#         [2.9539e-04, 8.8054e-01, 1.1917e-01]])</span>
+
+<span style="color:#75715e"># For readability, approximate the above as follows</span>
+attn_scores_softmax <span style="color:#f92672">=</span> [
+  [<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span>],
+  [<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">0.0</span>],
+  [<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">0.1</span>]
+]
+attn_scores_softmax <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor(attn_scores_softmax)
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="step-6-multiply-scores-with-values">Step 6: Multiply scores with values<a hidden class="anchor" aria-hidden="true" href="#step-6-multiply-scores-with-values">#</a></h3>
+<p>将经过 softmax 的分数作为权重与 value 相乘, 得到加权后的表示.</p>
+<img src="images/transformer/self-attention5.gif" width = "500" div align=center />
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">weighted_values <span style="color:#f92672">=</span> values[:,<span style="color:#66d9ef">None</span>] <span style="color:#f92672">*</span> attn_scores_softmax<span style="color:#f92672">.</span>T[:,:,<span style="color:#66d9ef">None</span>]
+
+<span style="color:#75715e"># tensor([[[0.0000, 0.0000, 0.0000],</span>
+<span style="color:#75715e">#          [0.0000, 0.0000, 0.0000],</span>
+<span style="color:#75715e">#          [0.0000, 0.0000, 0.0000]],</span>
+<span style="color:#75715e"># </span>
+<span style="color:#75715e">#         [[1.0000, 4.0000, 0.0000],</span>
+<span style="color:#75715e">#          [2.0000, 8.0000, 0.0000],</span>
+<span style="color:#75715e">#          [1.8000, 7.2000, 0.0000]],</span>
+<span style="color:#75715e"># </span>
+<span style="color:#75715e">#         [[1.0000, 3.0000, 1.5000],</span>
+<span style="color:#75715e">#          [0.0000, 0.0000, 0.0000],</span>
+<span style="color:#75715e">#          [0.2000, 0.6000, 0.3000]]])</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="step-7-sum-weighted-values-to-get-output-1">Step 7: Sum weighted values to get Output 1<a hidden class="anchor" aria-hidden="true" href="#step-7-sum-weighted-values-to-get-output-1">#</a></h3>
+<p>将输入的 value 经过 Input 1 所给分数的加权和作为 Ouput 1.</p>
+<img src="images/transformer/self-attention6.gif" width = "500" div align=center />
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">outputs <span style="color:#f92672">=</span> weighted_values<span style="color:#f92672">.</span>sum(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+
+<span style="color:#75715e"># tensor([[2.0000, 7.0000, 1.5000],  # Output 1</span>
+<span style="color:#75715e">#         [2.0000, 8.0000, 0.0000],  # Output 2</span>
+<span style="color:#75715e">#         [2.0000, 7.8000, 0.3000]]) # Output 3</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="step-8-repeat-for-input-2--input-3">Step 8: Repeat for Input 2 &amp; Input 3<a hidden class="anchor" aria-hidden="true" href="#step-8-repeat-for-input-2--input-3">#</a></h3>
+<img src="images/transformer/self-attention7.gif" width = "500" div align=center />
+<h2 id="self-attention-to-transformer">Self-Attention to Transformer<a hidden class="anchor" aria-hidden="true" href="#self-attention-to-transformer">#</a></h2>
+<p>在 self-attention 模块内:</p>
+<ul>
+<li>Dimension</li>
+<li>Bias</li>
+</ul>
+<p>输入到 self-attention 模块:</p>
+<ul>
+<li>Embedding module</li>
+<li>Positional encoding</li>
+<li>Truncating</li>
+<li>Masking</li>
+</ul>
+<p>加入更多的 self-attention 模块:</p>
+<ul>
+<li>Multihead</li>
+<li>Layer stacking</li>
+</ul>
+<p>Self-attention 模块之间的模块:</p>
+<ul>
+<li>Linear transformation</li>
+<li>LayerNorm</li>
+</ul>
+
+
+  </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
