@@ -12,7 +12,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://michelia-zhx.github.io/posts/2022-04-02-vit/</guid>
-      <description>An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale https://arxiv.org/abs/2010.11929 在整体的实现上, 原文完全使用原始bert的transformer结构, 主要是对图片转换成类似token的处理, 原文</description>
+      <description>An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale 在整体的实现上, 原文完全使用原始bert的transformer结构, 主要是对图片转换成类似token的处理, 原文引</description>
     </item>
     
   </channel>
