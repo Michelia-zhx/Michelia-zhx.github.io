@@ -256,7 +256,7 @@
 <li>针对 Input 2, 3 重复步骤 4-7</li>
 </ol>
 <h3 id="step-1-prepare-inputs">Step 1: Prepare inputs<a hidden class="anchor" aria-hidden="true" href="#step-1-prepare-inputs">#</a></h3>
-<img src="images/transformer/self-attention1.png" width = "500" div align=center />
+<img src="/images/transformer/self-attention1.png" width = "500" div align=center />
 <h3 id="step-2-initialise-weights">Step 2: Initialise weights<a hidden class="anchor" aria-hidden="true" href="#step-2-initialise-weights">#</a></h3>
 <p>每个输入需要有三种表示, 分别被称为 key, query 和 value. 为了得到这三种表示, 每个输入都要分别和三种权重相乘, 得到各自的 key, query 和 value.</p>
 <p>这些权重通常是一些较小的数字, 用一些合适的随机分布 (like Gaussian, Xavier and Kaiming distributions) 在训练前进行初始化.</p>
@@ -309,7 +309,7 @@ w_value <span style="color:#f92672">=</span> torch<span style="color:#f92672">.<
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="step-3-derive-key-query-and-value">Step 3: Derive key, query and value<a hidden class="anchor" aria-hidden="true" href="#step-3-derive-key-query-and-value">#</a></h3>
-<img src="images/transformer/self-attention2.gif" width = "500" div align=center />
+<img src="/images/transformer/self-attention2.gif" width = "500" div align=center />
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -354,7 +354,7 @@ print(values)
 </div>
 </div><h3 id="step-4-calculate-attention-scores-for-input-1">Step 4: Calculate attention scores for Input 1<a hidden class="anchor" aria-hidden="true" href="#step-4-calculate-attention-scores-for-input-1">#</a></h3>
 <p>为了得到 Input 1 的分数, 将 Input 1 的 query 和所有输入的 key 做点积 (包括和它自己).</p>
-<img src="images/transformer/self-attention3.gif" width = "500" div align=center />
+<img src="/images/transformer/self-attention3.gif" width = "500" div align=center />
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -372,7 +372,7 @@ print(values)
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="step-5-calculate-softmax">Step 5: Calculate softmax<a hidden class="anchor" aria-hidden="true" href="#step-5-calculate-softmax">#</a></h3>
-<img src="images/transformer/self-attention4.gif" width = "500" div align=center />
+<img src="/images/transformer/self-attention4.gif" width = "500" div align=center />
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -409,7 +409,7 @@ attn_scores_softmax <span style="color:#f92672">=</span> torch<span style="color
 </div>
 </div><h3 id="step-6-multiply-scores-with-values">Step 6: Multiply scores with values<a hidden class="anchor" aria-hidden="true" href="#step-6-multiply-scores-with-values">#</a></h3>
 <p>将经过 softmax 的分数作为权重与 value 相乘, 得到加权后的表示.</p>
-<img src="images/transformer/self-attention5.gif" width = "500" div align=center />
+<img src="/images/transformer/self-attention5.gif" width = "500" div align=center />
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -444,7 +444,7 @@ attn_scores_softmax <span style="color:#f92672">=</span> torch<span style="color
 </div>
 </div><h3 id="step-7-sum-weighted-values-to-get-output-1">Step 7: Sum weighted values to get Output 1<a hidden class="anchor" aria-hidden="true" href="#step-7-sum-weighted-values-to-get-output-1">#</a></h3>
 <p>将输入的 value 经过 Input 1 所给分数的加权和作为 Ouput 1.</p>
-<img src="images/transformer/self-attention6.gif" width = "500" div align=center />
+<img src="/images/transformer/self-attention6.gif" width = "500" div align=center />
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -462,7 +462,7 @@ attn_scores_softmax <span style="color:#f92672">=</span> torch<span style="color
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="step-8-repeat-for-input-2--input-3">Step 8: Repeat for Input 2 &amp; Input 3<a hidden class="anchor" aria-hidden="true" href="#step-8-repeat-for-input-2--input-3">#</a></h3>
-<img src="images/transformer/self-attention7.gif" width = "500" div align=center />
+<img src="/images/transformer/self-attention7.gif" width = "500" div align=center />
 <h2 id="self-attention-to-transformer">Self-Attention to Transformer<a hidden class="anchor" aria-hidden="true" href="#self-attention-to-transformer">#</a></h2>
 <p>在 self-attention 模块内:</p>
 <ul>
