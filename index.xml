@@ -62,6 +62,25 @@
     </item>
     
     <item>
+      <title>Notes - Convex Optimization and Approximation (EE 227C)</title>
+      <link>https://michelia-zhx.github.io/posts/2022-04-01-ee227c/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-04-01-ee227c/</guid>
+      <description>1 Convexity 1.1 Convex sets $\textbf{Definition 1.1}$ (Convex set). A set $K \subseteq \mathbb{R}^n$ is convex if it the line segment between any two points in K is also contained in K. Formally, for all $x, y\in K$, and all scalars $\gamma\in [0,1]$, we have $\gamma x+(1-\gamma)y\in K$.
+$\textbf{Theorem 1.2}$ (Separation Theorem). Let $C, K \subseteq \mathbb{R}^n$ be convex sets with empty intersection $C \cap K = \emptyset$. Then there exists apoint $a\in \mathbb{R}^n$ and a number $b\in \mathbb{R}$ such that</description>
+    </item>
+    
+    <item>
+      <title>Notes - Convex Optimization: Algorithms and Complexity</title>
+      <link>https://michelia-zhx.github.io/posts/2022-03-26-convex-optimization/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://michelia-zhx.github.io/posts/2022-03-26-convex-optimization/</guid>
+      <description>1 Introduction 定义 1.1 (Convex sets and convex functions) 我们关心的问题是定义在凸集上的凸函数的最小值问题 1.1 机器学习里的凸优化问题 $$\min_{x\in\mathbb{R}^n}\sum_{i=1}^mf_i(x) + \gamma\mathcal{R}(x)$$ 最小化表示代价+模型复杂性. 分类问题 SVM: $f_i(x) =</description>
+    </item>
+    
+    <item>
       <title>Paper Notes - Active Learning</title>
       <link>https://michelia-zhx.github.io/posts/2021-08-31-active_learning/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
